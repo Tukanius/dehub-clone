@@ -56,6 +56,16 @@ class FinanceProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  discountType(String value) {
+    finance.discountType = value;
+    notifyListeners();
+  }
+
+  penaltyType(String value) {
+    finance.penaltyType = value;
+    notifyListeners();
+  }
+
   clearData() {
     finance = Finance();
     notifyListeners();

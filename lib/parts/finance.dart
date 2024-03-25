@@ -9,6 +9,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Finance.fromJson(e)).toList()
         : null,
+    businessIds: json['businessIds'] != null
+        ? (json['businessIds'] as List).map((e) => e as String).toList()
+        : null,
     payments: json['payments'] != null
         ? (json['payments'] as List).map((e) => Finance.fromJson(e)).toList()
         : null,
@@ -56,6 +59,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? json['buyerPenaltyType'] as String
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    participantStatus: json['participantStatus'] != null
+        ? json['participantStatus'] as String
+        : null,
     lbfAccount:
         json['lbfAccount'] != null ? json['lbfAccount'] as String : null,
     accountId: json['accountId'] != null ? json['accountId'] as String : null,
@@ -575,6 +581,9 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     receiverFinUser: json['receiverFinUser'] != null
         ? Finance.fromJson(json['receiverFinUser'] as Map<String, dynamic>)
         : null,
+    paymentTerm: json['paymentTerm'] != null
+        ? Finance.fromJson(json['paymentTerm'] as Map<String, dynamic>)
+        : null,
     senderAcc: json['senderAcc'] != null
         ? Finance.fromJson(json['senderAcc'] as Map<String, dynamic>)
         : null,
@@ -645,13 +654,150 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         json['payerAccNum'] != null ? json['payerAccNum'] as String : null,
     accountNum:
         json['accountNum'] != null ? json['accountNum'] as String : null,
+    classificationCategory: json['classificationCategory'] != null
+        ? Finance.fromJson(
+            json['classificationCategory'] as Map<String, dynamic>)
+        : null,
+    classificationPriority: json['classificationPriority'] != null
+        ? Finance.fromJson(
+            json['classificationPriority'] as Map<String, dynamic>)
+        : null,
+    classificationSetUser: json['classificationSetUser'] != null
+        ? Finance.fromJson(
+            json['classificationSetUser'] as Map<String, dynamic>)
+        : null,
+    areaRegion: json['areaRegion'] != null
+        ? Finance.fromJson(json['areaRegion'] as Map<String, dynamic>)
+        : null,
+    areaDirection: json['areaDirection'] != null
+        ? Finance.fromJson(json['areaDirection'] as Map<String, dynamic>)
+        : null,
+    areaSetUser: json['areaSetUser'] != null
+        ? Finance.fromJson(json['areaSetUser'] as Map<String, dynamic>)
+        : null,
+    areaSetDate: json['areaSetDate'] != null
+        ? DateTime.parse(json['areaSetDate'].toString())
+        : null,
+    classificationSetDate: json['classificationSetDate'] != null
+        ? DateTime.parse(json['classificationSetDate'].toString())
+        : null,
+    classificationDesc: json['classificationDesc'] != null
+        ? json['classificationDesc'] as String
+        : null,
+    weekAvgDebtAmount: json['weekAvgDebtAmount'] != null
+        ? double.parse(json['weekAvgDebtAmount'].toString())
+        : null,
+    halfMonthAvgDebtAmount: json['halfMonthAvgDebtAmount'] != null
+        ? double.parse(json['halfMonthAvgDebtAmount'].toString())
+        : null,
+    monthAvgDebtAmount: json['monthAvgDebtAmount'] != null
+        ? double.parse(json['monthAvgDebtAmount'].toString())
+        : null,
+    monthAvgPurchaseAmount: json['monthAvgPurchaseAmount'] != null
+        ? double.parse(json['monthAvgPurchaseAmount'].toString())
+        : null,
+    monthAvgRefundAmount: json['monthAvgRefundAmount'] != null
+        ? double.parse(json['monthAvgRefundAmount'].toString())
+        : null,
+    monthAvgBidAmount: json['monthAvgBidAmount'] != null
+        ? double.parse(json['monthAvgBidAmount'].toString())
+        : null,
+    debtLimitAmount: json['debtLimitAmount'] != null
+        ? double.parse(json['debtLimitAmount'].toString())
+        : null,
+    debtLimitStartDate: json['debtLimitStartDate'] != null
+        ? json['debtLimitStartDate'] as String
+        : null,
+    debtLimitEndDate: json['debtLimitEndDate'] != null
+        ? json['debtLimitEndDate'] as String
+        : null,
+    earlyDiscount:
+        json['earlyDiscount'] != null ? json['earlyDiscount'] as bool : null,
+    countPenalty:
+        json['countPenalty'] != null ? json['countPenalty'] as bool : null,
+    discountType:
+        json['discountType'] != null ? json['discountType'] as String : null,
+    discountPercent: json['discountPercent'] != null
+        ? double.parse(json['discountPercent'].toString())
+        : null,
   );
 }
 
 Map<String, dynamic> _$FinanceToJson(Finance instance) {
   Map<String, dynamic> json = {};
+
+  if (instance.debtLimitStartDate != null) {
+    json['debtLimitStartDate'] = instance.debtLimitStartDate;
+  }
+  if (instance.businessIds != null) {
+    json['businessIds'] = instance.businessIds;
+  }
+  if (instance.debtLimitEndDate != null) {
+    json['debtLimitEndDate'] = instance.debtLimitEndDate;
+  }
+  if (instance.earlyDiscount != null) {
+    json['earlyDiscount'] = instance.earlyDiscount;
+  }
+  if (instance.countPenalty != null) {
+    json['countPenalty'] = instance.countPenalty;
+  }
+  if (instance.discountType != null) {
+    json['discountType'] = instance.discountType;
+  }
+  if (instance.discountPercent != null) {
+    json['discountPercent'] = instance.discountPercent;
+  }
+  if (instance.classificationCategory != null) {
+    json['classificationCategory'] = instance.classificationCategory;
+  }
+  if (instance.paymentTerm != null) {
+    json['paymentTerm'] = instance.paymentTerm;
+  }
+  if (instance.classificationPriority != null) {
+    json['classificationPriority'] = instance.classificationPriority;
+  }
+  if (instance.classificationSetUser != null) {
+    json['classificationSetUser'] = instance.classificationSetUser;
+  }
+  if (instance.areaRegion != null) json['areaRegion'] = instance.areaRegion;
+  if (instance.areaDirection != null) {
+    json['areaDirection'] = instance.areaDirection;
+  }
+  if (instance.areaSetUser != null) json['areaSetUser'] = instance.areaSetUser;
+  if (instance.areaSetDate != null) json['areaSetDate'] = instance.areaSetDate;
+  if (instance.classificationSetDate != null) {
+    json['classificationSetDate'] = instance.classificationSetDate;
+  }
+  if (instance.classificationDesc != null) {
+    json['classificationDesc'] = instance.classificationDesc;
+  }
+  if (instance.weekAvgDebtAmount != null) {
+    json['weekAvgDebtAmount'] = instance.weekAvgDebtAmount;
+  }
+  if (instance.halfMonthAvgDebtAmount != null) {
+    json['halfMonthAvgDebtAmount'] = instance.halfMonthAvgDebtAmount;
+  }
+  if (instance.monthAvgDebtAmount != null) {
+    json['monthAvgDebtAmount'] = instance.monthAvgDebtAmount;
+  }
+  if (instance.monthAvgPurchaseAmount != null) {
+    json['monthAvgPurchaseAmount'] = instance.monthAvgPurchaseAmount;
+  }
+  if (instance.monthAvgRefundAmount != null) {
+    json['monthAvgRefundAmount'] = instance.monthAvgRefundAmount;
+  }
+  if (instance.monthAvgBidAmount != null) {
+    json['monthAvgBidAmount'] = instance.monthAvgBidAmount;
+  }
+  if (instance.debtLimitAmount != null) {
+    json['debtLimitAmount'] = instance.debtLimitAmount;
+  }
+
   if (instance.payerAccName != null) {
     json['payerAccName'] = instance.payerAccName;
+  }
+  if (instance.participantStatus != null) {
+    json['participantStatus'] = instance.participantStatus;
   }
   if (instance.payerAccNum != null) json['payerAccNum'] = instance.payerAccNum;
   if (instance.accountNum != null) json['accountNum'] = instance.accountNum;

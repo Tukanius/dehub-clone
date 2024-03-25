@@ -28,7 +28,7 @@ class _CurrentAssetTabState extends State<CurrentAssetTab>
   list(page, limit) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(type: "CURRENT_ASSET");
+    Filter filter = Filter(financeType: "SCF");
     limitUsage = await FinanceApi().limitUsage(
         source.url, ResultArguments(filter: filter, offset: offset));
     setState(() {

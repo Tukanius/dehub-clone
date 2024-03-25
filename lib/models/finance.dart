@@ -255,8 +255,59 @@ class Finance {
   String? payerAccName;
   String? payerAccNum;
   String? accountNum;
+  String? participantStatus;
+  Finance? classificationCategory;
+  Finance? classificationPriority;
+  Finance? classificationSetUser;
+  Finance? areaRegion;
+  Finance? areaDirection;
+  Finance? areaSetUser;
+  DateTime? areaSetDate;
+  DateTime? classificationSetDate;
+  String? classificationDesc;
+  double? weekAvgDebtAmount;
+  double? halfMonthAvgDebtAmount;
+  double? monthAvgDebtAmount;
+  double? monthAvgPurchaseAmount;
+  double? monthAvgRefundAmount;
+  double? monthAvgBidAmount;
+  double? debtLimitAmount;
+  Finance? paymentTerm;
+  String? debtLimitStartDate; // Must be string
+  String? debtLimitEndDate; // Must be string
+  bool? earlyDiscount;
+  bool? countPenalty;
+  String? discountType;
+  double? discountPercent;
+
+  List<String>? businessIds;
 
   Finance({
+    this.businessIds,
+    this.debtLimitStartDate,
+    this.debtLimitEndDate,
+    this.earlyDiscount,
+    this.countPenalty,
+    this.discountType,
+    this.discountPercent,
+    this.paymentTerm,
+    this.classificationCategory,
+    this.classificationPriority,
+    this.classificationSetUser,
+    this.areaRegion,
+    this.areaDirection,
+    this.areaSetUser,
+    this.areaSetDate,
+    this.classificationSetDate,
+    this.classificationDesc,
+    this.weekAvgDebtAmount,
+    this.halfMonthAvgDebtAmount,
+    this.monthAvgDebtAmount,
+    this.monthAvgPurchaseAmount,
+    this.monthAvgRefundAmount,
+    this.monthAvgBidAmount,
+    this.debtLimitAmount,
+    this.participantStatus,
     this.payerAccName,
     this.payerAccNum,
     this.accountNum,

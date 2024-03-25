@@ -16,9 +16,24 @@ General _$GeneralFromJson(Map<String, dynamic> json) {
             .map((e) => BankAccounts.fromJson(e))
             .toList()
         : null,
+    programParticipantStatus: json['programParticipantStatus'] != null
+        ? (json['programParticipantStatus'] as List)
+            .map((e) => ProgramParticipantStatus.fromJson(e))
+            .toList()
+        : null,
     stockMovementTypes: json['stockMovementTypes'] != null
         ? (json['stockMovementTypes'] as List)
             .map((e) => StockMovementTypes.fromJson(e))
+            .toList()
+        : null,
+    networkDiscountTypes: json['networkDiscountTypes'] != null
+        ? (json['networkDiscountTypes'] as List)
+            .map((e) => NetworkTypes.fromJson(e))
+            .toList()
+        : null,
+    networkPenaltyTypes: json['networkPenaltyTypes'] != null
+        ? (json['networkPenaltyTypes'] as List)
+            .map((e) => NetworkTypes.fromJson(e))
             .toList()
         : null,
     actions: json['actions'] != null
@@ -465,6 +480,15 @@ Map<String, dynamic> _$GeneralToJson(General instance) {
 
   if (instance.productSuppPenaltyTypes != null) {
     json['productSuppPenaltyTypes'] = instance.productSuppPenaltyTypes;
+  }
+  if (instance.networkDiscountTypes != null) {
+    json['networkDiscountTypes'] = instance.networkDiscountTypes;
+  }
+  if (instance.networkPenaltyTypes != null) {
+    json['networkPenaltyTypes'] = instance.networkPenaltyTypes;
+  }
+  if (instance.programParticipantStatus != null) {
+    json['programParticipantStatus'] = instance.programParticipantStatus;
   }
   if (instance.invoiceHistoryLogTypes != null) {
     json['invoiceHistoryLogTypes'] = instance.invoiceHistoryLogTypes;

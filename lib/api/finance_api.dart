@@ -162,7 +162,12 @@ class FinanceApi extends HttpRequestFinance {
   }
 
   Future<Result> networkList(String host, ResultArguments data) async {
-    var res = get(host, '/network', data: data.toJson());
-    return Result.fromJson(res, Finance.$fromJson);
+    var res = await get(host, '/network', data: data.toJson());
+    return Result.fromJson(res, Finance.fromJson);
+  }
+
+  Future<Finance> setLimit(String host, Finance data) async {
+    var res = await put(host, '/network/set_limit', data: data.toJson());
+    return Finance.fromJson(res as Map<String, dynamic>);
   }
 }

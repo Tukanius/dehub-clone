@@ -1,8 +1,11 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/finance_api.dart';
+import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/models/finance.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/src/finance_module/components/buyer_proposal_card/buyer_proposal_card.dart';
+import 'package:dehub/src/finance_module/screens/set_limit_page/set_limit_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +25,7 @@ class _BuyerProposalState extends State<BuyerProposal> with AfterLayoutMixin {
   Result network = Result(rows: [], count: 0);
   bool isLoading = true;
   RefreshController refreshController = RefreshController();
+  List<Finance> selected = [];
 
   list(page, limit) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
@@ -60,6 +64,7 @@ class _BuyerProposalState extends State<BuyerProposal> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
+
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -75,15 +80,66 @@ class _BuyerProposalState extends State<BuyerProposal> with AfterLayoutMixin {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: network.rows!
-              .map(
-                (data) => BuyerProposalCard(data: data),
-              )
-              .toList(),
-        ),
-      ),
+      floatingActionButton: selected.isNotEmpty
+          ? Material(
+              color: source.currentColor,
+              borderRadius: BorderRadius.circular(5),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                    SetLimitPage.routeName,
+                    arguments: SetLimitPageArguments(data: selected),
+                  );
+                },
+                borderRadius: BorderRadius.circular(5),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Лимит тохируулах',
+                    style: TextStyle(color: white),
+                  ),
+                ),
+              ),
+            )
+          : null,
+      body: isLoading == true
+          ? Center(
+              child: CircularProgressIndicator(
+                color: source.currentColor,
+              ),
+            )
+          : Refresher(
+              refreshController: refreshController,
+              color: source.currentColor,
+              onLoading:
+                  network.count != network.rows!.length ? onLoading : null,
+              onRefresh: onRefresh,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: network.rows!
+                      .map(
+                        (data) => BuyerProposalCard(
+                          selected: selected,
+                          data: data,
+                          onClick: () {
+                            if (selected.contains(data)) {
+                              setState(() {
+                                selected.removeWhere(
+                                    (element) => element.id == data.id);
+                              });
+                            } else {
+                              setState(() {
+                                selected.add(data);
+                              });
+                            }
+                          },
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
     );
   }
 }

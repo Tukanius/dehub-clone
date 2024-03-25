@@ -18,6 +18,7 @@ import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/invoice_history_log_types.dart';
 import 'package:dehub/models/invoice_over_due_status.dart';
 import 'package:dehub/models/modules.dart';
+import 'package:dehub/models/network_types.dart';
 import 'package:dehub/models/order_status.dart';
 import 'package:dehub/models/partner_staffs.dart';
 import 'package:dehub/models/payment_term_conditions.dart';
@@ -40,6 +41,7 @@ import 'package:dehub/models/product_buyer_fee_rules.dart';
 import 'package:dehub/models/product_buyer_penalty_types.dart';
 import 'package:dehub/models/product_supp_fee_rules.dart';
 import 'package:dehub/models/product_supp_penalty_types.dart';
+import 'package:dehub/models/program_participant_status.dart';
 import 'package:dehub/models/program_types.dart';
 import 'package:dehub/models/pull_sheet_status.dart';
 import 'package:dehub/models/purchase_types.dart';
@@ -193,8 +195,14 @@ class General {
   List<FinanceRoleStatus>? financeRoleStatus;
   List<SettlementStatus>? settlementStatus;
   List<InvoiceHistoryLogTypes>? invoiceHistoryLogTypes;
+  List<ProgramParticipantStatus>? programParticipantStatus;
+  List<NetworkTypes>? networkDiscountTypes;
+  List<NetworkTypes>? networkPenaltyTypes;
 
   General({
+    this.networkDiscountTypes,
+    this.networkPenaltyTypes,
+    this.programParticipantStatus,
     this.invoiceHistoryLogTypes,
     this.settlementStatus,
     this.financeRoleStatus,
