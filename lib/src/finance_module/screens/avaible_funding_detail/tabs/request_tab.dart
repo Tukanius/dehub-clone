@@ -8,11 +8,13 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/currency_formatter.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
@@ -46,6 +48,9 @@ class _RequestTabState extends State<RequestTab> {
   double appFee = 0;
   double fee = 0;
   DateTime repaymentDate = DateTime.now();
+  String? amount;
+  double minOfInv = 0;
+  double maxOfInv = 0;
 
   void pickFile() async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
@@ -105,6 +110,13 @@ class _RequestTabState extends State<RequestTab> {
           : widget.data.paymentDate!.add(Duration(
               days: widget.data.program!.product!.buyerCalculateDay!.toInt(),
             ));
+    } else {
+      minOfInv = (source.finance.requestedAmount! *
+              widget.data.lbfProgram!.lbfProduct!.minOfInv!) /
+          100;
+      maxOfInv = (source.finance.requestedAmount! *
+              widget.data.lbfProgram!.lbfProduct!.maxOfInv!) /
+          100;
     }
     super.initState();
   }
@@ -169,19 +181,34 @@ class _RequestTabState extends State<RequestTab> {
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
-              labelText: 'Хүсэлтийн төрөл',
-              secondText: widget.userType == "SUPPLIER"
-                  ? 'Эрт санхүүжилт'
-                  : "Дараа төлөлт",
+              labelText: 'Хамаарах бизнес',
+              secondText:
+                  '${user.currentBusiness?.profileName}, ${user.currentBusiness?.refCode}',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
-              labelText: 'Хүсэлт гаргасан',
+              labelText: 'Хүсэлт гаргаж буй',
               secondText:
-                  '${user.currentBusiness?.profileName}, ${user.currentBusiness?.refCode}',
+                  '${widget.data.senderFinUser?.lastName?[0]}. ${widget.data.senderFinUser?.firstName}',
+              secondTextColor: source.currentColor,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Харилцагчийн код',
+              secondText: '${user.clientCode}',
+              secondTextColor: source.currentColor,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Татвар төлөгчийн дугаар',
+              secondText: '${user.currentBusiness?.regNumber}',
               secondTextColor: source.currentColor,
             ),
             FieldCard(
@@ -191,6 +218,45 @@ class _RequestTabState extends State<RequestTab> {
               labelText: 'Хүсэлтийн огноо',
               secondText: DateFormat('yyyy-MM-dd').format(DateTime.now()),
               secondTextColor: source.currentColor,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Зээл төлөх огноо',
+              secondText:
+                  DateFormat('yyyy-MM-dd').format(widget.data.paymentDate!),
+              secondTextColor: source.currentColor,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Хөтөлбөрийн нэр',
+              secondText: widget.data.lbfProgram?.name,
+              secondTextColor: source.currentColor,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Хөтөлбөрийн код',
+              secondText: widget.data.lbfProgram?.refCode,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Бүтээгдэхүүний нэр',
+              secondText: widget.data.lbfProgram?.lbfProduct?.name,
+              secondTextColor: source.currentColor,
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Бүтээгдэхүүний код',
+              secondText: widget.data.lbfProgram?.lbfProduct?.refCode,
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -204,19 +270,31 @@ class _RequestTabState extends State<RequestTab> {
                   ),
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: grey2, width: 1.5),
                     ),
                     child: const Text(
-                      'Draft',
-                      style:
-                          TextStyle(color: grey2, fontWeight: FontWeight.w500),
+                      'Түр төлөв',
+                      style: TextStyle(
+                        color: grey2,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],
               ),
+            ),
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              color: white,
+              labelText: 'Хэмжээ шалгуур',
+              secondText:
+                  '${Utils().formatCurrency("${minOfInv.toInt()}")}₮ - ${Utils().formatCurrency("${maxOfInv.toInt()}")}₮',
+              secondTextColor: source.currentColor,
             ),
             if (source.type == "SCF")
               Column(
@@ -244,10 +322,9 @@ class _RequestTabState extends State<RequestTab> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: const Text(
-                'Санхүүжилт хүсэх дүн',
+                'Нэхэмжлэхийн шалгуур хангах байдал',
                 style: TextStyle(
                   color: grey3,
-                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -255,37 +332,60 @@ class _RequestTabState extends State<RequestTab> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               color: white,
-              child: FormTextField(
-                onChanged: (value) {
-                  source.requestedAmount(double.tryParse(value) ?? 0);
-                },
-                initialValue: source.finance.requestedAmount != null
-                    ? source.finance.requestedAmount?.toInt().toString()
-                    : "",
-                name: "amount",
-                inputType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Санхүүжилт дүн',
-                  hintStyle: TextStyle(
-                    color: source.currentColor,
-                    fontSize: 18,
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  border: const OutlineInputBorder(),
-                  fillColor: Colors.white,
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: source.currentColor),
-                  ),
-                  suffixIcon: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: SvgPicture.asset(
-                      'assets/svg/edit_rounded.svg',
-                      colorFilter:
-                          const ColorFilter.mode(black, BlendMode.srcIn),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    child: const Text(
+                      'Санхүүжилт хүсэх дүн',
                     ),
                   ),
-                ),
+                  FormTextField(
+                    onChanged: (value) {
+                      setState(() {
+                        amount = Utils().parseCurrency(value);
+                      });
+                      source.requestedAmount(double.tryParse(amount!) ?? 0);
+                    },
+                    initialValue: Utils().formatCurrency("$maxOfInv"),
+                    name: "amount",
+                    inputFormatters: [CurrencyInputFormatter()],
+                    inputType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'Санхүүжилт дүн',
+                      hintStyle: TextStyle(
+                        color: source.currentColor,
+                        fontSize: 18,
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      border: const OutlineInputBorder(),
+                      fillColor: Colors.white,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: source.currentColor),
+                      ),
+                      suffixIcon: Container(
+                        padding: const EdgeInsets.all(15),
+                        child: SvgPicture.asset(
+                          'assets/svg/edit_rounded.svg',
+                          colorFilter:
+                              const ColorFilter.mode(black, BlendMode.srcIn),
+                        ),
+                      ),
+                    ),
+                    validator: FormBuilderValidators.compose([
+                      (value) {
+                        double am = double.tryParse(amount!) ?? 0;
+                        if (am > maxOfInv || am < minOfInv) {
+                          return 'Хэмжээ шалгуур хангахгүй байна';
+                        } else {
+                          return null;
+                        }
+                      }
+                    ]),
+                  ),
+                ],
               ),
             ),
             FieldCard(

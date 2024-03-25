@@ -16,31 +16,31 @@ import '../main.dart';
 
 class HttpRequest {
   static const host = 'http://dev-de-dehub.zto.mn/2fa';
-  // static const host = 'http://192.168.1.220:30510/2fa';
+  // static const host = 'http://192.168.1.232:30510/2fa';
 
   static const partnerHost = 'http://dev-de-partner.zto.mn/prt';
-  // static const partnerHost = 'http://192.168.1.220:30518/prt';
+  // static const partnerHost = 'http://192.168.1.232:30518/prt';
 
   static const invoiceHost = 'http://dev-de-invoice.zto.mn/inv';
-  // static const invoiceHost = 'http://192.168.1.220:30514/inv';
+  // static const invoiceHost = 'http://192.168.1.232:30514/inv';
 
   static const businessHost = 'http://dev-de-network.zto.mn/biz';
-  // static const businessHost = 'http://192.168.1.220:30512/biz';
+  // static const businessHost = 'http://192.168.1.232:30512/biz';
 
   static const inventoryHost = 'http://dev-de-inventory.zto.mn/erp';
-  // static const inventoryHost = 'http://192.168.1.220:30513/erp';
+  // static const inventoryHost = 'http://192.168.1.232:30513/erp';
 
   static const orderHost = 'http://dev-de-order.zto.mn/ord';
-  // static const orderHost = 'http://192.168.1.220:30517/ord';
+  // static const orderHost = 'http://192.168.1.232:30517/ord';
 
   static const paymentHost = 'http://dev-de-payment.zto.mn/pay';
-  // static const paymentHost = 'http://192.168.1.220:30519/pay';
+  // static const paymentHost = 'http://192.168.1.232:30519/pay';
 
   static const media = 'http://dev-de-dehub.zto.mn/mdi';
-  // static const media = 'http://192.168.1.220:30515/mdi';
+  // static const media = 'http://192.168.1.232:30515/mdi';
 
   static const userHost = 'http://dev-de-user.zto.mn/usr';
-  // static const userHost = 'http://192.168.1.220:30521/usr';
+  // static const userHost = 'http://192.168.1.232:30521/usr';
 
   static const version = '/app';
 

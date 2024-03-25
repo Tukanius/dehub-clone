@@ -15,6 +15,7 @@ import 'package:dehub/src/auth/password_recovery/password_recovery.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
 import 'package:dehub/src/finance_module/screens/account_detail_page/account_detail_page.dart';
 import 'package:dehub/src/finance_module/screens/available_funding_page/available_funding_page.dart';
+import 'package:dehub/src/finance_module/screens/buyer_proposal/buyer_proposal.dart';
 import 'package:dehub/src/finance_module/screens/compromise_page/compromise_page.dart';
 import 'package:dehub/src/finance_module/screens/finance_qpay/finance_qpay.dart';
 import 'package:dehub/src/finance_module/screens/payment_page/payment_page.dart';
@@ -1801,6 +1802,10 @@ class MyApp extends StatelessWidget {
                         id: arguments.id,
                       );
                     });
+                  case BuyerProposal.routeName:
+                    return MaterialPageRoute(builder: (context) {
+                      return const BuyerProposal();
+                    });
                   case SetPrice.routeName:
                     SetPriceArguments arguments =
                         settings.arguments as SetPriceArguments;
@@ -1908,7 +1913,7 @@ class MyApp extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.3),
         body: Container(
-          color: Colors.blue,
+          color: Colors.black,
           child: SafeArea(
             bottom: false,
             top: false,

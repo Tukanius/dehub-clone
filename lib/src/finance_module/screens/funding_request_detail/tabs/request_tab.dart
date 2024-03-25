@@ -5,6 +5,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/finance_provider.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -72,6 +73,7 @@ class _RequestTabState extends State<RequestTab> {
   @override
   Widget build(BuildContext context) {
     final source = Provider.of<FinanceProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).financeUser;
     general =
         Provider.of<GeneralProvider>(context, listen: false).financeGeneral;
     return SingleChildScrollView(
@@ -303,64 +305,16 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Өргөдөл хураамж',
-            secondText:
-                '${Utils().formatCurrency(widget.data.appFee.toString()) + currency().symbol}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Олголт шимтгэл',
-            secondText:
-                '${Utils().formatCurrency(widget.data.disbursementFee.toString()) + currency().symbol}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Нийт шимтгэл',
-            secondText:
-                '${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString())}₮',
-            secondTextColor: source.currentColor,
-            secondTextFontWeight: FontWeight.bold,
-            color: white,
-          ),
-          // FieldCard(
-          //   paddingHorizontal: 15,
-          //   paddingVertical: 10,
-          //   labelText: 'Шимтгэл дүрэм',
-          //   secondText: feeRule(),
-          //   secondTextColor: source.currentColor,
-          //   color: white,
-          // ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Шимтгэл доод дүн',
-            secondText:
-                '${Utils().formatCurrency(widget.data.minFeeAmount.toString()) + currency().symbol}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Эргэн төлөх хугацаа',
-            secondText: '',
-            // DateFormat('yyyy-MM-dd').format(
-            //   widget.data.invPaymentDate!.add(Duration(
-            //     days: widget.data.product!.buyerTerm!.toInt(),
-            //   )),
-            // ),
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
+          if (user.currentBusiness?.type == "SUPPLIER")
+            FieldCard(
+              paddingHorizontal: 15,
+              paddingVertical: 10,
+              labelText: 'Эргэн төлөх хугацаа',
+              secondText: DateFormat('yyyy-MM-dd')
+                  .format(widget.data.invoice!.paymentDate!),
+              secondTextColor: source.currentColor,
+              color: white,
+            ),
           if (user.currentBusiness?.type == "SUPPLIER")
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -390,30 +344,6 @@ class _RequestTabState extends State<RequestTab> {
               secondTextColor: source.currentColor,
               color: white,
             ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Ху.Хэтрэлт алданги',
-            secondText: '${widget.data.penaltyPercent?.toInt()}%',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          // FieldCard(
-          //   paddingHorizontal: 15,
-          //   paddingVertical: 10,
-          //   labelText: 'Алдангийн арга',
-          //   secondText: penaltyType(),
-          //   secondTextColor: source.currentColor,
-          //   color: white,
-          // ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Эргэн төлөх дүрэм',
-            secondText: '-',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
           if (source.type == 'scf')
             FieldCard(
               paddingHorizontal: 15,
@@ -449,41 +379,6 @@ class _RequestTabState extends State<RequestTab> {
             secondTextColor: source.currentColor,
             color: white,
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            child: const Text(
-              'Санхүүжилт авах данс',
-              style: TextStyle(
-                color: grey3,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Дансны дугаар',
-            secondText: '${widget.data.receiverBusinessAcc?.number}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Дансны нэр',
-            secondText: '${widget.data.receiverBusinessAcc?.name}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Банкны нэр',
-            secondText: '${widget.data.receiverBusinessAcc?.bankName}',
-            secondTextColor: source.currentColor,
-            color: white,
-          ),
           if (widget.data.requestFiles != null &&
               widget.data.requestFiles!.isNotEmpty)
             Container(
@@ -492,7 +387,6 @@ class _RequestTabState extends State<RequestTab> {
                 'Хавсаргасан файл',
                 style: TextStyle(
                   color: grey3,
-                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),

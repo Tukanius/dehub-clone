@@ -64,6 +64,7 @@ class User {
   bool? hasPassword;
   User? currentBusiness;
   String? clientType;
+  String? clientCode;
   String? regNumber;
   double? stateRegNum;
   String? legalEntityType;
@@ -138,6 +139,7 @@ class User {
   String? bank;
 
   User({
+    this.clientCode,
     this.bank,
     this.financeRoleStatus,
     this.financeRole,

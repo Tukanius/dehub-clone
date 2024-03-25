@@ -1,15 +1,9 @@
-import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/order.dart';
 import 'package:flutter/cupertino.dart';
 
 class ListenController extends ChangeNotifier {
   String? value;
   String? listValue;
-  Invoice? invoice;
-  Invoice? partnerInvoice;
-  Invoice? goodsInvoice;
-  Invoice? sectorInvoice;
-  Invoice? invoiceAdditionalRow;
   Order? customerOrder;
   Order? productOrder;
   Order? additionalRows;
@@ -30,28 +24,8 @@ class ListenController extends ChangeNotifier {
     notifyListeners();
   }
 
-  invoiceChange(Invoice value) {
-    invoice = value;
-    notifyListeners();
-  }
-
-  partnerInvoiceChange(Invoice value) {
-    partnerInvoice = value;
-    notifyListeners();
-  }
-
-  sectorInvoiceChange(Invoice value) {
-    sectorInvoice = value;
-    notifyListeners();
-  }
-
   customerOrderChange(Order value) {
     customerOrder = value;
-    notifyListeners();
-  }
-
-  goodsInvoiceChange(Invoice value) {
-    goodsInvoice = value;
     notifyListeners();
   }
 
@@ -62,11 +36,6 @@ class ListenController extends ChangeNotifier {
 
   additionalRowsChange(Order value) {
     additionalRows = value;
-    notifyListeners();
-  }
-
-  invoiceAddRow(Invoice value) {
-    invoiceAdditionalRow = value;
     notifyListeners();
   }
 

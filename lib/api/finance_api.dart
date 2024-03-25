@@ -160,4 +160,9 @@ class FinanceApi extends HttpRequestFinance {
     var res = await put(host, '/settlement/$id/respond');
     return Finance.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Result> networkList(String host, ResultArguments data) async {
+    var res = get(host, '/network', data: data.toJson());
+    return Result.fromJson(res, Finance.$fromJson);
+  }
 }

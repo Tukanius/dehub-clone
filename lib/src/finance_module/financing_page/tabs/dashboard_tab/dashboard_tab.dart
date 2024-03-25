@@ -2,6 +2,7 @@ import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
 import 'package:dehub/models/finance.dart';
 import 'package:dehub/providers/finance_provider.dart';
+import 'package:dehub/src/finance_module/screens/buyer_proposal/buyer_proposal.dart';
 import 'package:dehub/src/finance_module/screens/program_page/program_page.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_page/funding_request_page.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/recalled_page.dart';
@@ -132,6 +133,16 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                   labelText: 'Буцаан дуудсан',
                   svgColor: source.currentColor,
                   svg: 'assets/svg/return.svg',
+                ),
+                DashboardCard(
+                  onClick: () {
+                    Navigator.of(context).pushNamed(BuyerProposal.routeName);
+                  },
+                  boxColor: source.currentColor.withOpacity(0.1),
+                  padding: 8,
+                  labelText: 'Buyer-ийн санал',
+                  svgColor: source.currentColor,
+                  svg: 'assets/svg/writing.svg',
                 ),
               ],
             ),

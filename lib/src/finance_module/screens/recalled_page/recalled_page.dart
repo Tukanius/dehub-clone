@@ -1,7 +1,6 @@
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/providers/finance_provider.dart';
-import 'package:dehub/src/finance_module/screens/recalled_page/tabs/buyer_led.dart';
 import 'package:dehub/src/finance_module/screens/recalled_page/tabs/supplier_led.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +62,7 @@ class _ReCalledPageState extends State<ReCalledPage>
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 15, bottom: 10),
+            margin: const EdgeInsets.only(left: 15),
             child: const Text(
               'Буцаан дуудсан',
               style: TextStyle(
@@ -72,79 +71,8 @@ class _ReCalledPageState extends State<ReCalledPage>
               ),
             ),
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 15,
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  pageController.animateToPage(0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color:
-                        currentIndex == 0 ? source.currentColor : transparent,
-                  ),
-                  child: Text(
-                    'Buyer-Led',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: currentIndex == 0 ? white : black,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  pageController.animateToPage(1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color:
-                        currentIndex == 1 ? source.currentColor : transparent,
-                  ),
-                  child: Text(
-                    'Supplier-Led',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: currentIndex == 1 ? white : black,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Expanded(
-            child: PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  currentIndex = value;
-                });
-              },
-              children: const [
-                BuyerLed(),
-                SupplierLed(),
-              ],
-            ),
+          const Expanded(
+            child: SupplierLed(),
           ),
         ],
       ),
