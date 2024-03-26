@@ -107,6 +107,9 @@ class _AdminUserFormState extends State<AdminUserForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(errorText: 'Заавал оруулна'),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),

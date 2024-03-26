@@ -4,6 +4,17 @@ import 'package:flutter/material.dart';
 class UserModuleProvider extends ChangeNotifier {
   User user = User();
 
+  selectBank(String value) {
+    user.bank = value;
+    notifyListeners();
+  }
+
+  selectUser(String name, String id) {
+    user.userId = id;
+    user.username = name;
+    notifyListeners();
+  }
+
   selectBusiness(User data) {
     user.business = data;
     notifyListeners();
@@ -40,7 +51,6 @@ class UserModuleProvider extends ChangeNotifier {
 
   departmentSubUnit(String value) {
     user.departmentSubUnitId = value;
-    user.employeeUnitId = null;
     notifyListeners();
   }
 

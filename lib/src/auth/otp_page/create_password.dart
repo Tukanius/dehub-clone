@@ -58,7 +58,6 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
             Navigator.of(context).pop();
             if (widget.type != "FORGOT") {
               Navigator.of(context).pop();
-              Navigator.of(context).pop();
             }
           },
         );

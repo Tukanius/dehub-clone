@@ -39,7 +39,6 @@ class _UserCardState extends State<UserCard> {
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).userGeneral;
-
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -56,13 +55,16 @@ class _UserCardState extends State<UserCard> {
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
+                    color: grey,
                     borderRadius: BorderRadius.circular(5),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        '${widget.data.avatar}',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                    image: widget.data.avatar != null
+                        ? DecorationImage(
+                            image: NetworkImage(
+                              '${widget.data.avatar}',
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
                 ),
                 const SizedBox(
@@ -73,7 +75,11 @@ class _UserCardState extends State<UserCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.data.lastName?[0]}. ${widget.data.firstName}, ${widget.data.registerNo}',
+                        widget.data.lastName != null
+                            ? '${widget.data.lastName?[0]}. ${widget.data.firstName}, ${widget.data.registerNo}'
+                            : widget.data.registerNo != null
+                                ? '${widget.data.firstName}, ${widget.data.registerNo}'
+                                : '${widget.data.firstName}',
                         style: const TextStyle(
                           color: userColor,
                           fontWeight: FontWeight.w500,
@@ -134,7 +140,7 @@ class _UserCardState extends State<UserCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'Ургын овог: ${widget.data.familyName}',
+                    'Ургын овог: ${widget.data.familyName ?? "-"}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -143,7 +149,7 @@ class _UserCardState extends State<UserCard> {
                 ),
                 Expanded(
                   child: Text(
-                    'И-мэйл: ${widget.data.email}',
+                    'И-мэйл: ${widget.data.email ?? '-'}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -227,7 +233,7 @@ class _UserCardState extends State<UserCard> {
               height: 5,
             ),
             Text(
-              'Харьяалал: ${widget.data.departmentUnit?.name} / ${widget.data.departmentSubUnit?.name}',
+              'Харьяалал: ${widget.data.departmentUnit?.name ?? '-'} / ${widget.data.departmentSubUnit?.name ?? '-'}',
               style: const TextStyle(
                 color: grey2,
                 fontSize: 12,
@@ -239,7 +245,7 @@ class _UserCardState extends State<UserCard> {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                'Албан тушаал: ${widget.data.employeeUnit?.name}',
+                'Албан тушаал: ${widget.data.employeeUnit?.name ?? '-'}',
                 style: const TextStyle(
                   color: grey2,
                   fontSize: 12,

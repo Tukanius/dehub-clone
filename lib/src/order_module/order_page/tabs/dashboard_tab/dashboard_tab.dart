@@ -85,7 +85,8 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   afterFirstLayout(BuildContext context) async {
     Map<String, double> pieData = {};
     dashboard = await OrderApi().dashboard(
-      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd')
+          .format(DateTime.now().subtract(const Duration(hours: 8))),
     );
     for (var i = 0; i < dashboard.byPie!.length; i++) {
       setState(() {

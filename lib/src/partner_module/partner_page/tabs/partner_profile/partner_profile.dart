@@ -155,7 +155,7 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            '${user.partner?.email}',
+                                            user.partner?.email ?? '-',
                                             style: const TextStyle(
                                               color: grey2,
                                               fontSize: 12,
@@ -173,7 +173,7 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '${user.partner?.phone}',
+                                            user.partner?.phone ?? '-',
                                             style: const TextStyle(
                                               color: grey2,
                                               fontSize: 12,
@@ -210,7 +210,8 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                         ),
                                         Expanded(
                                           child: Text(
-                                            '${user.partner?.businessAddress}',
+                                            user.partner?.businessAddress ??
+                                                '-',
                                             style: const TextStyle(
                                               color: grey2,
                                               fontSize: 12,
@@ -228,7 +229,8 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '${user.user?.employeeUnit?.name}',
+                                            user.user?.employeeUnit?.name ??
+                                                '-',
                                             style: const TextStyle(
                                               color: grey2,
                                               fontSize: 12,

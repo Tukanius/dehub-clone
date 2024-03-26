@@ -28,16 +28,19 @@ class _WarehouseCardState extends State<WarehouseCard> {
   General general = General();
 
   district() {
-    final res = general.zipCodes!
-        .firstWhere((element) => element.code == widget.data.district);
-    return res;
+    if (widget.data.district != null) {
+      final res = general.zipCodes!
+          .firstWhere((element) => element.code == widget.data.district);
+      return res.name;
+    } else {
+      return '-';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).partnerGeneral;
-
     return Container(
       padding: const EdgeInsets.only(right: 15, left: 15, top: 10, bottom: 9),
       decoration: BoxDecoration(
@@ -120,7 +123,7 @@ class _WarehouseCardState extends State<WarehouseCard> {
             children: [
               Expanded(
                 child: Text(
-                  "Дүүрэг: ${district().name}",
+                  "Дүүрэг: ${district()}",
                   style: const TextStyle(
                     color: grey2,
                     fontSize: 12,
@@ -173,8 +176,12 @@ class _WarehouseCardState extends State<WarehouseCard> {
                         children: [
                           CircleAvatar(
                             radius: 18,
-                            backgroundImage: NetworkImage(
-                                "${widget.data.warehouseUser?.avatar}"),
+                            backgroundColor: grey,
+                            backgroundImage:
+                                widget.data.warehouseUser?.avatar != null
+                                    ? NetworkImage(
+                                        "${widget.data.warehouseUser?.avatar}")
+                                    : null,
                           ),
                           const SizedBox(
                             width: 5,
@@ -183,7 +190,9 @@ class _WarehouseCardState extends State<WarehouseCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${widget.data.warehouseUser?.lastName?[0]}. ${widget.data.warehouseUser?.firstName}',
+                                widget.data.warehouseUser?.lastName != null
+                                    ? '${widget.data.warehouseUser?.lastName?[0]}. ${widget.data.warehouseUser?.firstName}'
+                                    : '${widget.data.warehouseUser?.firstName}',
                               ),
                               Text(
                                 "${widget.data.warehouseUser?.phone}",

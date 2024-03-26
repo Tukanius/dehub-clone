@@ -30,6 +30,7 @@ class _MarketingInformationState extends State<MarketingInformation>
     with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
   int confirmValue = 0;
+  bool isLoading = true;
 
   List<bool> confirmValues = [true, false];
 
@@ -37,14 +38,19 @@ class _MarketingInformationState extends State<MarketingInformation>
   afterFirstLayout(BuildContext context) {
     final source = Provider.of<PartnerProvider>(context, listen: false);
     if (widget.data != null) {
-      source.profileImage(widget.data!.logo!);
-      confirmValue = widget.data!.isConfirmed! == true ? 0 : 1;
+      if (widget.data?.logo != null) {
+        source.profileImage(widget.data!.logo!);
+      }
+      confirmValue = widget.data!.isConfirmed == true ? 0 : 1;
       if (widget.data!.profileBanners != null) {
         for (var i = 0; i < widget.data!.profileBanners!.length; i++) {
           source.bannerImages(widget.data!.profileBanners![i]);
         }
       }
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   onSubmit() async {
@@ -78,172 +84,175 @@ class _MarketingInformationState extends State<MarketingInformation>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: FormBuilder(
-        key: fbkey,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+    return isLoading == true
+        ? const SizedBox()
+        : SingleChildScrollView(
+            child: FormBuilder(
+              key: fbkey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text('Профайлын нэр'),
-                  ),
-                  FormTextField(
-                    textColor: black,
-                    name: 'profileName',
-                    initialValue: widget.data?.profileName,
-                    decoration: InputDecoration(
-                      hintText: 'Профайлын нэр',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: grey2.withOpacity(0.3),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: const Text('Профайлын нэр'),
                         ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: grey2.withOpacity(0.3),
-                        ),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      isDense: true,
-                      fillColor: white,
-                      filled: true,
-                    ),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: 'Заавал оруулна',
-                      ),
-                    ]),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text('Профайлын нэр /Латин/'),
-                  ),
-                  FormTextField(
-                    textColor: black,
-                    name: 'profileNameEng',
-                    initialValue: widget.data?.profileNameEng,
-                    decoration: InputDecoration(
-                      hintText: 'Профайлын нэр /Латин/',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: grey2.withOpacity(0.3),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: grey2.withOpacity(0.3),
-                        ),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      isDense: true,
-                      fillColor: white,
-                      filled: true,
-                    ),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: 'Заавал оруулна',
-                      ),
-                    ]),
-                  ),
-                ],
-              ),
-            ),
-            const PartnerPictureForm(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text('Товч танилцуулга'),
-                  ),
-                  FormTextField(
-                    textColor: black,
-                    name: 'profileInfo',
-                    maxLines: 2,
-                    initialValue: widget.data?.profileInfo,
-                    decoration: InputDecoration(
-                      hintText: 'Товч танилцуулга',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: grey2.withOpacity(0.3),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: grey2.withOpacity(0.3),
-                        ),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      isDense: true,
-                      fillColor: white,
-                      filled: true,
-                    ),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: 'Заавал оруулна',
-                      ),
-                    ]),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: const Text('Идэвхжүүлэх эсэх: '),
-                  ),
-                  Column(
-                    children: confirmValues
-                        .map(
-                          (e) => Material(
-                            color: white,
-                            child: RadioListTile(
-                              visualDensity: const VisualDensity(
-                                  horizontal: VisualDensity.minimumDensity,
-                                  vertical: VisualDensity.minimumDensity),
-                              title: Text(
-                                e == true ? "Тийм" : "Үгүй",
-                                style:
-                                    const TextStyle(color: dark, fontSize: 14),
+                        FormTextField(
+                          textColor: black,
+                          name: 'profileName',
+                          initialValue: widget.data?.profileName,
+                          decoration: InputDecoration(
+                            hintText: 'Профайлын нэр',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: grey2.withOpacity(0.3),
                               ),
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) => partnerColor),
-                              value: confirmValues.indexOf(e),
-                              groupValue: confirmValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  confirmValue = value!;
-                                });
-                              },
                             ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: grey2.withOpacity(0.3),
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            isDense: true,
+                            fillColor: white,
+                            filled: true,
                           ),
-                        )
-                        .toList(),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна',
+                            ),
+                          ]),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: const Text('Профайлын нэр /Латин/'),
+                        ),
+                        FormTextField(
+                          textColor: black,
+                          name: 'profileNameEng',
+                          initialValue: widget.data?.profileNameEng,
+                          decoration: InputDecoration(
+                            hintText: 'Профайлын нэр /Латин/',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: grey2.withOpacity(0.3),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: grey2.withOpacity(0.3),
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            isDense: true,
+                            fillColor: white,
+                            filled: true,
+                          ),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна',
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  CustomButton(
-                    onClick: onSubmit,
-                    labelColor: partnerColor,
-                    labelText: 'Хадгалах',
-                    textColor: white,
-                  ),
-                  const SizedBox(
-                    height: 50,
+                  const PartnerPictureForm(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: const Text('Товч танилцуулга'),
+                        ),
+                        FormTextField(
+                          textColor: black,
+                          name: 'profileInfo',
+                          maxLines: 2,
+                          initialValue: widget.data?.profileInfo,
+                          decoration: InputDecoration(
+                            hintText: 'Товч танилцуулга',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: grey2.withOpacity(0.3),
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: grey2.withOpacity(0.3),
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            isDense: true,
+                            fillColor: white,
+                            filled: true,
+                          ),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Заавал оруулна',
+                            ),
+                          ]),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 5),
+                          child: const Text('Идэвхжүүлэх эсэх: '),
+                        ),
+                        Column(
+                          children: confirmValues
+                              .map(
+                                (e) => Material(
+                                  color: white,
+                                  child: RadioListTile(
+                                    visualDensity: const VisualDensity(
+                                        horizontal:
+                                            VisualDensity.minimumDensity,
+                                        vertical: VisualDensity.minimumDensity),
+                                    title: Text(
+                                      e == true ? "Тийм" : "Үгүй",
+                                      style: const TextStyle(
+                                          color: dark, fontSize: 14),
+                                    ),
+                                    fillColor: MaterialStateColor.resolveWith(
+                                        (states) => partnerColor),
+                                    value: confirmValues.indexOf(e),
+                                    groupValue: confirmValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        confirmValue = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        CustomButton(
+                          onClick: onSubmit,
+                          labelColor: partnerColor,
+                          labelText: 'Хадгалах',
+                          textColor: white,
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

@@ -158,9 +158,13 @@ class _BankCardState extends State<BankCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            '${widget.data.financeRole?.user?.avatar}',
-                          ),
+                          backgroundColor: grey,
+                          backgroundImage:
+                              widget.data.financeRole?.user?.avatar != null
+                                  ? NetworkImage(
+                                      '${widget.data.financeRole?.user?.avatar}',
+                                    )
+                                  : null,
                         ),
                         const SizedBox(
                           width: 5,
@@ -183,7 +187,7 @@ class _BankCardState extends State<BankCard> {
                           ),
                         ),
                         Text(
-                          'Username: ${widget.data.financeRole?.username}',
+                          'Username: ${widget.data.financeRole?.username ?? '-'}',
                           style: const TextStyle(
                             color: grey2,
                             fontSize: 12,

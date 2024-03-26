@@ -49,12 +49,15 @@ class _FinanceRoleCardState extends State<FinanceRoleCard> {
                 width: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      '${widget.data.user?.avatar}',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                  color: grey,
+                  image: widget.data.user?.avatar != null
+                      ? DecorationImage(
+                          image: NetworkImage(
+                            '${widget.data.user?.avatar}',
+                          ),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
               ),
               const SizedBox(
@@ -67,7 +70,7 @@ class _FinanceRoleCardState extends State<FinanceRoleCard> {
                     Text(
                         '${widget.data.user?.lastName?[0]}. ${widget.data.user?.firstName}'),
                     Text(
-                      '${widget.data.username}',
+                      widget.data.username ?? '-',
                       style: const TextStyle(
                         color: grey2,
                         fontSize: 12,

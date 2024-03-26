@@ -709,8 +709,12 @@ class MyApp extends StatelessWidget {
                       return const GereetBish();
                     });
                   case FinanceRoleAssign.routeName:
+                    FinanceRoleAssignArguments arguments =
+                        settings.arguments as FinanceRoleAssignArguments;
                     return MaterialPageRoute(builder: (context) {
-                      return const FinanceRoleAssign();
+                      return FinanceRoleAssign(
+                        listenController: arguments.listenController,
+                      );
                     });
                   case OtpVerifyPage.routeName:
                     OtpVerifyPageArguments arguments =
@@ -737,6 +741,7 @@ class MyApp extends StatelessWidget {
                       return FinanceRequest(
                         bank: arguments.bank,
                         name: arguments.name,
+                        listenController: arguments.listenController,
                       );
                     });
                   case UpdateBusiness.routeName:

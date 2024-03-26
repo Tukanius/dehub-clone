@@ -58,17 +58,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     User user = User();
     try {
-      if (widget.verifyId == '') {
-        user.otpCode = value;
-        user.verifyId = widget.verifyId;
-        loading.loading(true);
-        await Provider.of<UserProvider>(context, listen: false).mailOtp(user);
-        loading.loading(false);
-        await Navigator.of(context).pushNamed(
-          OtpPhoneVerify.routeName,
-          arguments: OtpPhoneVerifyArguments(phone: widget.phone),
-        );
-      } else if (widget.verifyId == "CORE") {
+      if (widget.verifyId == "CORE") {
         user.otpMethod = 'FORGOT';
         user.otpCode = value;
         loading.loading(true);
@@ -78,7 +68,7 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
           CreatePasswordPage.routeName,
           arguments: CreatePasswordPageArguments(type: "FORGOT"),
         );
-      } else {
+      } else if (widget.verifyId == "FINANCE") {
         user.otpMethod = 'FORGOT';
         user.otpCode = value;
         loading.loading(true);
@@ -88,6 +78,16 @@ class _OtpVerifyPageState extends State<OtpVerifyPage> with AfterLayoutMixin {
         await Navigator.of(context).pushNamed(
           CreatePasswordPage.routeName,
           arguments: CreatePasswordPageArguments(type: "FORGOT"),
+        );
+      } else {
+        user.otpCode = value;
+        user.verifyId = widget.verifyId;
+        loading.loading(true);
+        await Provider.of<UserProvider>(context, listen: false).mailOtp(user);
+        loading.loading(false);
+        await Navigator.of(context).pushNamed(
+          OtpPhoneVerify.routeName,
+          arguments: OtpPhoneVerifyArguments(phone: widget.phone),
         );
       }
       loading.loading(false);

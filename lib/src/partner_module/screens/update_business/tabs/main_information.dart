@@ -45,17 +45,25 @@ class _MainInformationState extends State<MainInformation>
     final source = Provider.of<PartnerProvider>(context, listen: false);
     source.clearData();
     if (widget.data != null) {
-      source.selectBusinessSector(
-          widget.data!.businessSector!.id!, widget.data!.businessSector!.name!);
-      source.selectBusinessSubSector(widget.data!.businessSubSector!.id!,
-          widget.data!.businessSubSector!.name!);
-      purchaseTypeRadio = general.purchaseTypes!
-          .indexWhere((element) => element.code == widget.data!.purchaseType!);
-      if (purchaseTypeRadio == 0 || purchaseTypeRadio == 2) {
+      if (widget.data?.businessSector != null) {
+        source.selectBusinessSector(widget.data!.businessSector!.id!,
+            widget.data!.businessSector!.name!);
+      }
+      if (widget.data?.businessSubSector != null) {
+        source.selectBusinessSubSector(widget.data!.businessSubSector!.id!,
+            widget.data!.businessSubSector!.name!);
+      }
+      if (widget.data?.purchaseType != null) {
+        purchaseTypeRadio = general.purchaseTypes!.indexWhere(
+            (element) => element.code == widget.data!.purchaseType!);
+      }
+      if ((purchaseTypeRadio == 0 || purchaseTypeRadio == 2) &&
+          widget.data?.productCategoryType != null) {
         productCategoryTypeRadio = general.productCategoryTypes!.indexWhere(
             (element) => element.code == widget.data!.productCategoryType!);
       }
-      if (purchaseTypeRadio == 1 || purchaseTypeRadio == 2) {
+      if ((purchaseTypeRadio == 1 ||
+          purchaseTypeRadio == 2 && widget.data?.serviceCategoryType != null)) {
         serviceCategoryTypeRadio = general.serviceCategoryTypes!.indexWhere(
             (element) => element.code == widget.data!.serviceCategoryType!);
       }

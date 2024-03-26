@@ -66,4 +66,28 @@ class UserApi extends HttpRequest {
         data: data.toJson());
     return Result.fromJson(res, User.fromJson);
   }
+
+  Future<User> financeRoleAssign(User data) async {
+    var res = await put('/finance_settings/finance_role/assign', type, true,
+        data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<User> financeRoleCreate(User data) async {
+    var res = await post('/finance_settings/finance_role', type, true,
+        data: data.toJson());
+    return User.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> userSelect() async {
+    var res =
+        await get('/finance_settings/finance_role/user_select', type, true);
+    return Result.fromJson(res, User.fromJson);
+  }
+
+  Future<Result> bankSelect() async {
+    var res =
+        await get('/finance_settings/finance_role/bank_select', type, true);
+    return Result.fromJson(res, User.fromJson);
+  }
 }

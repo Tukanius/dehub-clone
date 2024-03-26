@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -30,27 +31,38 @@ class _MainInformationState extends State<MainInformation>
   bool isLoading = true;
 
   onSubmit() async {
-    final source = Provider.of<PartnerProvider>(context, listen: false);
+    Partner partner =
+        Provider.of<PartnerProvider>(context, listen: false).partner;
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       try {
-        loading.loading(true);
-        Partner data = Partner.fromJson(fbKey.currentState!.value);
-        data.province = source.partner.province;
-        data.district = source.partner.district;
-        data.khoroo = source.partner.khoroo;
-        data.legalEntityType = source.partner.legalEntityType;
-        data.equityType = source.partner.equityType;
-        data.country = source.partner.country;
-        data.classification = source.partner.classification;
-        await PartnerApi().profileUpdate(data);
-        await Provider.of<UserProvider>(context, listen: false)
-            .partnerMe(false);
-        loading.loading(false);
-        setState(() {
-          edit = false;
-        });
-      } catch (e) {
+        if (partner.legalEntityType != null &&
+            partner.equityType != null &&
+            partner.country != null &&
+            partner.classification != null &&
+            partner.province != null &&
+            partner.district != null &&
+            partner.khoroo != null) {
+          loading.loading(true);
+          Partner data = Partner.fromJson(fbKey.currentState!.value);
+          data.province = partner.province;
+          data.district = partner.district;
+          data.khoroo = partner.khoroo;
+          data.legalEntityType = partner.legalEntityType;
+          data.equityType = partner.equityType;
+          data.country = partner.country;
+          data.classification = partner.classification;
+          await PartnerApi().profileUpdate(data);
+          await Provider.of<UserProvider>(context, listen: false)
+              .partnerMe(false);
+          loading.loading(false);
+          setState(() {
+            edit = false;
+          });
+        } else {
+          showCustomDialog(context, "Талбаруудйиг бүрэн бөглөнө үү", false);
+        }
+      } catch (ex) {
         loading.loading(false);
       }
     }
@@ -59,13 +71,17 @@ class _MainInformationState extends State<MainInformation>
   setValue() {
     final source = Provider.of<PartnerProvider>(context, listen: false);
     source.partnerCategory(user.partner?.partnerCategory);
-    source.legalEntityType(user.partner!.legalEntityType!);
+    if (user.partner?.legalEntityType != null) {
+      source.legalEntityType(user.partner!.legalEntityType!);
+    }
     source.country(user.partner?.country);
     source.equityType(user.partner?.equityType);
     source.province(user.partner?.province);
     source.district(user.partner?.district);
     source.khoroo(user.partner?.khoroo);
-    source.classification(user.partner!.classification!);
+    if (user.partner?.classification != null) {
+      source.classification(user.partner!.classification!);
+    }
   }
 
   @override
@@ -81,7 +97,6 @@ class _MainInformationState extends State<MainInformation>
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).partnerUser;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       floatingActionButton: Row(

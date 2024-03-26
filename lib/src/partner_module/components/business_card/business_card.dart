@@ -48,13 +48,16 @@ class _BusinessCardState extends State<BusinessCard> {
                   height: 50,
                   width: 50,
                   decoration: BoxDecoration(
+                    color: grey,
                     borderRadius: BorderRadius.circular(5),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        '${widget.data.logo}',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                    image: widget.data.logo != null
+                        ? DecorationImage(
+                            image: NetworkImage(
+                              '${widget.data.logo}',
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        : null,
                   ),
                 ),
                 const SizedBox(
@@ -136,7 +139,7 @@ class _BusinessCardState extends State<BusinessCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'Сектор: ${widget.data.businessSector?.name}',
+                    'Сектор: ${widget.data.businessSector?.name ?? '-'}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -145,7 +148,7 @@ class _BusinessCardState extends State<BusinessCard> {
                 ),
                 Expanded(
                   child: Text(
-                    'Дэд сектор: ${widget.data.businessSubSector?.name}',
+                    'Дэд сектор: ${widget.data.businessSubSector?.name ?? '-'}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,

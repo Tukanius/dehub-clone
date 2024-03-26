@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/user_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/user_module/screens/finance_role_assign/finance_role_assign.dart';
@@ -19,6 +20,7 @@ class _FinanceRoleState extends State<FinanceRole> with AfterLayoutMixin {
   int limit = 10;
   Result roles = Result(rows: [], count: 0);
   bool isLoading = true;
+  ListenController listenController = ListenController();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -36,6 +38,17 @@ class _FinanceRoleState extends State<FinanceRole> with AfterLayoutMixin {
   }
 
   @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -43,7 +56,11 @@ class _FinanceRoleState extends State<FinanceRole> with AfterLayoutMixin {
         shape: const CircleBorder(),
         backgroundColor: userColor,
         onPressed: () {
-          Navigator.of(context).pushNamed(FinanceRoleAssign.routeName);
+          Navigator.of(context).pushNamed(
+            FinanceRoleAssign.routeName,
+            arguments:
+                FinanceRoleAssignArguments(listenController: listenController),
+          );
         },
         child: const Icon(
           Icons.add,

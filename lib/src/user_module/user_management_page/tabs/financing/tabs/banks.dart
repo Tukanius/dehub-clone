@@ -1,3 +1,4 @@
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/user_module/screens/finance_request/finance_request.dart';
 import 'package:dehub/src/user_module/components/bank_card/bank_card.dart';
@@ -17,6 +18,7 @@ class BanksTab extends StatefulWidget {
 class BanksTabState extends State<BanksTab> with AfterLayoutMixin {
   Result banks = Result(rows: [], count: 0);
   bool isLoading = true;
+  ListenController listenController = ListenController();
 
   list() async {
     banks = await UserApi().bankList();
@@ -28,6 +30,17 @@ class BanksTabState extends State<BanksTab> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) {
     list();
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list();
+    });
+    super.initState();
   }
 
   @override
@@ -54,6 +67,7 @@ class BanksTabState extends State<BanksTab> with AfterLayoutMixin {
                                           arguments: FinanceRequestArguments(
                                             name: e.name,
                                             bank: e.code,
+                                            listenController: listenController,
                                           ),
                                         );
                                       }

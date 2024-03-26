@@ -39,10 +39,12 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     dashboard = await InvoiceApi().dashboard(
-      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd')
+          .format(DateTime.now().subtract(const Duration(hours: 8))),
       DateFormat('yyyy-MM-dd')
           .format(DateTime.now().subtract(const Duration(days: 5))),
-      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd')
+          .format(DateTime.now().subtract(const Duration(hours: 8))),
     );
     for (var i = 0; i < dashboard.numberSurvey!.length; i++) {
       dashboard.numberSurvey?[i].image = svgs[i];

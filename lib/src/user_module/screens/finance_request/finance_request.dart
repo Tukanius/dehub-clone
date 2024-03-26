@@ -1,13 +1,22 @@
+import 'package:dehub/api/auth_api.dart';
+import 'package:dehub/api/user_api.dart';
+import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class FinanceRequestArguments {
   String bank;
   String name;
+  ListenController listenController;
   FinanceRequestArguments({
     required this.bank,
     required this.name,
+    required this.listenController,
   });
 }
 
@@ -15,8 +24,10 @@ class FinanceRequest extends StatefulWidget {
   static const routeName = '/FinanceRequest';
   final String bank;
   final String name;
+  final ListenController listenController;
   const FinanceRequest({
     super.key,
+    required this.listenController,
     required this.name,
     required this.bank,
   });
@@ -37,6 +48,27 @@ class _FinanceRequestState extends State<FinanceRequest> {
       borderRadius: BorderRadius.circular(5),
     ),
   );
+
+  onSubmit(String value) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      var res = await AuthApi().checkPin(User(pin: value));
+      if (res == true) {
+        await UserApi().financeRoleCreate(
+          User(bank: widget.bank),
+        );
+        widget.listenController.changeVariable(value);
+        loading.loading(false);
+        showCustomDialog(context, 'Амжилттай хүсэлт илгээлээ', true,
+            onPressed: () {
+          Navigator.of(context).pop();
+        });
+      }
+    } catch (e) {
+      loading.loading(false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +130,9 @@ class _FinanceRequestState extends State<FinanceRequest> {
                 autofocus: true,
                 keyboardType: TextInputType.number,
                 obscureText: true,
-                onCompleted: (value) async {},
+                onCompleted: (value) async {
+                  onSubmit(value);
+                },
                 length: 6,
                 hapticFeedbackType: HapticFeedbackType.lightImpact,
                 defaultPinTheme: defaultPinTheme,

@@ -173,7 +173,7 @@ class _MainInformationState extends State<MainInformation>
       isDefault = widget.data!.isDefault!;
       buyerRadioValue = widget.data!.isBuyer == true ? 1 : 0;
       supplierRadioValue = widget.data!.isSupplier == true ? 1 : 0;
-      if (widget.data!.isBuyer == true) {
+      if (widget.data?.isBuyer == true && buyers.rows!.isNotEmpty) {
         for (var i = 0; i < widget.data!.buyers!.length; i++) {
           Partner buyer = buyers.rows!.firstWhere(
               (element) => element.id == widget.data!.buyers![i].id);
@@ -182,7 +182,7 @@ class _MainInformationState extends State<MainInformation>
           source.selectBuyer(buyer);
         }
       }
-      if (widget.data!.isSupplier == true) {
+      if (widget.data!.isSupplier == true && suppliers.rows!.isNotEmpty) {
         for (var i = 0; i < widget.data!.suppliers!.length; i++) {
           Partner supplier = suppliers.rows!.firstWhere(
               (element) => element.id == widget.data!.suppliers![i].id);

@@ -179,7 +179,9 @@ class _MainInformationFormState extends State<MainInformationForm> {
         FormTextField(
           textColor: grey2,
           name: '1',
-          initialValue: '${user.user?.lastName?[0]}. ${user.user?.firstName}',
+          initialValue: user.user?.lastName != null
+              ? '${user.user?.lastName?[0]}. ${user.user?.firstName}'
+              : "${user.user?.firstName}",
           readOnly: true,
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -677,6 +679,9 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(errorText: 'Заавал оруулна'),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -705,6 +710,9 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(errorText: 'Заавал оруулна'),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -733,6 +741,9 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(errorText: 'Заавал оруулна'),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -761,6 +772,9 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(errorText: 'Заавал оруулна'),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
@@ -790,6 +804,9 @@ class _MainInformationFormState extends State<MainInformationForm> {
             fillColor: widget.edit == true ? white : backgroundColor,
             filled: true,
           ),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(errorText: 'Заавал оруулна'),
+          ]),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 10),

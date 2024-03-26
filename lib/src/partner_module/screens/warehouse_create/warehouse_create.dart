@@ -82,7 +82,6 @@ class _WarehouseCreateState extends State<WarehouseCreate>
         loading.loading(true);
         Partner data = Partner.fromJson(fbkey.currentState!.value);
         data.district = source.partner.district;
-        data.province = source.partner.province;
         data.isDefault = isDefault;
         data.isBuyer = buyerRadioValue == 1 ? true : false;
         if (buyerRadioValue == 1) {
@@ -161,6 +160,9 @@ class _WarehouseCreateState extends State<WarehouseCreate>
       buyerRadioValue = widget.data!.isBuyer == true ? 1 : 0;
       supplierRadioValue = widget.data!.isSupplier == true ? 1 : 0;
       source.warehouseStatus(widget.data!.warehouseStatus!);
+      source.province(general.zipCodes!
+          .firstWhere((element) => element.code == widget.data?.district)
+          .parent);
       source.district(widget.data!.district);
       source.partnerStaff(widget.data!.warehouseUserId!);
     }
@@ -207,7 +209,6 @@ class _WarehouseCreateState extends State<WarehouseCreate>
     final source = Provider.of<PartnerProvider>(context, listen: true);
     general =
         Provider.of<GeneralProvider>(context, listen: true).partnerGeneral;
-
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(

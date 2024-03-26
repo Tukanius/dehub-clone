@@ -42,9 +42,12 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
     dashboard = await PaymentApi().dashboard(
       DateFormat('yyyy-MM-dd')
           .format(DateTime.now().subtract(const Duration(days: 7))),
-      DateFormat('yyyy-MM-dd').format(DateTime.now()),
-      DateFormat('yyyy-MM').format(DateTime.now()),
-      DateFormat('yyyy-MM').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd')
+          .format(DateTime.now().subtract(const Duration(hours: 8))),
+      DateFormat('yyyy-MM')
+          .format(DateTime.now().subtract(const Duration(hours: 8))),
+      DateFormat('yyyy-MM')
+          .format(DateTime.now().subtract(const Duration(hours: 8))),
     );
     for (var data in dashboard.revenueStructure!) {
       pieData[data.name!] = data.amount!;

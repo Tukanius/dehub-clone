@@ -60,8 +60,12 @@ class _AdminUserState extends State<AdminUser> with AfterLayoutMixin {
     final source = Provider.of<PartnerProvider>(context, listen: false);
     Partner user =
         Provider.of<UserProvider>(context, listen: false).partnerUser;
-    source.departmentUnit(user.user!.departmentUnitId!);
-    source.employeeUnit(user.user!.employeeUnitId!);
+    if (user.user?.departmentUnitId != null) {
+      source.departmentUnit(user.user!.departmentUnitId!);
+    }
+    if (user.user?.employeeUnitId != null) {
+      source.employeeUnit(user.user!.employeeUnitId!);
+    }
     setState(() {
       isLoading = false;
     });

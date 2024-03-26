@@ -163,8 +163,12 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                               ),
                             ),
                             Text(
-                              user.currentBusiness?.partner?.businessName ??
-                                  "${user.lastName?[0]}. ${user.firstName}",
+                              user.currentBusiness?.partner?.businessName !=
+                                      null
+                                  ? "${user.currentBusiness?.partner?.businessName}"
+                                  : user.lastName != null
+                                      ? "${user.lastName?[0]}. ${user.firstName}"
+                                      : '${user.firstName}',
                               style: const TextStyle(
                                 color: white,
                                 fontWeight: FontWeight.w500,
@@ -178,14 +182,16 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "${user.currentBusiness?.type ?? user.loginType}: ",
+                                  user.currentBusiness?.type != null
+                                      ? "${user.currentBusiness?.type}: "
+                                      : "${user.loginType}",
                                   style: const TextStyle(
                                     color: Color(0xffFEBC11),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  user.currentBusiness?.profileName ?? "-",
+                                  user.currentBusiness?.profileName ?? "",
                                   style: const TextStyle(
                                     color: white,
                                     fontWeight: FontWeight.w500,

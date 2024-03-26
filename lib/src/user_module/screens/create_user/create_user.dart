@@ -93,14 +93,24 @@ class _CreateUserState extends State<CreateUser> with AfterLayoutMixin {
     final source = Provider.of<UserModuleProvider>(context, listen: false);
     source.clearData();
     if (widget.data != null) {
-      source.departmentUnit(widget.data!.departmentUnitId!);
+      if (widget.data?.departmentUnitId != null) {
+        source.departmentUnit(widget.data!.departmentUnitId!);
+      }
       if (widget.data!.departmentSubUnitId != null) {
         source.departmentSubUnit(widget.data!.departmentSubUnitId!);
       }
-      source.employeeUnit(widget.data!.employeeUnitId!);
-      source.profileImage(widget.data!.avatar!);
-      source.cardFront(widget.data!.identityCardFront!);
-      source.cardBack(widget.data!.identityCardBack!);
+      if (widget.data?.employeeUnit != null) {
+        source.employeeUnit(widget.data!.employeeUnitId!);
+      }
+      if (widget.data?.avatar != null) {
+        source.profileImage(widget.data!.avatar!);
+      }
+      if (widget.data?.identityCardFront != null) {
+        source.cardFront(widget.data!.identityCardFront!);
+      }
+      if (widget.data?.identityCardBack != null) {
+        source.cardBack(widget.data!.identityCardBack!);
+      }
       if (widget.data!.socialLinks!.isNotEmpty) {
         for (var i = 0; i < widget.data!.socialLinks!.length; i++) {
           int index = source.user.socialLinks!.indexWhere(
