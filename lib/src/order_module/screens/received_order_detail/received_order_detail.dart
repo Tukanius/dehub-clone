@@ -1,6 +1,7 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/order_module/components/order_product_card/order_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
@@ -139,7 +140,27 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: splitCreate,
+                    onTap: () {
+                      List<Order> data = splitList
+                          .where((element) => element.isSplit == false)
+                          .toList();
+                      if (data.isEmpty) {
+                        Navigator.of(context).pushNamed(
+                          PinCheckScreen.routeName,
+                          arguments: PinCheckScreenArguments(
+                            onSubmit: splitCreate,
+                            color: orderColor,
+                            labelText: 'Захиалга салгах',
+                          ),
+                        );
+                      } else {
+                        showCustomDialog(
+                          context,
+                          "(${data.map((e) => "${e.name}").join(', ')}) эдгээр бараа захиалга салгах эрхгүй байна",
+                          false,
+                        );
+                      }
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
@@ -588,18 +609,18 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                           Column(
                             children: order.lines!.map((data) {
                               bool possible =
-                                  order.orderStatus == "AUTHORIZED" &&
+                                  (order.orderStatus == "AUTHORIZED" &&
                                           data.isSplit == false &&
                                           order.salesType != "SPLIT" &&
                                           data.isLoadable == false &&
                                           order.salesType != "DROPSHIPPING" &&
-                                          order.salesType != "BACKORDER" ||
-                                      data.isDropshipping == true &&
+                                          order.salesType != "BACKORDER") ||
+                                      (data.isDropshipping == true &&
                                           order.orderStatus == "AUTHORIZED" &&
                                           data.isSplit == false &&
                                           order.salesType != "DROPSHIPPING" &&
                                           order.salesType != "SPLIT" &&
-                                          order.salesType != "BACKORDER";
+                                          order.salesType != "BACKORDER");
                               return Column(
                                 children: [
                                   OrderProductCard(

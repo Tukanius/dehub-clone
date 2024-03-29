@@ -71,9 +71,15 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       Container(
                         height: 24,
                         width: 24,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: grey,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              "${widget.data.receiverBusiness?.logo}",
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -91,7 +97,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                             )
                           : Expanded(
                               child: Text(
-                                '${widget.data.business?.profileName}',
+                                '${widget.data.receiverBusiness?.profileName}',
                                 style: const TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.bold,

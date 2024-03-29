@@ -1,7 +1,10 @@
+import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/models/invoice.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/tabs/history_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/tabs/basic_information_tab.dart';
+import 'package:after_layout/after_layout.dart';
 
 class InvoiceDetailPageArguments {
   String id;
@@ -19,7 +22,19 @@ class InvoiceDetailPage extends StatefulWidget {
   State<InvoiceDetailPage> createState() => _InvoiceDetailPageState();
 }
 
-class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
+class _InvoiceDetailPageState extends State<InvoiceDetailPage>
+    with AfterLayoutMixin {
+  bool isLoading = true;
+  Invoice invoice = Invoice();
+
+  @override
+  afterFirstLayout(BuildContext context) async {
+    invoice = await InvoiceApi().getInvoice(widget.id);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -66,9 +81,16 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
         ),
         body: TabBarView(
           children: [
-            BasicInformationTab(
-              id: widget.id,
-            ),
+            isLoading == false
+                ? BasicInformationTab(
+                    id: widget.id,
+                    data: invoice,
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(
+                      color: invoiceColor,
+                    ),
+                  ),
             HistoryTab(id: widget.id),
           ],
         ),

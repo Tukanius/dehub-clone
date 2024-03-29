@@ -39,7 +39,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
     general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
 
     return AnimatedOpacity(
-      duration: Duration(milliseconds: 300 + (widget.index * 400)),
+      duration: Duration(milliseconds: 300 + (widget.index * 200)),
       curve: Curves.ease,
       opacity: widget.startAnimation ? 1 : 0,
       child: AnimatedContainer(
@@ -180,22 +180,15 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                         ),
                       ),
                       Expanded(
-                        child: widget.isFinished == true &&
-                                widget.data.staff != null
-                            ? Text(
-                                '${widget.data.staff?.lastName?[0]}. ${widget.data.staff?.firstName}',
-                                style: const TextStyle(
-                                  color: depBrown,
-                                  fontSize: 14,
-                                ),
-                              )
-                            : const Text(
-                                '-',
-                                style: TextStyle(
-                                  color: depBrown,
-                                  fontSize: 14,
-                                ),
-                              ),
+                        child: Text(
+                          widget.isFinished == true && widget.data.staff != null
+                              ? '${widget.data.staff?.lastName?[0]}. ${widget.data.staff?.firstName}'
+                              : '-',
+                          style: const TextStyle(
+                            color: depBrown,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
                     ],
                   ),

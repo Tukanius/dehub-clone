@@ -48,7 +48,7 @@ class _BranchCardState extends State<BranchCard> {
       onTap: widget.onClick,
       child: AnimatedOpacity(
         opacity: widget.startAnimation ? 1 : 0,
-        duration: Duration(milliseconds: 300 + (widget.index * 500)),
+        duration: Duration(milliseconds: 300 + (widget.index * 200)),
         curve: Curves.ease,
         child: AnimatedContainer(
           duration: Duration(milliseconds: 300 + (widget.index * 200)),
@@ -210,7 +210,7 @@ class _BranchCardState extends State<BranchCard> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

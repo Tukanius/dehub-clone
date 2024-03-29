@@ -1,3 +1,4 @@
+import 'package:dehub/components/full_picture/full_picture.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/tabs/information_tab.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/tabs/sector_tab.dart';
 import 'package:dehub/src/network_module/screens/partner_page/partner_detail_page/tabs/staffs_tab.dart';
@@ -29,12 +30,12 @@ class PartnerDetailPage extends StatefulWidget {
 
 class _PartnerDetailPageState extends State<PartnerDetailPage>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
-  BusinessNetwork businessNetwork = BusinessNetwork();
+  BusinessNetwork partner = BusinessNetwork();
   bool isLoading = true;
 
   @override
   afterFirstLayout(BuildContext context) async {
-    businessNetwork = await BusinessApi().networkGet(widget.id);
+    partner = await BusinessApi().networkGet(widget.id);
     setState(() {
       isLoading = false;
     });
@@ -73,34 +74,47 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                     SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          if (businessNetwork.profileBanners!.isNotEmpty)
+                          if (partner.profileBanners!.isNotEmpty)
                             CarouselSlider(
-                              items: businessNetwork.profileBanners!
-                                  .map(
-                                    (data) => Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: white,
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            '${data.url}',
-                                          ),
-                                          fit: BoxFit.cover,
+                              items: partner.profileBanners!.map((data) {
+                                List<String> images = [];
+                                for (var data in partner.profileBanners!) {
+                                  images.add(data.url!);
+                                }
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      FullPicture.routeName,
+                                      arguments: FullPictureArguments(
+                                        pictures: images,
+                                        initialPage: partner.profileBanners!
+                                            .indexOf(data),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: white,
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          '${data.url}',
                                         ),
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  )
-                                  .toList(),
+                                  ),
+                                );
+                              }).toList(),
                               options: CarouselOptions(
                                 enlargeCenterPage:
-                                    businessNetwork.profileBanners?.length != 1,
+                                    partner.profileBanners?.length != 1,
                                 autoPlayCurve: Curves.ease,
                                 height: 200,
-                                autoPlay:
-                                    businessNetwork.profileBanners?.length != 1,
+                                autoPlay: partner.profileBanners?.length != 1,
                                 enableInfiniteScroll:
-                                    businessNetwork.profileBanners?.length != 1,
+                                    partner.profileBanners?.length != 1,
                               ),
                             ),
                           const SizedBox(
@@ -145,13 +159,13 @@ class _PartnerDetailPageState extends State<PartnerDetailPage>
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     InformationTab(
-                      data: businessNetwork,
+                      data: partner,
                     ),
                     StaffsTab(
-                      staffs: businessNetwork.staffs,
+                      staffs: partner.staffs,
                     ),
                     SectorTab(
-                      data: businessNetwork.branches,
+                      data: partner.branches,
                     ),
                   ],
                 ),

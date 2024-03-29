@@ -22,17 +22,17 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class GivePage extends StatefulWidget {
-  static const routeName = 'GivePage';
-  const GivePage({
+class InvoiceListPage extends StatefulWidget {
+  static const routeName = 'InvoiceListPage';
+  const InvoiceListPage({
     super.key,
   });
 
   @override
-  State<GivePage> createState() => _GivePageState();
+  State<InvoiceListPage> createState() => _GivePageState();
 }
 
-class _GivePageState extends State<GivePage>
+class _GivePageState extends State<InvoiceListPage>
     with AfterLayoutMixin, SingleTickerProviderStateMixin {
   List<Invoice> groupedList = [];
   bool isLoading = true;
@@ -179,7 +179,7 @@ class _GivePageState extends State<GivePage>
                   arguments: NewInvoiceArguments(data: null),
                 );
               },
-            )
+            ),
         ],
       ),
       body: Column(
@@ -235,15 +235,6 @@ class _GivePageState extends State<GivePage>
               },
             ),
           ),
-          SearchButton(
-            onChange: (query) {
-              setState(() {
-                search = query;
-              });
-              onChange(query);
-            },
-            color: invoiceColor,
-          ),
           isLoading == true
               ? const Center(
                   child: CircularProgressIndicator(
@@ -259,78 +250,97 @@ class _GivePageState extends State<GivePage>
                     onRefresh: onRefresh,
                     color: invoiceColor,
                     child: SingleChildScrollView(
-                      child: groupedList.isEmpty
-                          ? const NotFound(
-                              module: "INVOICE",
-                              labelText: "Нэхэмжлэл олдсонгүй",
-                            )
-                          : Column(
-                              children: groupedList
-                                  .map(
-                                    (item) => Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AnimatedContainer(
-                                          duration: Duration(
-                                              milliseconds: 300 +
-                                                  (groupedList.indexOf(item) *
-                                                      400)),
-                                          transform: Matrix4.translationValues(
-                                              startAnimation
-                                                  ? 0
-                                                  : -MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                              0,
-                                              0),
-                                          margin: const EdgeInsets.only(
-                                              left: 15, top: 10, bottom: 10),
-                                          child: Text(
-                                            DateFormat('yyyy-MM-dd')
-                                                .format(item.header!),
-                                            style: const TextStyle(
-                                              color: grey3,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        Column(
-                                          children: item.values!
-                                              .map(
-                                                (data) => Column(
-                                                  children: [
-                                                    InvoiceCard(
-                                                      startAnimation:
-                                                          startAnimation,
-                                                      index: invoice.rows!
-                                                          .indexOf(data),
-                                                      data: data,
-                                                      onClick: () {
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                          InvoiceDetailPage
-                                                              .routeName,
-                                                          arguments:
-                                                              InvoiceDetailPageArguments(
-                                                            id: data.id!,
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                  ],
+                      child: Column(
+                        children: [
+                          SearchButton(
+                            onChange: (query) {
+                              setState(() {
+                                search = query;
+                              });
+                              onChange(query);
+                            },
+                            color: invoiceColor,
+                          ),
+                          groupedList.isEmpty
+                              ? const NotFound(
+                                  module: "INVOICE",
+                                  labelText: "Нэхэмжлэл олдсонгүй",
+                                )
+                              : Column(
+                                  children: groupedList
+                                      .map(
+                                        (item) => Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AnimatedContainer(
+                                              duration: Duration(
+                                                milliseconds: 300 +
+                                                    (groupedList.indexOf(item) *
+                                                        400),
+                                              ),
+                                              transform:
+                                                  Matrix4.translationValues(
+                                                      startAnimation
+                                                          ? 0
+                                                          : -MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                      0,
+                                                      0),
+                                              margin: const EdgeInsets.only(
+                                                  left: 15,
+                                                  top: 10,
+                                                  bottom: 10),
+                                              child: Text(
+                                                DateFormat('yyyy-MM-dd')
+                                                    .format(item.header!),
+                                                style: const TextStyle(
+                                                  color: grey3,
+                                                  fontWeight: FontWeight.w600,
                                                 ),
-                                              )
-                                              .toList(),
+                                              ),
+                                            ),
+                                            Column(
+                                              children: item.values!
+                                                  .map(
+                                                    (data) => Column(
+                                                      children: [
+                                                        InvoiceCard(
+                                                          startAnimation:
+                                                              startAnimation,
+                                                          index: invoice.rows!
+                                                              .indexOf(data),
+                                                          data: data,
+                                                          onClick: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushNamed(
+                                                              InvoiceDetailPage
+                                                                  .routeName,
+                                                              arguments:
+                                                                  InvoiceDetailPageArguments(
+                                                                id: data.id!,
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
+                                      )
+                                      .toList(),
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

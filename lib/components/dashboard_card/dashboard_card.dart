@@ -26,43 +26,48 @@ class DashboardCard extends StatefulWidget {
 class _DashboardCardState extends State<DashboardCard> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onClick,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: Material(
+        color: white,
+        borderRadius: BorderRadius.circular(10),
+        child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          color: white,
-        ),
-        padding: const EdgeInsets.all(8),
-        width: 100,
-        height: 100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 40,
-              width: 40,
-              padding: EdgeInsets.all(widget.padding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: widget.boxColor,
-              ),
-              child: SvgPicture.asset(
-                widget.svg,
-                colorFilter: ColorFilter.mode(widget.svgColor, BlendMode.srcIn),
-              ),
+          onTap: widget.onClick,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            width: 100,
+            height: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  padding: EdgeInsets.all(widget.padding),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: widget.boxColor,
+                  ),
+                  child: SvgPicture.asset(
+                    widget.svg,
+                    colorFilter:
+                        ColorFilter.mode(widget.svgColor, BlendMode.srcIn),
+                  ),
+                ),
+                const SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  widget.labelText,
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w500),
+                  softWrap: true,
+                ),
+              ],
             ),
-            const SizedBox(
-              height: 2,
-            ),
-            Text(
-              widget.labelText,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-              softWrap: true,
-            ),
-          ],
+          ),
         ),
       ),
     );

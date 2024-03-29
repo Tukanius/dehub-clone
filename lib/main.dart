@@ -76,7 +76,7 @@ import 'package:dehub/src/invoice_module/screens/closed_invoice/closed_invoice_p
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_product/add_product.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/add_row/invoice_add_row.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/sector-choose/sector_choose.dart';
-import 'package:dehub/src/invoice_module/screens/invoice_list/give.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_list/invoice_list.dart';
 import 'package:dehub/src/network_module/screens/category_page/add_category.dart';
 import 'package:dehub/src/network_module/screens/direction_page/add_direction.dart';
 import 'package:dehub/src/network_module/screens/direction_page/direction_detail_page.dart';
@@ -804,23 +804,9 @@ class MyApp extends StatelessWidget {
                       return const ClientClassifications();
                     });
                   case FinancingLogin.routeName:
-                    return PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          const FinancingLogin(),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = const Offset(1.0, 0.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    );
+                    return MaterialPageRoute(builder: (context) {
+                      return const FinancingLogin();
+                    });
                   case SentInvitationDetail.routeName:
                     SentInvitationDetailArguments arguments =
                         settings.arguments as SentInvitationDetailArguments;
@@ -1873,9 +1859,9 @@ class MyApp extends StatelessWidget {
                         id: arguments.id!,
                       );
                     });
-                  case GivePage.routeName:
+                  case InvoiceListPage.routeName:
                     return MaterialPageRoute(builder: (context) {
-                      return const GivePage();
+                      return const InvoiceListPage();
                     });
                   case SectorChoose.routeName:
                     return PageRouteBuilder(

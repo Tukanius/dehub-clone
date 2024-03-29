@@ -82,13 +82,15 @@ class PieChartState extends State<PieChart> {
                         Expanded(
                           flex: 8,
                           child: Text(
-                            widget.module == "INVOICE"
-                                ? '${data.name}'
-                                : widget.module == "ORDER"
-                                    ? '${Utils().formatCurrency("${data.amount}")}₮'
-                                    : widget.module == "PAYMENT"
+                            widget.module == "FINANCE"
+                                ? '${data.amount != null ? data.amount.toInt() : 0}'
+                                : widget.module == "INVOICE"
+                                    ? '${data.name}'
+                                    : widget.module == "ORDER"
                                         ? '${Utils().formatCurrency("${data.amount}")}₮'
-                                        : '${data.count}',
+                                        : widget.module == "PAYMENT"
+                                            ? '${Utils().formatCurrency("${data.amount}")}₮'
+                                            : '${data.count}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -101,13 +103,15 @@ class PieChartState extends State<PieChart> {
                         Expanded(
                           flex: 3,
                           child: Text(
-                            widget.module == "INVOICE"
-                                ? "${data.invoiceCount}"
-                                : widget.module == "ORDER"
-                                    ? '${data.ordersCount.toInt()}'
-                                    : widget.module == "PAYMENT"
-                                        ? "${data.percent.toInt()}%"
-                                        : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
+                            widget.module == 'FINANCE'
+                                ? "${data.count}"
+                                : widget.module == "INVOICE"
+                                    ? "${data.invoiceCount}"
+                                    : widget.module == "ORDER"
+                                        ? '${data.ordersCount.toInt()}'
+                                        : widget.module == "PAYMENT"
+                                            ? "${data.percent.toInt()}%"
+                                            : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,
                               fontSize: 12,
@@ -121,13 +125,15 @@ class PieChartState extends State<PieChart> {
                         Expanded(
                           flex: 10,
                           child: Text(
-                            widget.module == "INVOICE"
-                                ? '${Utils().formatCurrency("${data.amountToPay}")}₮'
-                                : widget.module == "ORDER"
-                                    ? '${data.name}'
-                                    : widget.module == "PAYMENT"
-                                        ? "${data.name}"
-                                        : '${data.profileName}',
+                            widget.module == "FINANCE"
+                                ? "${data.name}"
+                                : widget.module == "INVOICE"
+                                    ? '${Utils().formatCurrency("${data.amountToPay}")}₮'
+                                    : widget.module == "ORDER"
+                                        ? '${data.name}'
+                                        : widget.module == "PAYMENT"
+                                            ? "${data.name}"
+                                            : '${data.profileName}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: grey2,

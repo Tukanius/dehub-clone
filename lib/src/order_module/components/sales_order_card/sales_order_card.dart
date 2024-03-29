@@ -150,8 +150,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                         widget.data.orderStatus == "REVIEWED")
                       Container(
                         margin: const EdgeInsets.only(left: 5),
-                        height: 20,
-                        width: 20,
+                        height: 30,
+                        width: 30,
                         child: Checkbox(
                           side: MaterialStateBorderSide.resolveWith(
                             (states) => const BorderSide(
@@ -165,7 +165,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
                           activeColor: orderColor,
-                          value: source.backorderList.contains(widget.data),
+                          value: index > -1,
                           onChanged: (value) {
                             if (index > -1) {
                               source.removeBackOrder(index);

@@ -9,6 +9,15 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => Finance.fromJson(e)).toList()
         : null,
+    byProgram: json['byProgram'] != null
+        ? (json['byProgram'] as List).map((e) => Finance.fromJson(e)).toList()
+        : null,
+    byInterval: json['byInterval'] != null
+        ? (json['byInterval'] as List).map((e) => Finance.fromJson(e)).toList()
+        : null,
+    numberSurvey: json['numberSurvey'] != null
+        ? (json['numberSurvey'] as List).map((e) => Stats.fromJson(e)).toList()
+        : null,
     businessIds: json['businessIds'] != null
         ? (json['businessIds'] as List).map((e) => e as String).toList()
         : null,
@@ -760,6 +769,11 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
     json['classificationSetUser'] = instance.classificationSetUser;
   }
   if (instance.areaRegion != null) json['areaRegion'] = instance.areaRegion;
+  if (instance.numberSurvey != null) {
+    json['numberSurvey'] = instance.numberSurvey;
+  }
+  if (instance.byInterval != null) json['byInterval'] = instance.byInterval;
+  if (instance.byProgram != null) json['byProgram'] = instance.byProgram;
   if (instance.areaDirection != null) {
     json['areaDirection'] = instance.areaDirection;
   }

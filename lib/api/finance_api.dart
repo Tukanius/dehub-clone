@@ -170,4 +170,16 @@ class FinanceApi extends HttpRequestFinance {
     var res = await put(host, '/network/set_limit', data: data.toJson());
     return Finance.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Finance> dashboardMain(String host, String date, String start,
+      String end, String programId) async {
+    var res = await get(host,
+        '/dashboard?date=$date&startDate=$start&endDate=$end&programId=$programId');
+    return Finance.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> programSelect(String host) async {
+    var res = await get(host, '/dashboard/program_select');
+    return Result.fromJson(res, Finance.fromJson);
+  }
 }

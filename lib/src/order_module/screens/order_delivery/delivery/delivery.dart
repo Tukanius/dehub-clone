@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/full_picture/full_picture.dart';
 import 'package:dehub/src/order_module/components/chat_card/chat_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/order.dart';
@@ -398,57 +399,70 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                     child: ListView(
                                       scrollDirection: Axis.horizontal,
                                       shrinkWrap: true,
-                                      children: get.lines!
-                                          .map(
-                                            (item) => Stack(
-                                              children: [
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                    right: 10,
+                                      children: get.lines!.map((item) {
+                                        List<String> images = [];
+                                        for (var data in get.lines!) {
+                                          images.add(data.image!);
+                                        }
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pushNamed(
+                                              FullPicture.routeName,
+                                              arguments: FullPictureArguments(
+                                                pictures: images,
+                                                initialPage:
+                                                    get.lines!.indexOf(item),
+                                              ),
+                                            );
+                                          },
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                  right: 10,
+                                                ),
+                                                height: 125,
+                                                width: 185,
+                                                decoration: BoxDecoration(
+                                                  color: lightGrey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      '${item.image}',
+                                                    ),
+                                                    fit: BoxFit.cover,
                                                   ),
-                                                  height: 125,
-                                                  width: 185,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 10,
+                                                left: 10,
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 7,
+                                                      horizontal: 8),
                                                   decoration: BoxDecoration(
-                                                    color: lightGrey,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             5),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                        '${item.image}',
-                                                      ),
-                                                      fit: BoxFit.cover,
+                                                    color:
+                                                        const Color(0xfffdf4f6),
+                                                  ),
+                                                  child: Text(
+                                                    '${item.quantity} ${item.unit![0]}'
+                                                        .toLowerCase(),
+                                                    style: const TextStyle(
+                                                      color: pink,
                                                     ),
                                                   ),
                                                 ),
-                                                Positioned(
-                                                  bottom: 10,
-                                                  left: 10,
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 7,
-                                                        horizontal: 8),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      color: const Color(
-                                                          0xfffdf4f6),
-                                                    ),
-                                                    child: Text(
-                                                      '${item.quantity} ${item.unit![0]}'
-                                                          .toLowerCase(),
-                                                      style: const TextStyle(
-                                                        color: pink,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                          .toList(),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }).toList(),
                                     ),
                                   ),
                                   const SizedBox(

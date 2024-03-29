@@ -48,7 +48,7 @@ class _VersionControlSheetState extends State<VersionControlSheet>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    generateValues();
+    await generateValues();
     setState(() {
       isLoading = false;
     });

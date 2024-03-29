@@ -106,14 +106,14 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         svgColor: productColor,
                         svg: 'assets/svg/grid1.svg',
                       ),
-                DashboardCard(
-                  onClick: () {},
-                  boxColor: productColor.withOpacity(0.1),
-                  padding: 8,
-                  labelText: 'Ажил, үйлчилгээ',
-                  svgColor: productColor,
-                  svg: 'assets/svg/headset.svg',
-                ),
+                // DashboardCard(
+                //   onClick: () {},
+                //   boxColor: productColor.withOpacity(0.1),
+                //   padding: 8,
+                //   labelText: 'Ажил, үйлчилгээ',
+                //   svgColor: productColor,
+                //   svg: 'assets/svg/headset.svg',
+                // ),
                 DashboardCard(
                   onClick: () {
                     Navigator.of(context).pushNamed(PriceGroupPage.routeName);

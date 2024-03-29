@@ -114,7 +114,19 @@ class _DrosShipCreateState extends State<DropshipCreate> {
                 Expanded(
                   flex: 6,
                   child: CustomButton(
-                    onClick: dropshipCreate,
+                    onClick: () {
+                      List<Order> data = widget.lines
+                          .where((element) =>
+                              element.supplierBusiness == null ||
+                              element.buyerBusiness == null)
+                          .toList();
+                      if (data.isEmpty) {
+                        dropshipCreate();
+                      } else {
+                        showCustomDialog(context,
+                            "Нийлүүлэгч, худалдан авагч сонгоно уу", false);
+                      }
+                    },
                     labelText: 'Захиалга салгах',
                     labelColor: orderColor,
                     textColor: white,

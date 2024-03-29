@@ -6,7 +6,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/closed_invoice/closed_invoice_page.dart';
-import 'package:dehub/src/invoice_module/screens/invoice_list/give.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_list/invoice_list.dart';
 import 'package:dehub/src/invoice_module/screens/payment_register/payment_register.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -100,7 +100,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     children: [
                       DashboardCard(
                         onClick: () {
-                          Navigator.of(context).pushNamed(GivePage.routeName);
+                          Navigator.of(context)
+                              .pushNamed(InvoiceListPage.routeName);
                         },
                         boxColor: invoiceColor.withOpacity(0.1),
                         padding: 10,
@@ -168,7 +169,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(GivePage.routeName);
+                            Navigator.of(context)
+                                .pushNamed(InvoiceListPage.routeName);
                           },
                           child: Container(
                             color: transparent,
@@ -238,7 +240,8 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(GivePage.routeName);
+                            Navigator.of(context)
+                                .pushNamed(InvoiceListPage.routeName);
                           },
                           child: Container(
                             color: transparent,

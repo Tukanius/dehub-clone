@@ -205,6 +205,20 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                       const ModulesCard(),
                     ],
                   ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     Navigator.of(context).push(
+                  //       MaterialPageRoute(
+                  //         builder: (context) => const Test(),
+                  //       ),
+                  //     );
+                  //   },
+                  //   child: Container(
+                  //     height: 100,
+                  //     width: 100,
+                  //     color: red,
+                  //   ),
+                  // ),
                   user.currentBusiness?.type == "BUYER" ||
                           user.currentBusiness?.type == "SUPPLIER"
                       ? Column(

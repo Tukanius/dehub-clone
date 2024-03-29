@@ -2,6 +2,7 @@
 
 import 'package:dehub/models/bank_accounts.dart';
 import 'package:dehub/models/qpay_urls.dart';
+import 'package:dehub/models/stats.dart';
 part '../parts/finance.dart';
 
 class Finance {
@@ -279,10 +280,16 @@ class Finance {
   bool? countPenalty;
   String? discountType;
   double? discountPercent;
-
   List<String>? businessIds;
 
+  List<Finance>? byProgram;
+  List<Finance>? byInterval;
+  List<Stats>? numberSurvey;
+
   Finance({
+    this.byProgram,
+    this.byInterval,
+    this.numberSurvey,
     this.businessIds,
     this.debtLimitStartDate,
     this.debtLimitEndDate,

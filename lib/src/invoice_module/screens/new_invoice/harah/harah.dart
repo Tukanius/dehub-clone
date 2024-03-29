@@ -36,6 +36,7 @@ class Harah extends StatefulWidget {
 
 class _HarahState extends State<Harah> {
   User user = User();
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
@@ -244,42 +245,30 @@ class _HarahState extends State<Harah> {
                       height: 10,
                     ),
                     INVOICEPDF(
-                        lines: widget.invoice.lines!, data: widget.invoice),
+                      lines: widget.invoice.lines!,
+                      data: widget.invoice,
+                    ),
                     const SizedBox(
                       height: 30,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(width: 0.5, color: grey3),
-                          ),
-                          child: const Icon(
-                            Icons.share_outlined,
-                            color: grey3,
-                            size: 20,
-                          ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(width: 0.5, color: grey3),
+                          color: transparent,
                         ),
-                        const SizedBox(
-                          width: 25,
+                        child: SvgPicture.asset(
+                          'assets/svg/save1.svg',
+                          colorFilter:
+                              const ColorFilter.mode(grey3, BlendMode.srcIn),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(width: 0.5, color: grey3),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/svg/save1.svg',
-                            colorFilter:
-                                const ColorFilter.mode(grey3, BlendMode.srcIn),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 50,
                     ),

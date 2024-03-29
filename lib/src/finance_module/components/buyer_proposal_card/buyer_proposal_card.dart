@@ -137,7 +137,7 @@ class _BuyerProposalCardState extends State<BuyerProposalCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'Бүсийн нэр: ${widget.data.areaRegion?.name}',
+                    'Бүсийн нэр: ${widget.data.areaRegion?.name ?? '-'}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -146,7 +146,7 @@ class _BuyerProposalCardState extends State<BuyerProposalCard> {
                 ),
                 Expanded(
                   child: Text(
-                    'Чиглэл нэр: ${widget.data.areaDirection?.name}',
+                    'Чиглэл нэр: ${widget.data.areaDirection?.name ?? '-'}',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,

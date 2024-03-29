@@ -16,7 +16,7 @@ class _FinancingTabState extends State<FinancingTab>
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() {
       setState(() {});
     });
@@ -34,8 +34,6 @@ class _FinancingTabState extends State<FinancingTab>
               labelColor: userColor,
               unselectedLabelColor: grey2,
               indicatorColor: userColor,
-              isScrollable: true,
-              tabAlignment: TabAlignment.start,
               overlayColor: MaterialStatePropertyAll(Colors.grey.shade200),
               tabs: const [
                 Tab(
@@ -43,9 +41,6 @@ class _FinancingTabState extends State<FinancingTab>
                 ),
                 Tab(
                   text: 'Эрхийн түүх',
-                ),
-                Tab(
-                  text: 'Системийн лог',
                 ),
               ],
             ),
@@ -57,7 +52,6 @@ class _FinancingTabState extends State<FinancingTab>
         children: const [
           BanksTab(),
           FinanceRole(),
-          Text(''),
         ],
       ),
     );
