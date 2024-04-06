@@ -79,7 +79,7 @@ class _ApprovalRuleCardState extends State<ApprovalRuleCard> {
                   border: Border.all(color: Colors.blue),
                 ),
                 child: Text(
-                  "${action().name}",
+                  action().name != null ? "${action().name}" : '',
                   style: const TextStyle(fontSize: 12, color: Colors.blue),
                 ),
               ),

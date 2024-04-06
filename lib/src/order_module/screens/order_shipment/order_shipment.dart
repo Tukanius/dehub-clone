@@ -161,19 +161,20 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   }
 
   end() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
+      loading.loading(true);
       if (widget.data.endedDate == null) {
         await OrderApi().pullSheetEnd(widget.data.id!);
       }
       shipment = await OrderApi().pullSheetGet(widget.data.id!);
+      loading.loading(false);
       await Navigator.of(context).pushNamed(
         PullSheetExpenses.routeName,
         arguments: PullSheetExpensesArguments(data: shipment),
       );
     } catch (e) {
-      debugPrint('============err==========');
-      debugPrint(e.toString());
-      debugPrint('============err==========');
+      loading.loading(false);
     }
   }
 

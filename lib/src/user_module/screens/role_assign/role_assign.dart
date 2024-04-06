@@ -1,8 +1,11 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_module_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -42,10 +45,29 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
   List<User> businesses = [];
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    List<User> roles = [];
+    roles = businesses.where((element) => element.roleIds!.isNotEmpty).toList();
     List<User> data = [];
-    data = businesses.where((element) => element.roles!.isNotEmpty).toList();
-    for (var i = 0; i < data.length; i++) {
-      debugPrint((data[i].toJson()).toString());
+    for (var i = 0; i < roles.length; i++) {
+      data.add(
+        User(
+          businessId: roles[i].id,
+          roleIds: roles[i].roleIds,
+          accessLevel: roles[i].accessLevel,
+        ),
+      );
+    }
+    try {
+      loading.loading(true);
+      await UserApi().roleAdd(User(userId: widget.id, roles: data));
+      loading.loading(false);
+      widget.listenController.changeVariable('asdf');
+      showCustomDialog(context, "Амжилттай", true, onPressed: () {
+        Navigator.of(context).pop();
+      });
+    } catch (e) {
+      loading.loading(false);
     }
   }
 
@@ -54,7 +76,7 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
     final source = Provider.of<UserModuleProvider>(context, listen: false);
     source.clearData();
     for (var element in general.businesses!) {
-      element.roles = [];
+      element.roleIds = [];
       element.accessLevel = 'TO_ANYONE';
     }
     businesses = general.businesses!;
@@ -101,7 +123,7 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                   Column(
                     children: businesses.map(
                       (data) {
-                        data.roles ??= [];
+                        data.roleIds ??= [];
                         return Container(
                           margin: const EdgeInsets.only(bottom: 3),
                           padding: const EdgeInsets.symmetric(
@@ -142,20 +164,20 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                                       children: general.roles!.map(
                                         (role) {
                                           int index = -1;
-                                          if (data.roles != null) {
-                                            index = data.roles!.indexWhere(
+                                          if (data.roleIds != null) {
+                                            index = data.roleIds!.indexWhere(
                                                 (element) =>
-                                                    element == role.name);
+                                                    element == role.id);
                                           }
                                           return GestureDetector(
                                             onTap: () {
                                               if (index > -1) {
                                                 setState(() {
-                                                  data.roles!.removeAt(index);
+                                                  data.roleIds!.removeAt(index);
                                                 });
                                               } else {
                                                 setState(() {
-                                                  data.roles!.add(role.name!);
+                                                  data.roleIds!.add(role.id!);
                                                 });
                                               }
                                             },
@@ -184,13 +206,13 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                                                     onChanged: (value) {
                                                       if (index > -1) {
                                                         setState(() {
-                                                          data.roles!
+                                                          data.roleIds!
                                                               .removeAt(index);
                                                         });
                                                       } else {
                                                         setState(() {
-                                                          data.roles!
-                                                              .add(role.name!);
+                                                          data.roleIds!
+                                                              .add(role.id!);
                                                         });
                                                       }
                                                     },
@@ -213,8 +235,9 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
                                   ),
                                 ],
                               ),
-                              if (data.roles!.indexWhere(
-                                      (element) => element == "Order") >
+                              if (data.roleIds!.indexWhere((element) =>
+                                      element ==
+                                      "616e152e-3958-4dba-bcf3-af579fa8a2f9") >
                                   -1)
                                 Container(
                                   margin: const EdgeInsets.only(right: 15),

@@ -39,12 +39,9 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     dashboard = await InvoiceApi().dashboard(
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(hours: 8))),
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(days: 5))),
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(hours: 8))),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
     );
     for (var i = 0; i < dashboard.numberSurvey!.length; i++) {
       dashboard.numberSurvey?[i].image = svgs[i];
@@ -72,70 +69,70 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
 
-    return isLoading == true
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: invoiceColor,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+            child: const Text(
+              'Нэхэмжлэх удирдлага',
+              style: TextStyle(
+                  color: black, fontSize: 24, fontWeight: FontWeight.bold),
             ),
-          )
-        : SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          SizedBox(
+            height: 100,
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              scrollDirection: Axis.horizontal,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-                  child: const Text(
-                    'Нэхэмжлэх удирдлага',
-                    style: TextStyle(
-                        color: black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
-                  ),
+                DashboardCard(
+                  onClick: () {
+                    Navigator.of(context).pushNamed(InvoiceListPage.routeName);
+                  },
+                  boxColor: invoiceColor.withOpacity(0.1),
+                  padding: 10,
+                  labelText: 'Нээлттэй нэхэмжлэх',
+                  svgColor: invoiceColor,
+                  svg: 'assets/svg/take_invoice.svg',
                 ),
-                SizedBox(
-                  height: 100,
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(InvoiceListPage.routeName);
-                        },
-                        boxColor: invoiceColor.withOpacity(0.1),
-                        padding: 10,
-                        labelText: 'Нээлттэй нэхэмжлэх',
-                        svgColor: invoiceColor,
-                        svg: 'assets/svg/take_invoice.svg',
-                      ),
-                      if (user.currentBusiness?.type == "SUPPLIER")
-                        DashboardCard(
-                          onClick: () {
-                            Navigator.of(context)
-                                .pushNamed(PaymentRegister.routeName);
-                          },
-                          boxColor: invoiceColor.withOpacity(0.1),
-                          padding: 10,
-                          labelText: 'Төлөлт бүртгэх',
-                          svgColor: invoiceColor,
-                          svg: 'assets/svg/closed_invoice.svg',
-                        ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(ClosedInvoicePage.routeName);
-                        },
-                        boxColor: invoiceColor.withOpacity(0.1),
-                        padding: 8,
-                        labelText: 'Хаагдсан нэхэмжлэх',
-                        svgColor: invoiceColor,
-                        svg: 'assets/svg/report_off.svg',
-                      ),
-                    ],
+                if (user.currentBusiness?.type == "SUPPLIER")
+                  DashboardCard(
+                    onClick: () {
+                      Navigator.of(context)
+                          .pushNamed(PaymentRegister.routeName);
+                    },
+                    boxColor: invoiceColor.withOpacity(0.1),
+                    padding: 10,
+                    labelText: 'Төлөлт бүртгэх',
+                    svgColor: invoiceColor,
+                    svg: 'assets/svg/closed_invoice.svg',
                   ),
+                DashboardCard(
+                  onClick: () {
+                    Navigator.of(context)
+                        .pushNamed(ClosedInvoicePage.routeName);
+                  },
+                  boxColor: invoiceColor.withOpacity(0.1),
+                  padding: 8,
+                  labelText: 'Хаагдсан нэхэмжлэх',
+                  svgColor: invoiceColor,
+                  svg: 'assets/svg/report_off.svg',
                 ),
-                Container(
+              ],
+            ),
+          ),
+          isLoading == true
+              ? Container(
+                  margin: const EdgeInsets.only(top: 50),
+                  child: const Center(
+                    child: CircularProgressIndicator(
+                      color: invoiceColor,
+                    ),
+                  ),
+                )
+              : Container(
                   margin: const EdgeInsets.only(top: 10),
                   height: 120,
                   child: ListView.builder(
@@ -147,211 +144,212 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          const SizedBox(
+            height: 25,
+          ),
+          if (isLoading == false)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: const Text(
-                            'Хугацаа хэтрэлтийн мэдээлэл',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(InvoiceListPage.routeName);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: invoiceColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: invoiceColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    if (data.isNotEmpty)
-                      PieChart(
-                        legend: dashboard.overdue!,
-                        colorList: colorList,
-                        data: data,
-                        module: "INVOICE",
-                      ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: user.currentBusiness?.type == "SUPPLIER"
-                              ? const Text(
-                                  'Баталсан нэхэмжлэх',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )
-                              : const Text(
-                                  'Танай илгээсэн',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(InvoiceListPage.routeName);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: invoiceColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: invoiceColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                          style: const TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                        const Icon(
-                          Icons.calendar_today,
-                          color: grey,
-                          size: 18,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                          style: const TextStyle(
-                            color: grey,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
                     Container(
-                      height: 180,
-                      padding: const EdgeInsets.all(10),
-                      margin: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: white,
-                      ),
-                      child: SfCartesianChart(
-                        series: <ChartSeries>[
-                          ColumnSeries<Invoice, String>(
-                            borderRadius: BorderRadius.circular(5),
-                            pointColorMapper: (datum, index) =>
-                                invoiceColor.withOpacity(0.5),
-                            dataSource: dashboard.confirmed!,
-                            xValueMapper: (gdp, _) => gdp.date,
-                            yValueMapper: (gdp, _) => gdp.confirmedAmount,
-                          ),
-                          ColumnSeries<Invoice, String>(
-                            borderRadius: BorderRadius.circular(5),
-                            pointColorMapper: (datum, index) => invoiceColor,
-                            dataSource: dashboard.confirmed!,
-                            xValueMapper: (gdp, _) => gdp.date,
-                            yValueMapper: (gdp, _) => gdp.paidAmount,
-                          ),
-                        ],
-                        primaryXAxis: CategoryAxis(),
+                      margin: const EdgeInsets.only(left: 15),
+                      child: const Text(
+                        'Хугацаа хэтрэлтийн мэдээлэл',
+                        style: TextStyle(
+                          color: black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    )
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(InvoiceListPage.routeName);
+                      },
+                      child: Container(
+                        color: transparent,
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Row(
+                          children: [
+                            Text(
+                              "Бүгдийг",
+                              style: TextStyle(
+                                color: invoiceColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: invoiceColor,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                if (data.isNotEmpty)
+                  PieChart(
+                    legend: dashboard.overdue!,
+                    colorList: colorList,
+                    data: data,
+                    module: "INVOICE",
+                  ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 15),
+                      child: user.currentBusiness?.type == "SUPPLIER"
+                          ? const Text(
+                              'Баталсан нэхэмжлэх',
+                              style: TextStyle(
+                                color: black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            )
+                          : const Text(
+                              'Танай илгээсэн',
+                              style: TextStyle(
+                                color: black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed(InvoiceListPage.routeName);
+                      },
+                      child: Container(
+                        color: transparent,
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: const Row(
+                          children: [
+                            Text(
+                              "Бүгдийг",
+                              style: TextStyle(
+                                color: invoiceColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: invoiceColor,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Icon(
+                      Icons.calendar_today,
+                      color: grey,
+                      size: 18,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
+                      style: const TextStyle(
+                        color: grey,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.calendar_today,
+                      color: grey,
+                      size: 18,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                      style: const TextStyle(
+                        color: grey,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  height: 180,
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: white,
+                  ),
+                  child: SfCartesianChart(
+                    series: <ChartSeries>[
+                      ColumnSeries<Invoice, String>(
+                        borderRadius: BorderRadius.circular(5),
+                        pointColorMapper: (datum, index) =>
+                            invoiceColor.withOpacity(0.5),
+                        dataSource: dashboard.confirmed!,
+                        xValueMapper: (gdp, _) => gdp.date,
+                        yValueMapper: (gdp, _) => gdp.confirmedAmount,
+                      ),
+                      ColumnSeries<Invoice, String>(
+                        borderRadius: BorderRadius.circular(5),
+                        pointColorMapper: (datum, index) => invoiceColor,
+                        dataSource: dashboard.confirmed!,
+                        xValueMapper: (gdp, _) => gdp.date,
+                        yValueMapper: (gdp, _) => gdp.paidAmount,
+                      ),
+                    ],
+                    primaryXAxis: CategoryAxis(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                )
               ],
             ),
-          );
+        ],
+      ),
+    );
   }
 }

@@ -85,8 +85,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   afterFirstLayout(BuildContext context) async {
     Map<String, double> pieData = {};
     dashboard = await OrderApi().dashboard(
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(hours: 8))),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
     );
     for (var i = 0; i < dashboard.byPie!.length; i++) {
       setState(() {
@@ -447,54 +446,56 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 15),
-                            child: const Text(
-                              'Борлуулалтын захиалга',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
+                      if (data.isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(left: 15),
+                              child: const Text(
+                                'Борлуулалтын захиалга',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              index.indexChange(3);
-                            },
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: const Row(
-                                children: [
-                                  Text(
-                                    "Бүгдийг",
-                                    style: TextStyle(
-                                      color: orderColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
+                            GestureDetector(
+                              onTap: () {
+                                index.indexChange(3);
+                              },
+                              child: Container(
+                                color: transparent,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: const Row(
+                                  children: [
+                                    Text(
+                                      "Бүгдийг",
+                                      style: TextStyle(
+                                        color: orderColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: orderColor,
-                                    size: 16,
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: orderColor,
+                                      size: 16,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
                       const SizedBox(
                         height: 10,
                       ),

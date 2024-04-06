@@ -3,7 +3,7 @@ import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/user_module/user_management_page/tabs/financing/financing_tab.dart';
-import 'package:dehub/src/user_module/user_management_page/tabs/rule/rule_tab.dart';
+// import 'package:dehub/src/user_module/user_management_page/tabs/rule/rule_tab.dart';
 import 'package:dehub/src/user_module/user_management_page/tabs/setting/setting_tab.dart';
 import 'package:dehub/src/user_module/user_management_page/tabs/users/user_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -26,7 +26,7 @@ class UserMangementPageState extends State<UserMangementPage>
   static const List<Widget> currentPages = [
     SettingTab(),
     UsersTab(),
-    RuleTab(),
+    // RuleTab(),
     FinancingTab(),
   ];
 
@@ -131,6 +131,33 @@ class UserMangementPageState extends State<UserMangementPage>
             ),
             label: '',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Column(
+          //     children: [
+          //       Container(
+          //         decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           color: selectedIndex == 2 ? userColor : white,
+          //         ),
+          //         padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
+          //         child: SvgPicture.asset(
+          //           'assets/svg/note.svg',
+          //           height: 20,
+          //           width: 20,
+          //           colorFilter: ColorFilter.mode(
+          //               selectedIndex == 2 ? white : userColor,
+          //               BlendMode.srcIn),
+          //         ),
+          //       ),
+          //       if (selectedIndex != 2)
+          //         const Text(
+          //           'Дүрэм',
+          //           style: TextStyle(color: userColor, fontSize: 12),
+          //         )
+          //     ],
+          //   ),
+          //   label: '',
+          // ),
           BottomNavigationBarItem(
             icon: Column(
               children: [
@@ -141,7 +168,7 @@ class UserMangementPageState extends State<UserMangementPage>
                   ),
                   padding: EdgeInsets.all(selectedIndex == 2 ? 7 : 0),
                   child: SvgPicture.asset(
-                    'assets/svg/note.svg',
+                    'assets/svg/finance_review.svg',
                     height: 20,
                     width: 20,
                     colorFilter: ColorFilter.mode(
@@ -150,33 +177,6 @@ class UserMangementPageState extends State<UserMangementPage>
                   ),
                 ),
                 if (selectedIndex != 2)
-                  const Text(
-                    'Дүрэм',
-                    style: TextStyle(color: userColor, fontSize: 12),
-                  )
-              ],
-            ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selectedIndex == 3 ? userColor : white,
-                  ),
-                  padding: EdgeInsets.all(selectedIndex == 3 ? 7 : 0),
-                  child: SvgPicture.asset(
-                    'assets/svg/finance_review.svg',
-                    height: 20,
-                    width: 20,
-                    colorFilter: ColorFilter.mode(
-                        selectedIndex == 3 ? white : userColor,
-                        BlendMode.srcIn),
-                  ),
-                ),
-                if (selectedIndex != 3)
                   const Text(
                     'Санхүүжилт',
                     style: TextStyle(color: userColor, fontSize: 12),

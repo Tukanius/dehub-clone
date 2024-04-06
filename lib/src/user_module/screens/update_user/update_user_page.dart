@@ -57,34 +57,41 @@ class _UpdateUserPageState extends State<UpdateUserPage>
             fontWeight: FontWeight.w600,
           ),
         ),
-        bottom: TabBar(
-          controller: tabController,
-          overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
-          indicatorColor: userColor,
-          labelColor: userColor,
-          unselectedLabelColor: grey2,
-          tabs: const [
-            Tab(
-              text: 'Үндсэн мэдээлэл',
-            ),
-            Tab(
-              text: 'Эрхийн тохиргоо',
-            ),
-          ],
-        ),
+        bottom: widget.data.userStatus == "ACTIVE"
+            ? TabBar(
+                controller: tabController,
+                overlayColor: MaterialStatePropertyAll(Colors.grey.shade100),
+                indicatorColor: userColor,
+                labelColor: userColor,
+                unselectedLabelColor: grey2,
+                tabs: const [
+                  Tab(
+                    text: 'Үндсэн мэдээлэл',
+                  ),
+                  Tab(
+                    text: 'Эрхийн тохиргоо',
+                  ),
+                ],
+              )
+            : null,
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          CreateUser(
-            listenController: widget.listenController,
-            data: widget.data,
-          ),
-          RoleSetting(
-            data: widget.data,
-          ),
-        ],
-      ),
+      body: widget.data.userStatus == "ACTIVE"
+          ? TabBarView(
+              controller: tabController,
+              children: [
+                CreateUser(
+                  listenController: widget.listenController,
+                  data: widget.data,
+                ),
+                RoleSetting(
+                  data: widget.data,
+                ),
+              ],
+            )
+          : CreateUser(
+              listenController: widget.listenController,
+              data: widget.data,
+            ),
     );
   }
 }

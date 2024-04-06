@@ -252,53 +252,53 @@ class _UserCardState extends State<UserCard> {
                 ),
               ),
             ),
-            if (widget.data.userRoles!.isNotEmpty)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  const Text(
-                    'Хэрэглэгчийн роль:',
-                    style: TextStyle(
-                      color: depBrown,
-                      fontSize: 12,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: widget.data.userRoles!
-                          .map(
-                            (e) => Container(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Container(
-                                height: 20,
-                                margin: const EdgeInsets.only(right: 7),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: userColor),
-                                ),
-                                child: Text(
-                                  "${e.name}",
-                                  style: const TextStyle(
-                                    color: userColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ],
-              ),
+            // if (widget.data.userRoles!.isNotEmpty)
+            //   Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const SizedBox(
+            //         height: 5,
+            //       ),
+            //       const Text(
+            //         'Хэрэглэгчийн роль:',
+            //         style: TextStyle(
+            //           color: depBrown,
+            //           fontSize: 12,
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 40,
+            //         child: ListView(
+            //           scrollDirection: Axis.horizontal,
+            //           children: widget.data.userRoles!
+            //               .map(
+            //                 (e) => Container(
+            //                   padding: const EdgeInsets.symmetric(vertical: 10),
+            //                   child: Container(
+            //                     height: 20,
+            //                     margin: const EdgeInsets.only(right: 7),
+            //                     padding:
+            //                         const EdgeInsets.symmetric(horizontal: 10),
+            //                     decoration: BoxDecoration(
+            //                       borderRadius: BorderRadius.circular(10),
+            //                       border: Border.all(color: userColor),
+            //                     ),
+            //                     child: Text(
+            //                       "${e.name}",
+            //                       style: const TextStyle(
+            //                         color: userColor,
+            //                         fontSize: 12,
+            //                         fontWeight: FontWeight.w500,
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               )
+            //               .toList(),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
           ],
         ),
       ),

@@ -57,12 +57,9 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
   main(String url, String? programId) async {
     dashboard = await FinanceApi().dashboardMain(
       url,
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(hours: 8))),
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(days: 7))),
-      DateFormat('yyyy-MM-dd')
-          .format(DateTime.now().subtract(const Duration(hours: 8))),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      DateFormat('yyyy-MM-dd').format(DateTime.now()),
       programId ?? '',
     );
     for (var data in dashboard.numberSurvey!) {
