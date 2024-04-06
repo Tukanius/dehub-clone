@@ -76,6 +76,7 @@ class _SetClientClassificationState extends State<SetClientClassification> {
             classificationDesc: controller.text,
           ),
         );
+        widget.listenController.changeVariable('SetClassification');
         loading.loading(false);
         showCustomDialog(
           context,
@@ -83,7 +84,6 @@ class _SetClientClassificationState extends State<SetClientClassification> {
           true,
           onPressed: () {
             Navigator.of(context).pop();
-            widget.listenController.changeVariable('SetClassification');
           },
         );
       } catch (e) {

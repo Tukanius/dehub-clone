@@ -36,8 +36,8 @@ class _MainInformationState extends State<MainInformation>
   General general = General();
   bool isDefault = false;
   int purchaseTypeRadio = 0;
-  int productCategoryTypeRadio = 1;
-  int serviceCategoryTypeRadio = 1;
+  int productCategoryTypeRadio = 0;
+  int serviceCategoryTypeRadio = 0;
   bool isLoading = true;
 
   @override
@@ -199,7 +199,7 @@ class _MainInformationState extends State<MainInformation>
                         )
                         .toList(),
                   ),
-                  if (purchaseTypeRadio == 0 || purchaseTypeRadio == 2)
+                  if (purchaseTypeRadio == 0 || purchaseTypeRadio == 1)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -239,12 +239,12 @@ class _MainInformationState extends State<MainInformation>
                         ),
                       ],
                     ),
-                  if (productCategoryTypeRadio == 0)
+                  if (productCategoryTypeRadio == 1)
                     SelectionField(
                       hintText: 'Барааны категори сонгох',
                       onClick: () {},
                     ),
-                  if (purchaseTypeRadio == 1 || purchaseTypeRadio == 2)
+                  if (purchaseTypeRadio == 0 || purchaseTypeRadio == 2)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -284,7 +284,7 @@ class _MainInformationState extends State<MainInformation>
                         ),
                       ],
                     ),
-                  if (serviceCategoryTypeRadio == 0)
+                  if (serviceCategoryTypeRadio == 1)
                     SelectionField(
                       hintText: 'Ажил, үйлчилгээний категори сонгох',
                       onClick: () {},

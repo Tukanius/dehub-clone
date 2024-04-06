@@ -42,13 +42,25 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> additionalUnits = [];
     try {
-      if (data.supplierTypeName != null && data.baseUnitId != null) {
+      if (data.baseUnitId == null) {
+        customScaffoldMessenger(
+          context,
+          color: productColor,
+          labelText: 'Үндсэн хэмжих нэгж сонгоно уу!',
+        );
+      } else if (data.supplierTypeName == null) {
+        customScaffoldMessenger(
+          context,
+          color: productColor,
+          labelText: 'Ханган нийлүүлэгч сонгоно уу!',
+        );
+      } else {
         if (fbKey.currentState!.saveAndValidate()) {
           loading.loading(true);
           InventoryGoods form =
               InventoryGoods.fromJson(fbKey.currentState!.value);
           form.supplierType = data.supplierType;
-          form.baseUnitId = data.unitId;
+          form.baseUnitId = data.baseUnitId;
           form.weightLabel = data.unitWeightLabelId;
           form.spaceLabel = data.unitSpaceLabelId;
           form.returnAllow = data.returnAllow ?? false;
@@ -61,7 +73,7 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
             for (var i = 0; i < data.additionalUnits!.length; i++) {
               additionalUnits.add(
                 InventoryGoods(
-                  unitId: data.additionalUnits?[i].id,
+                  baseUnitId: data.additionalUnits?[i].id,
                   convertType: data.additionalUnits?[i].convertType,
                   convertValue: data.additionalUnits?[i].convertValue,
                   floatValue: data.additionalUnits?[i].floatValue,
@@ -95,18 +107,6 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
             );
           }
         }
-      } else if (data.supplierTypeName == null) {
-        customScaffoldMessenger(
-          context,
-          color: productColor,
-          labelText: 'Ханган нийлүүлэгч сонгоно уу!',
-        );
-      } else {
-        customScaffoldMessenger(
-          context,
-          color: productColor,
-          labelText: 'Үндсэн хэмжих нэгж сонгоно уу!',
-        );
       }
     } catch (e) {
       loading.loading(false);

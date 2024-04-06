@@ -15,32 +15,32 @@ class UserModuleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  selectBusiness(User data) {
-    user.business = data;
-    notifyListeners();
-  }
+  // selectBusiness(User data) {
+  //   user.business = data;
+  //   notifyListeners();
+  // }
 
-  selectRole(String id, String name) {
-    user.roleId = id;
-    user.roleName = name;
-    notifyListeners();
-  }
+  // selectRole(String id, String name) {
+  //   user.roleId = id;
+  //   user.roleName = name;
+  //   notifyListeners();
+  // }
 
-  selectRoleType(String type) {
-    user.type = type;
-    notifyListeners();
-  }
+  // selectRoleType(String type) {
+  //   user.type = type;
+  //   notifyListeners();
+  // }
 
-  selectBranch(String id, String name) {
-    user.branchId = id;
-    user.branchName = name;
-    notifyListeners();
-  }
+  // selectBranch(String id, String name) {
+  //   user.branchId = id;
+  //   user.branchName = name;
+  //   notifyListeners();
+  // }
 
-  selectAccessLevel(String code) {
-    user.accessLevel = code;
-    notifyListeners();
-  }
+  // selectAccessLevel(String code) {
+  //   user.accessLevel = code;
+  //   notifyListeners();
+  // }
 
   departmentUnit(String value) {
     user.departmentUnitId = value;

@@ -59,13 +59,13 @@ class _SetAccountState extends State<SetAccount> {
           outAccId: outAccId,
         ),
       );
+      widget.listenController.changeVariable('SetAccount');
       loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
         true,
         onPressed: () {
-          widget.listenController.changeVariable('SetAccount');
           Navigator.of(context).pop();
         },
       );

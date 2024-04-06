@@ -74,13 +74,13 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
           paymentTermEndDate: DateFormat("yyyy-MM-dd").format(endDate),
         ),
       );
+      widget.listenController.changeVariable('SetPaymentTerm');
       loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
         true,
         onPressed: () {
-          widget.listenController.changeVariable('SetPaymentTerm');
           Navigator.of(context).pop();
         },
       );

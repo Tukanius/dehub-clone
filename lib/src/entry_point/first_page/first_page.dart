@@ -68,12 +68,16 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     // showStartDialog(context);
-    if (user.loginType != "PARTNER") {
+    if (user.currentBusiness?.type == "SUPPLIER") {
       await Provider.of<GeneralProvider>(context, listen: false)
           .invoiceInit(false);
       await Provider.of<UserProvider>(context, listen: false).invoice(false);
       await list(page, limit);
       for (var i = 0; i < invoice.rows!.length; i++) {}
+    } else {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 

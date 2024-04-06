@@ -595,76 +595,77 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                       ),
                     ),
                   ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                  if (get.deliveryNoteStatus != "DELIVERED")
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
                       ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 25),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 40,
-                                child: FormTextField(
-                                  onChanged: (value) {
-                                    setState(() {});
-                                  },
-                                  onComplete: () {
-                                    sendChat();
-                                  },
-                                  controller: chatController,
-                                  name: 'chat',
-                                  inputType: TextInputType.multiline,
-                                  maxLines: null,
-                                  decoration: const InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 15),
-                                    filled: true,
-                                    hintText: 'Энд харилцана уу',
-                                    fillColor: lightGrey,
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 25),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: 40,
+                                  child: FormTextField(
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
+                                    onComplete: () {
+                                      sendChat();
+                                    },
+                                    controller: chatController,
+                                    name: 'chat',
+                                    inputType: TextInputType.multiline,
+                                    maxLines: null,
+                                    decoration: const InputDecoration(
+                                      contentPadding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      filled: true,
+                                      hintText: 'Энд харилцана уу',
+                                      fillColor: lightGrey,
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      isDense: false,
                                     ),
-                                    isDense: false,
                                   ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                sendChat();
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 15),
-                                height: 40,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: orderColor,
-                                ),
-                                child: Center(
-                                  child: chatController.text.isNotEmpty
-                                      ? SvgPicture.asset(
-                                          'assets/svg/send_chat.svg')
-                                      : const Text(
-                                          '👋',
-                                          style: TextStyle(fontSize: 20),
-                                        ),
+                              GestureDetector(
+                                onTap: () {
+                                  sendChat();
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(left: 15),
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: orderColor,
+                                  ),
+                                  child: Center(
+                                    child: chatController.text.isNotEmpty
+                                        ? SvgPicture.asset(
+                                            'assets/svg/send_chat.svg')
+                                        : const Text(
+                                            '👋',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               ),
       ),

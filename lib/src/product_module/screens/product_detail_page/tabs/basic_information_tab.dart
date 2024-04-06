@@ -301,12 +301,23 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
               ),
             ),
           ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            color: white,
-            child: Image(
-              image: NetworkImage('${widget.data.image}'),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                FullPicture.routeName,
+                arguments: FullPictureArguments(
+                  pictures: [widget.data.image],
+                  initialPage: 0,
+                ),
+              );
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              color: white,
+              child: Image(
+                image: NetworkImage('${widget.data.image}'),
+              ),
             ),
           ),
           Container(
@@ -345,13 +356,6 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                         ),
                         child: GestureDetector(
                           onTap: () {
-                            // showDialog(
-                            //   barrierDismissible: true,
-                            //   context: context,
-                            //   builder: (context) {
-                            //     return ImageDialog(link: e);
-                            //   },
-                            // );
                             Navigator.of(context).pushNamed(
                               FullPicture.routeName,
                               arguments: FullPictureArguments(

@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/user_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/general.dart';
@@ -31,6 +32,7 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
   bool isLoading = true;
   int limit = 10;
   int page = 1;
+  ListenController listenController = ListenController();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -72,6 +74,17 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
   }
 
   @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit);
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).userGeneral;
     return Scaffold(
@@ -86,7 +99,10 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
         onPressed: () {
           Navigator.of(context).pushNamed(
             RoleAssign.routeName,
-            arguments: RoleAssignArguments(id: widget.data!.id!),
+            arguments: RoleAssignArguments(
+              id: widget.data!.id!,
+              listenController: listenController,
+            ),
           );
         },
       ),
@@ -105,39 +121,6 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Системийн эрх: ',
-                            style: TextStyle(
-                              color: grey3,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 3),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: userColor,
-                            ),
-                            child: Text(
-                              '${usageType().name}',
-                              style: const TextStyle(
-                                color: white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     roles.rows!.isNotEmpty
                         ? Column(
                             children: roles.rows!
@@ -150,6 +133,7 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
                                         arguments: RoleAssignArguments(
                                           id: widget.data!.id!,
                                           data: data,
+                                          listenController: listenController,
                                         ),
                                       );
                                     },

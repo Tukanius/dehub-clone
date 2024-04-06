@@ -95,6 +95,7 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
         await BusinessApi().createDistributionArea(businessStaffs);
         await Provider.of<GeneralProvider>(context, listen: false)
             .businessInit(true);
+        widget.listenController.changeVariable('createDirection');
         loading.loading(false);
         showCustomDialog(
           context,
@@ -104,7 +105,6 @@ class _AddDirectionState extends State<AddDirection> with AfterLayoutMixin {
             Navigator.of(context).pop();
           },
         );
-        widget.listenController.changeVariable('createDirection');
       } catch (e) {
         loading.loading(false);
         debugPrint(e.toString());

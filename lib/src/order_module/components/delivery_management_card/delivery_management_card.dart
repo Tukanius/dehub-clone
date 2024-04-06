@@ -193,53 +193,54 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
                     ],
                   ),
                 ),
-                GestureDetector(
-                  onTap: widget.onClick,
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: orderColor,
-                    ),
-                    child: widget.isFinished == true
-                        ? const Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.shopping_cart_outlined,
-                                color: white,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Ачилт',
-                                style: TextStyle(color: white),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/svg/zahialga.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    white, BlendMode.srcIn),
-                                height: 14,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              const Text(
-                                'Хүргэлт хуваарилах',
-                                style: TextStyle(
+                Material(
+                  borderRadius: BorderRadius.circular(5),
+                  color: orderColor,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(5),
+                    onTap: widget.onClick,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: widget.isFinished == true
+                          ? const Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.shopping_cart_outlined,
                                   color: white,
-                                  fontSize: 14,
+                                  size: 20,
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Ачилт',
+                                  style: TextStyle(color: white),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/zahialga.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      white, BlendMode.srcIn),
+                                  height: 14,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text(
+                                  'Хүргэлт хуваарилах',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
                 ),
               ],

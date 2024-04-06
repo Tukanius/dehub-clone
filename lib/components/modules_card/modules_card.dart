@@ -47,12 +47,7 @@ class _ModulesCardState extends State<ModulesCard> {
             shrinkWrap: true,
             crossAxisCount: 3,
             children: [
-              InkWell(
-                overlayColor: !isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
-                borderRadius:
-                    const BorderRadius.only(topLeft: Radius.circular(15)),
+              GestureDetector(
                 onTap: () {
                   if (!isPartner) {
                     Navigator.of(context).pushNamed(Invoicepage.routeName);
@@ -97,10 +92,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: !isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
+              GestureDetector(
                 onTap: () {
                   if (!isPartner) {
                     Navigator.of(context).pushNamed(OrderPage.routeName);
@@ -147,12 +139,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: !isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
-                borderRadius:
-                    const BorderRadius.only(topRight: Radius.circular(15)),
+              GestureDetector(
                 onTap: () {
                   if (!isPartner) {
                     Navigator.of(context).pushNamed(PaymentPage.routeName);
@@ -197,10 +184,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: !isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
+              GestureDetector(
                 onTap: () {
                   if (!isPartner) {
                     Navigator.of(context).pushNamed(FinanceEntry.routeName);
@@ -245,10 +229,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: !isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
+              GestureDetector(
                 onTap: () {
                   if (!isPartner) {
                     Navigator.of(context).pushNamed(NetworkPage.routeName);
@@ -293,10 +274,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: !isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
+              GestureDetector(
                 onTap: () {
                   if (!isPartner) {
                     Navigator.of(context).pushNamed(ProductPage.routeName);
@@ -341,12 +319,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
-                borderRadius:
-                    const BorderRadius.only(bottomLeft: Radius.circular(15)),
+              GestureDetector(
                 onTap: () {
                   if (isPartner) {
                     Navigator.of(context).pushNamed(PartnerPage.routeName);
@@ -391,10 +364,7 @@ class _ModulesCardState extends State<ModulesCard> {
                   ),
                 ),
               ),
-              InkWell(
-                overlayColor: isPartner
-                    ? null
-                    : const MaterialStatePropertyAll(transparent),
+              GestureDetector(
                 onTap: () {
                   if (isPartner) {
                     Navigator.of(context)

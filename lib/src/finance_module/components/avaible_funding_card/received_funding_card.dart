@@ -11,11 +11,9 @@ import 'package:provider/provider.dart';
 class ReceivedFundingCard extends StatefulWidget {
   final Finance data;
   final Function()? onClick;
-  final Function()? paymentClick;
   const ReceivedFundingCard({
     super.key,
     this.onClick,
-    this.paymentClick,
     required this.data,
   });
 
@@ -139,7 +137,7 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                     Row(
                       children: [
                         const Text(
-                          'Хүсэлтийн дүн: ',
+                          'Зээл авсан дүн: ',
                           style: TextStyle(
                             color: Color(0xff555555),
                             fontSize: 12,
@@ -178,50 +176,26 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        widget.data.totalScfFeeAmount != null
-                            ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
-                            : 'Нийт шимтгэл:-',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xff555555),
-                        ),
-                      ),
-                    ),
-                    if (widget.paymentClick != null)
-                      Material(
-                        borderRadius: BorderRadius.circular(5),
-                        color: white,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(5),
-                          onTap: widget.paymentClick,
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: source.currentColor, width: 1.3),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/svg/payment.svg',
-                              colorFilter: ColorFilter.mode(
-                                source.currentColor,
-                                BlendMode.srcIn,
-                              ),
-                            ),
+                if (widget.data.totalScfFeeAmount != null)
+                  const SizedBox(
+                    height: 10,
+                  ),
+                if (widget.data.totalScfFeeAmount != null)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.data.totalScfFeeAmount != null
+                              ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
+                              : 'Нийт шимтгэл:-',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Color(0xff555555),
                           ),
                         ),
-                      ),
-                  ],
-                ),
+                      )
+                    ],
+                  ),
               ],
             ),
           ),

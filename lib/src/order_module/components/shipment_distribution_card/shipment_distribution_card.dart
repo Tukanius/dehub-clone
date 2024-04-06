@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -10,8 +11,10 @@ class ShipmentDistributionCard extends StatefulWidget {
   final List<Order> lines;
   final Order data;
   final String deliveryNoteId;
+  final ListenController listenController;
   const ShipmentDistributionCard({
     super.key,
+    required this.listenController,
     required this.deliveryNoteId,
     required this.data,
     required this.lines,
@@ -31,6 +34,7 @@ class _ShipmentDistributionCardState extends State<ShipmentDistributionCard> {
     data.loadingDate = date.toString();
     data.deliveryNoteId = widget.deliveryNoteId;
     await OrderApi().pullSheetCreate(data);
+    widget.listenController.changeVariable('qwer');
     showCustomDialog(
       context,
       "Амжилттай хүргэлт хуваариллаа",

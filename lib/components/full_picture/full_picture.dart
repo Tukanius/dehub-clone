@@ -55,13 +55,19 @@ class _FullPictureState extends State<FullPicture> {
               },
               children: widget.pictures
                   .map(
-                    (e) => Dismissible(
-                      key: GlobalKey(),
-                      direction: DismissDirection.vertical,
-                      onDismissed: (direction) {
-                        Navigator.of(context).pop();
-                      },
-                      child: Image.network(e, fit: BoxFit.contain),
+                    (e) => InteractiveViewer(
+                      minScale: 1,
+                      maxScale: 2,
+                      panEnabled: false,
+                      boundaryMargin: const EdgeInsets.all(100),
+                      child: Dismissible(
+                        key: GlobalKey(),
+                        direction: DismissDirection.vertical,
+                        onDismissed: (direction) {
+                          Navigator.of(context).pop();
+                        },
+                        child: Image.network(e, fit: BoxFit.contain),
+                      ),
                     ),
                   )
                   .toList(),

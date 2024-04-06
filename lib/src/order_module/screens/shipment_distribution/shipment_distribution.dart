@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/order_module/components/shipment_distribution_card/shipment_distribution_card.dart';
 import 'package:dehub/models/order.dart';
@@ -8,16 +9,20 @@ import 'package:after_layout/after_layout.dart';
 
 class ShipmentDistributionArguments {
   String id;
+  ListenController listenController;
   ShipmentDistributionArguments({
     required this.id,
+    required this.listenController,
   });
 }
 
 class ShipmentDistribution extends StatefulWidget {
-  final String id;
   static const routeName = '/ShipmentDistribution';
+  final String id;
+  final ListenController listenController;
   const ShipmentDistribution({
     super.key,
+    required this.listenController,
     required this.id,
   });
 
@@ -70,6 +75,7 @@ class _ShipmentDistributionState extends State<ShipmentDistribution>
                                   deliveryNoteId: approve.deliveryNote!.id!,
                                   data: data,
                                   lines: data.lines!,
+                                  listenController: widget.listenController,
                                 ),
                               )
                               .toList(),

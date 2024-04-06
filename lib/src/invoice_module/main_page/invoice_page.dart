@@ -27,7 +27,8 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await Provider.of<GeneralProvider>(context, listen: false).init(true);
+    await Provider.of<GeneralProvider>(context, listen: false)
+        .invoiceInit(true);
     await Provider.of<UserProvider>(context, listen: false).invoice(true);
     setState(() {
       isLoading = false;
@@ -54,7 +55,6 @@ class _InvoicepageState extends State<Invoicepage> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

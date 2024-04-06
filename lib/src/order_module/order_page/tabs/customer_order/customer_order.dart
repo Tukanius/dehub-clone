@@ -47,7 +47,7 @@ class _CustomerOrderState extends State<CustomerOrder>
     return Scaffold(
       floatingActionButton: user.currentBusiness?.type == "SUPPLIER"
           ? source.backorderList.isNotEmpty
-              ? GestureDetector(
+              ? InkWell(
                   onTap: () {
                     Navigator.of(context).pushNamed(
                       CreateBackOrder.routeName,

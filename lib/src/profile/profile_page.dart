@@ -166,28 +166,29 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            changePage(1);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(color: grey3, width: 0.5),
-                              color:
-                                  tabController.index == 1 ? menuBack : white,
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/svg/hospital.svg',
-                              colorFilter: ColorFilter.mode(
-                                  tabController.index != 1 ? grey3 : white,
-                                  BlendMode.srcIn),
+                        if (user.loginType == "PARTNER")
+                          GestureDetector(
+                            onTap: () {
+                              changePage(1);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                border: Border.all(color: grey3, width: 0.5),
+                                color:
+                                    tabController.index == 1 ? menuBack : white,
+                              ),
+                              child: SvgPicture.asset(
+                                'assets/svg/hospital.svg',
+                                colorFilter: ColorFilter.mode(
+                                    tabController.index != 1 ? grey3 : white,
+                                    BlendMode.srcIn),
+                              ),
                             ),
                           ),
-                        ),
                         GestureDetector(
                           onTap: () {
                             changePage(2);

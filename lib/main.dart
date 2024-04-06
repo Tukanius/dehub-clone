@@ -1454,6 +1454,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return ShipmentDistribution(
                         id: arguments.id,
+                        listenController: arguments.listenController,
                       );
                     });
                   case SetDeliveryDistribution.routeName:
@@ -1462,6 +1463,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return SetDeliveryDistribution(
                         data: arguments.data,
+                        listenController: arguments.listenController,
                       );
                     });
                   case DeliveryPage.routeName:
@@ -1515,6 +1517,7 @@ class MyApp extends StatelessWidget {
                       return RoleAssign(
                         id: arguments.id,
                         data: arguments.data,
+                        listenController: arguments.listenController,
                       );
                     });
                   case OrderSendPage.routeName:
@@ -1911,9 +1914,9 @@ class MyApp extends StatelessWidget {
     return PopScope(
       canPop: shouldPop,
       child: Scaffold(
-        backgroundColor: Colors.black.withOpacity(0.3),
+        backgroundColor: backgroundColor,
         body: Container(
-          color: Colors.black,
+          color: backgroundColor,
           child: SafeArea(
             bottom: false,
             top: false,

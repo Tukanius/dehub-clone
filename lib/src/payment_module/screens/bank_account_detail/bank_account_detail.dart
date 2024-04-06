@@ -130,6 +130,7 @@ class BankAccountDetailState extends State<BankAccountDetail>
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
+                        useSafeArea: true,
                         builder: (context) => UpdateAccountSheet(
                           shortName: get.shortName!,
                           isDefault: get.isDefault ?? false,

@@ -101,12 +101,6 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  supplier(String value, String id) {
-    product.supplierName = value;
-    product.supplierId = id;
-    notifyListeners();
-  }
-
   manufacturer(String value, String id) {
     product.manufacturerName = value;
     product.manufacturerId = id;
@@ -196,7 +190,7 @@ class InventoryProvider extends ChangeNotifier {
   }
 
   units(String value, String id) {
-    product.unitId = id;
+    product.baseUnitId = id;
     product.unitName = value;
     notifyListeners();
   }

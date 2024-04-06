@@ -10,8 +10,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
-GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
-
 class UpdateAccountSheet extends StatefulWidget {
   final String shortName;
   final bool isDefault;
@@ -31,6 +29,7 @@ class UpdateAccountSheet extends StatefulWidget {
 
 class _UpdateAccountSheetState extends State<UpdateAccountSheet> {
   bool isDefault = false;
+  GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -65,126 +64,126 @@ class _UpdateAccountSheetState extends State<UpdateAccountSheet> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         decoration: const BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Дансны мэдээлэл засах',
-              style: TextStyle(
-                color: grey3,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: FormBuilder(
-                  key: fbkey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: const Text('Дансны товч нэр'),
+            FormBuilder(
+              key: fbkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: const Text(
+                      'Дансны мэдээлэл засах',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w500,
                       ),
-                      FormTextField(
-                        name: 'shortName',
-                        initialValue: widget.shortName,
-                        decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide(
-                              color: grey3.withOpacity(0.3),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          isDense: true,
-                          hintText: "Дансны товч нэр оруулна уу",
-                          fillColor: white,
-                          filled: true,
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: const Text('Дансны товч нэр'),
+                  ),
+                  FormTextField(
+                    name: 'shortName',
+                    initialValue: widget.shortName,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide(
+                          color: grey3.withOpacity(0.3),
                         ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                              errorText: 'Заавал оруулна '),
-                        ]),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
-                        child: const Text('Үндсэн данс эсэх'),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        borderSide: BorderSide.none,
                       ),
-                      Row(
-                        children: [
-                          Checkbox(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            activeColor: white,
-                            fillColor: MaterialStateProperty.resolveWith(
-                                (states) => isDefault ? paymentColor : white),
-                            checkColor: white,
-                            value: isDefault,
-                            onChanged: (value) {
-                              setState(() {
-                                isDefault = !isDefault;
-                              });
-                            },
-                          ),
-                          Text(isDefault ? 'Тийм' : "Үгүй"),
-                        ],
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      isDense: true,
+                      hintText: "Дансны товч нэр оруулна уу",
+                      fillColor: white,
+                      filled: true,
+                    ),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна '),
+                    ]),
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: const Text('Үндсэн данс эсэх'),
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        activeColor: white,
+                        fillColor: MaterialStateProperty.resolveWith(
+                            (states) => isDefault ? paymentColor : white),
+                        checkColor: white,
+                        value: isDefault,
+                        onChanged: (value) {
+                          setState(() {
+                            isDefault = !isDefault;
+                          });
+                        },
                       ),
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 25,
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: CustomButton(
-                              onClick: () {
-                                Navigator.of(context).pop();
-                              },
-                              borderColor: grey2,
-                              labelText: 'Болих',
-                              labelColor: white,
-                              textColor: buttonColor,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            flex: 6,
-                            child: CustomButton(
-                              onClick: onSubmit,
-                              labelColor: paymentColor,
-                              labelText: 'Хадгалах',
-                              textColor: white,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 25,
-                          ),
-                        ],
-                      )
+                      Text(isDefault ? 'Тийм' : "Үгүй"),
                     ],
                   ),
-                ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 25),
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: CustomButton(
+                      onClick: () {
+                        Navigator.of(context).pop();
+                      },
+                      borderColor: grey2,
+                      labelText: 'Болих',
+                      labelColor: white,
+                      textColor: buttonColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    flex: 6,
+                    child: CustomButton(
+                      onClick: onSubmit,
+                      labelColor: paymentColor,
+                      labelText: 'Хадгалах',
+                      textColor: white,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
               ),
             ),
           ],

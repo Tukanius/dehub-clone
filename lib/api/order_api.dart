@@ -15,15 +15,10 @@ class OrderApi extends HttpRequest {
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> variantSelect(
-      String? orderType,
-      String? businessId,
-      String? query,
-      String? supplierId,
-      String? categoryId,
-      String? brandId) async {
+  Future<Result> variantSelect(String? orderType, String? businessId,
+      String? query, String? categoryId, String? brandId) async {
     var res = await get(
-        '/order/variant/select?orderType=$orderType&businessId=$businessId&query=$query&categoryId=$categoryId&supplierId=$supplierId&brandId=$brandId&limit=',
+        '/order/variant/select?orderType=$orderType&businessId=$businessId&query=$query&categoryId=$categoryId&brandId=$brandId&limit=',
         "INVENTORY",
         true);
     return Result.fromJson(res, Order.fromJson);

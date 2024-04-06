@@ -62,6 +62,7 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
       respond.accept = true;
       respond.responseMessage = 'accept';
       await BusinessApi().respond(respond, widget.id);
+      widget.listenController.changeVariable('refresh');
       showCustomDialog(
         context,
         "Амжилттай зөвшөөрлөө",
@@ -71,7 +72,6 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
           Navigator.of(context).pop();
         },
       );
-      widget.listenController.changeVariable('refresh');
       setState(() {
         isLoading = false;
       });

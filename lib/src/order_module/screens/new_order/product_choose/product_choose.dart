@@ -66,7 +66,6 @@ class _ProductChooseState extends State<ProductChoose>
         widget.businessId,
         query,
         '',
-        '',
         '');
     category = await InventoryApi().category(
         user.currentBusiness?.type == "SUPPLIER" ? "SALES" : "PURCHASE",
@@ -146,7 +145,6 @@ class _ProductChooseState extends State<ProductChoose>
                                                 : "PURCHASE",
                                             widget.businessId,
                                             query,
-                                            '',
                                             '${e.id}',
                                             '');
                                         setState(() {

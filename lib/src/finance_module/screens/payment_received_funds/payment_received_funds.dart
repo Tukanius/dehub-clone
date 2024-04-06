@@ -50,11 +50,7 @@ class _PaymentReceivedFundsState extends State<PaymentReceivedFunds>
   afterFirstLayout(BuildContext context) async {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     await source.clearData();
-    if (widget.data == null) {
-      finance = await FinanceApi().requestGet(source.url, widget.id!, 'lbf');
-    } else {
-      finance = widget.data!;
-    }
+    finance = widget.data!;
     setState(() {
       isLoading = false;
     });

@@ -222,6 +222,7 @@ class PaymentRegisterState extends State<PaymentRegister>
                               inputType: TextInputType.number,
                               fontSize: 14,
                               textAlign: TextAlign.end,
+                              readOnly: selected.isNotEmpty,
                               name: "asdf",
                               onChanged: (value) {
                                 setState(() {

@@ -40,6 +40,10 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     createdAt: json['createdAt'] != null
         ? DateTime.parse(json['createdAt'].toString())
         : null,
+    openDate: json['openDate'] != null ? json['openDate'] as String : null,
+    accountCategory: json['accountCategory'] != null
+        ? json['accountCategory'] as String
+        : null,
     updatedAt: json['updatedAt'] != null
         ? DateTime.parse(json['updatedAt'].toString())
         : null,
@@ -68,12 +72,20 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? json['buyerPenaltyType'] as String
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
+    periodInMonths: json['periodInMonths'] != null
+        ? json['periodInMonths'] as String
+        : null,
+    periodInDays:
+        json['periodInDays'] != null ? json['periodInDays'] as String : null,
     participantStatus: json['participantStatus'] != null
         ? json['participantStatus'] as String
         : null,
     lbfAccount:
         json['lbfAccount'] != null ? json['lbfAccount'] as String : null,
     accountId: json['accountId'] != null ? json['accountId'] as String : null,
+    nextInstallmentDueDate: json['nextInstallmentDueDate'] != null
+        ? json['nextInstallmentDueDate'] as String
+        : null,
     invoiceRef:
         json['invoiceRef'] != null ? json['invoiceRef'] as String : null,
     lbfProgramId:
@@ -134,6 +146,8 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         : null,
     date: json['date'] != null ? json['date'] as String : null,
     regNumber: json['regNumber'] != null ? json['regNumber'] as String : null,
+    maturityDate:
+        json['maturityDate'] != null ? json['maturityDate'] as String : null,
     partnerRef:
         json['partnerRef'] != null ? json['partnerRef'] as String : null,
     overdueStatus:
@@ -141,12 +155,18 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
     isRecalled: json['isRecalled'] != null ? json['isRecalled'] as bool : null,
     email: json['email'] != null ? json['email'] as String : null,
     password: json['password'] != null ? json['password'] as String : null,
+    accountName:
+        json['accountName'] != null ? json['accountName'] as String : null,
     profileName:
         json['profileName'] != null ? json['profileName'] as String : null,
     accessToken:
         json['accessToken'] != null ? json['accessToken'] as String : null,
     parentRefCode:
         json['parentRefCode'] != null ? json['parentRefCode'] as String : null,
+    payOffAmount:
+        json['payOffAmount'] != null ? json['payOffAmount'] as String : null,
+    overdueAmount:
+        json['overdueAmount'] != null ? json['overdueAmount'] as String : null,
     invCount: json['invCount'] != null
         ? double.parse(json['invCount'].toString())
         : null,
@@ -738,6 +758,28 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.debtLimitStartDate != null) {
     json['debtLimitStartDate'] = instance.debtLimitStartDate;
   }
+  if (instance.periodInDays != null) {
+    json['periodInDays'] = instance.periodInDays;
+  }
+  if (instance.periodInMonths != null) {
+    json['periodInMonths'] = instance.periodInMonths;
+  }
+  if (instance.accountName != null) {
+    json['accountName'] = instance.accountName;
+  }
+  if (instance.overdueAmount != null) {
+    json['overdueAmount'] = instance.overdueAmount;
+  }
+  if (instance.payOffAmount != null) {
+    json['payOffAmount'] = instance.payOffAmount;
+  }
+  if (instance.accountCategory != null) {
+    json['accountCategory'] = instance.accountCategory;
+  }
+  if (instance.openDate != null) json['openDate'] = instance.openDate;
+  if (instance.maturityDate != null) {
+    json['maturityDate'] = instance.maturityDate;
+  }
   if (instance.businessIds != null) {
     json['businessIds'] = instance.businessIds;
   }
@@ -771,6 +813,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
   if (instance.areaRegion != null) json['areaRegion'] = instance.areaRegion;
   if (instance.numberSurvey != null) {
     json['numberSurvey'] = instance.numberSurvey;
+  }
+  if (instance.nextInstallmentDueDate != null) {
+    json['nextInstallmentDueDate'] = instance.nextInstallmentDueDate;
   }
   if (instance.byInterval != null) json['byInterval'] = instance.byInterval;
   if (instance.byProgram != null) json['byProgram'] = instance.byProgram;

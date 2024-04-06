@@ -137,8 +137,10 @@ class User {
   User? financeRole;
   String? financeRoleStatus;
   String? bank;
+  List<String>? roles = [];
 
   User({
+    this.roles,
     this.clientCode,
     this.bank,
     this.financeRoleStatus,

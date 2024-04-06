@@ -8,7 +8,6 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/brand_sheet.dart';
-import 'package:dehub/src/product_module/screens/new_product/sheet/supplier_sheet.dart';
 
 class BrandForm extends StatefulWidget {
   final BuildContext context;
@@ -44,24 +43,6 @@ class _BrandFormState extends State<BrandForm> {
                 useSafeArea: true,
                 builder: (context) {
                   return const BrandSheet();
-                },
-              );
-            },
-          ),
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: "Нийлүүлэгч",
-            secondText: source.product.supplierName ?? 'Сонгох',
-            secondTextColor: productColor,
-            arrowColor: productColor,
-            onClick: () {
-              FocusScope.of(widget.context).unfocus();
-              showModalBottomSheet(
-                context: context,
-                useSafeArea: true,
-                builder: (context) {
-                  return const SupplierSheet();
                 },
               );
             },

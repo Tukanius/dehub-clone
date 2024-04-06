@@ -1,5 +1,6 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
@@ -17,16 +18,20 @@ import 'package:after_layout/after_layout.dart';
 
 class SetDeliveryDistributionArguments {
   Order data;
+  ListenController listenController;
   SetDeliveryDistributionArguments({
     required this.data,
+    required this.listenController,
   });
 }
 
 class SetDeliveryDistribution extends StatefulWidget {
   final Order data;
+  final ListenController listenController;
   static const routeName = '/SetDeliveryDistribution';
   const SetDeliveryDistribution({
     super.key,
+    required this.listenController,
     required this.data,
   });
 
@@ -56,6 +61,7 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
       data.loadingDate = endDate.toString();
       data.staffId = staffId;
       await OrderApi().deliveryManagementAssign(data, widget.data.id!);
+      widget.listenController.changeVariable('asdf');
       showCustomDialog(
         context,
         "Амжилттай хуваариллаа",

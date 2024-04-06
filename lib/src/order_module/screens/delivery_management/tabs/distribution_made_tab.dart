@@ -1,4 +1,5 @@
 import 'package:dehub/api/order_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/order_module/components/delivery_management_card/delivery_management_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -25,6 +26,7 @@ class _DistributionMadeTabState extends State<DistributionMadeTab>
   Result order = Result(count: 0, rows: []);
   bool isLoading = true;
   bool startAnimation = false;
+  ListenController listenController = ListenController();
 
   void onLoading() async {
     setState(() {
@@ -65,6 +67,17 @@ class _DistributionMadeTabState extends State<DistributionMadeTab>
   @override
   afterFirstLayout(BuildContext context) {
     list(page, limit);
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit);
+    });
+    super.initState();
   }
 
   @override
@@ -112,6 +125,8 @@ class _DistributionMadeTabState extends State<DistributionMadeTab>
                                             arguments:
                                                 ShipmentDistributionArguments(
                                               id: data.id,
+                                              listenController:
+                                                  listenController,
                                             ),
                                           );
                                         },

@@ -58,13 +58,13 @@ class _SetClientStaffState extends State<SetClientStaff> {
           businessStaffDesc: textController.text,
         ),
       );
+      widget.listenController.changeVariable('setClientStaff');
       loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
         true,
         onPressed: () {
-          widget.listenController.changeVariable('setClientStaff');
           Navigator.of(context).pop();
         },
       );

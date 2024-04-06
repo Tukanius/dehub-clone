@@ -10,7 +10,6 @@ import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AccountInformation extends StatefulWidget {
@@ -43,14 +42,17 @@ class _AccountInformationState extends State<AccountInformation> {
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FieldCard(
-            paddingHorizontal: 15,
-            paddingVertical: 10,
-            labelText: 'Дансны дугаар',
-            secondText: '${widget.data.accountNumber}',
-            color: white,
-            secondTextColor: source.currentColor,
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: const Text(
+              'Харилцагчийн мэдээлэл',
+              style: TextStyle(
+                color: grey3,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
           FieldCard(
             paddingHorizontal: 15,
@@ -63,20 +65,20 @@ class _AccountInformationState extends State<AccountInformation> {
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Харилцагчийн нэр',
+            labelText: 'Татвар төлөгчийн дугаар',
             secondText: user.currentBusiness?.type == "SUPPLIER"
-                ? '${widget.data.invoice?.buyer?.profileName}'
-                : '${widget.data.invoice?.supplier?.profileName}',
+                ? '${widget.data.invoice?.buyer?.regNumber}'
+                : '${widget.data.invoice?.supplier?.regNumber}',
             color: white,
             secondTextColor: source.currentColor,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Татвар төлөгчийн дугаар',
+            labelText: 'Харилцагчийн нэр',
             secondText: user.currentBusiness?.type == "SUPPLIER"
-                ? '${widget.data.invoice?.buyer?.regNumber}'
-                : '${widget.data.invoice?.supplier?.regNumber}',
+                ? '${widget.data.invoice?.buyer?.profileName}'
+                : '${widget.data.invoice?.supplier?.profileName}',
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -103,6 +105,14 @@ class _AccountInformationState extends State<AccountInformation> {
             thirdText: user.currentBusiness?.type == "SUPPLIER"
                 ? '${widget.data.invoice?.buyer?.profileName}'
                 : '${widget.data.invoice?.supplier?.profileName}',
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Хүссэн ажилтан',
+            secondText: "SCF/DCF ажилтан",
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -144,33 +154,105 @@ class _AccountInformationState extends State<AccountInformation> {
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Олгосон огноо',
-            secondText: DateFormat('yyyy-MM-dd HH:mm')
-                .format(widget.data.invoice!.createdAt!),
+            labelText: 'Хүлээн авсан данс',
+            secondText: user.currentBusiness?.type == "SUPPLIER"
+                ? "${widget.data.invoice?.supplierAccount?.number}, "
+                : "${widget.data.invoice?.buyerAccount?.number}, ",
+            thirdText: user.currentBusiness?.type == "SUPPLIER"
+                ? "${widget.data.invoice?.supplierAccount?.name}"
+                : "${widget.data.invoice?.buyerAccount?.name}",
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: const Text(
+              'Зээлийн дансны мэдээлэл',
+              style: TextStyle(
+                color: grey3,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Дансны дугаар',
+            secondText: '${widget.data.accountNumber}',
             color: white,
             secondTextColor: source.currentColor,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Хүлээн авах данс',
-            secondText: widget.data.accountNumber,
+            labelText: 'Дансны нэр',
+            secondText: '${widget.data.accountName}',
             color: white,
             secondTextColor: source.currentColor,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Дансны төлөв',
-            secondText: "НЭЭЛТТЭЙ",
+            labelText: 'Бүтээгдэхүүний нэр',
+            secondText: '${widget.data.accountCategory}',
             color: white,
             secondTextColor: source.currentColor,
           ),
           FieldCard(
             paddingHorizontal: 15,
             paddingVertical: 10,
-            labelText: 'Хүссэн ажилтан',
-            secondText: "SCF/DCF ажилтан",
+            labelText: 'Валют',
+            secondText: currency().name,
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Данс нээсэн огноо',
+            secondText: widget.data.openDate,
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Данс хаагдах хугацаа',
+            secondText: widget.data.maturityDate,
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Хугацаа сараар',
+            secondText: widget.data.periodInMonths,
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Дараагийн өр төлөх хугацаа',
+            secondText: widget.data.nextInstallmentDueDate,
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Хугацаа хэтэрсэн дүн',
+            secondText: Utils().formatCurrency(widget.data.overdueAmount) +
+                currency().symbol,
+            color: white,
+            secondTextColor: source.currentColor,
+          ),
+          FieldCard(
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            labelText: 'Нийт үлдэгдэл',
+            secondText: Utils().formatCurrency(widget.data.payOffAmount) +
+                currency().symbol,
             color: white,
             secondTextColor: source.currentColor,
           ),

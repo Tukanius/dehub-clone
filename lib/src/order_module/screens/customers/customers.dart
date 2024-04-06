@@ -87,88 +87,93 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: white,
-        surfaceTintColor: white,
-        iconTheme: const IconThemeData(color: orderColor),
-        title: Text(
-          user.currentBusiness?.type == "SUPPLIER"
-              ? 'Харилцагчийн жагсаалт'
-              : 'Нийлүүлэгчийн жагсаалт',
-          style: const TextStyle(
-            color: buttonColor,
-            fontSize: 17,
-            fontWeight: FontWeight.w500,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: white,
+          surfaceTintColor: white,
+          iconTheme: const IconThemeData(color: orderColor),
+          title: Text(
+            user.currentBusiness?.type == "SUPPLIER"
+                ? 'Харилцагчийн жагсаалт'
+                : 'Нийлүүлэгчийн жагсаалт',
+            style: const TextStyle(
+              color: buttonColor,
+              fontSize: 17,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          centerTitle: true,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(2.0),
+            child: Container(
+              color: orderColor,
+              height: 1.0,
+            ),
           ),
         ),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
-          child: Container(
-            color: orderColor,
-            height: 1.0,
-          ),
-        ),
-      ),
-      body: isLoading == true
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: orderColor,
-              ),
-            )
-          : Column(
-              children: [
-                SearchButton(
+        body: isLoading == true
+            ? const Center(
+                child: CircularProgressIndicator(
                   color: orderColor,
-                  onChange: (query) {
-                    onChange(query);
-                  },
                 ),
-                Expanded(
-                  child: Refresher(
-                    refreshController: refreshController,
-                    onLoading:
-                        order.rows!.length == order.count ? null : onLoading,
-                    onRefresh: onRefresh,
+              )
+            : Column(
+                children: [
+                  SearchButton(
                     color: orderColor,
-                    child: SingleChildScrollView(
-                      child: isSubmit == false
-                          ? order.rows!.isNotEmpty
-                              ? Column(
-                                  children: order.rows!
-                                      .map(
-                                        (data) => OrderCustomerCard(
-                                          index: order.rows!.indexOf(data),
-                                          startAnimation: startAnimation,
-                                          data: data,
-                                          onClick: () {
-                                            Navigator.of(context).pushNamed(
-                                              NewOrder.routeName,
-                                              arguments: NewOrderArguments(
-                                                  id: data.id),
-                                            );
-                                          },
-                                        ),
-                                      )
-                                      .toList(),
-                                )
-                              : const NotFound(
-                                  module: "ORDER",
-                                  labelText: "Харилцагч олдсонгүй",
-                                )
-                          : const Center(
-                              child: CircularProgressIndicator(
-                                color: orderColor,
+                    onChange: (query) {
+                      onChange(query);
+                    },
+                  ),
+                  Expanded(
+                    child: Refresher(
+                      refreshController: refreshController,
+                      onLoading:
+                          order.rows!.length == order.count ? null : onLoading,
+                      onRefresh: onRefresh,
+                      color: orderColor,
+                      child: SingleChildScrollView(
+                        child: isSubmit == false
+                            ? order.rows!.isNotEmpty
+                                ? Column(
+                                    children: order.rows!
+                                        .map(
+                                          (data) => OrderCustomerCard(
+                                            index: order.rows!.indexOf(data),
+                                            startAnimation: startAnimation,
+                                            data: data,
+                                            onClick: () {
+                                              Navigator.of(context).pushNamed(
+                                                NewOrder.routeName,
+                                                arguments: NewOrderArguments(
+                                                    id: data.id),
+                                              );
+                                            },
+                                          ),
+                                        )
+                                        .toList(),
+                                  )
+                                : const NotFound(
+                                    module: "ORDER",
+                                    labelText: "Харилцагч олдсонгүй",
+                                  )
+                            : const Center(
+                                child: CircularProgressIndicator(
+                                  color: orderColor,
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 }

@@ -252,6 +252,8 @@ class Finance {
   String? lbfAccount;
   String? accountId;
   String? accountNumber;
+  String? accountName;
+  String? accountCategory;
   List<Finance>? payments;
   String? payerAccName;
   String? payerAccNum;
@@ -281,12 +283,27 @@ class Finance {
   String? discountType;
   double? discountPercent;
   List<String>? businessIds;
-
   List<Finance>? byProgram;
   List<Finance>? byInterval;
   List<Stats>? numberSurvey;
+  String? openDate;
+  String? maturityDate;
+  String? periodInDays;
+  String? periodInMonths;
+  String? nextInstallmentDueDate;
+  String? overdueAmount;
+  String? payOffAmount;
 
   Finance({
+    this.maturityDate,
+    this.overdueAmount,
+    this.payOffAmount,
+    this.nextInstallmentDueDate,
+    this.periodInDays,
+    this.periodInMonths,
+    this.accountCategory,
+    this.openDate,
+    this.accountName,
     this.byProgram,
     this.byInterval,
     this.numberSurvey,

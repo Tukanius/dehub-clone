@@ -64,13 +64,13 @@ class _SetDistributionAreaState extends State<SetDistributionArea> {
           areaDesc: textController.text,
         ),
       );
+      widget.listenController.changeVariable('SetDistributionArea');
       loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай хадгаллаа",
         true,
         onPressed: () {
-          widget.listenController.changeVariable('SetDistributionArea');
           Navigator.of(context).pop();
         },
       );

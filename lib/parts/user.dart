@@ -44,6 +44,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
             .map((e) => BusinessStaffs.fromJson(e))
             .toList()
         : null,
+    roles: json['roles'] != null
+        ? (json['roles'] as List).map((e) => e as String).toList()
+        : null,
     urls: json['urls'] != null
         ? (json['urls'] as List).map((e) => e as String).toList()
         : null,
@@ -275,6 +278,8 @@ Map<String, dynamic> _$UserToJson(User instance) {
   if (instance.danVerifiedDate != null) {
     json['danVerifiedDate'] = instance.danVerifiedDate;
   }
+  if (instance.roles != null) json['roles'] = instance.roles;
+
   if (instance.clientCode != null) {
     json['clientCode'] = instance.clientCode;
   }
