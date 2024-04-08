@@ -207,67 +207,77 @@ class _SetPriceState extends State<SetPrice> with AfterLayoutMixin {
                               const SizedBox(
                                 width: 10,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Нэр: "),
-                                      Text(
-                                        '${widget.data.nameMon}',
-                                        style: const TextStyle(
-                                            color: productColor),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("DeHUB код: "),
-                                      Text(
-                                        '${widget.data.refCode}',
-                                        style: const TextStyle(
-                                            color: productColor),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("SKU код: "),
-                                      Text(
-                                        '${widget.data.skuCode}',
-                                        style: const TextStyle(
-                                            color: productColor),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Bar код: "),
-                                      Text(
-                                        '${widget.data.barCode}',
-                                        style: const TextStyle(
-                                            color: productColor),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Нэр: "),
+                                        Expanded(
+                                          child: Text(
+                                            '${widget.data.nameMon}',
+                                            style: const TextStyle(
+                                                color: productColor),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("DeHUB код: "),
+                                        Expanded(
+                                          child: Text(
+                                            '${widget.data.refCode}',
+                                            style: const TextStyle(
+                                                color: productColor),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("SKU код: "),
+                                        Expanded(
+                                          child: Text(
+                                            '${widget.data.skuCode}',
+                                            style: const TextStyle(
+                                                color: productColor),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text("Bar код: "),
+                                        Expanded(
+                                          child: Text(
+                                            '${widget.data.barCode}',
+                                            style: const TextStyle(
+                                                color: productColor),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

@@ -1,8 +1,11 @@
 import 'package:dehub/components/custom_switch/custom_switch.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class BankCard extends StatefulWidget {
   final User data;
@@ -18,8 +21,18 @@ class BankCard extends StatefulWidget {
 }
 
 class _BankCardState extends State<BankCard> {
+  General general = General();
+
+  financeRoleStatus() {
+    final res = general.financeRoleStatus!.firstWhere((element) =>
+        element.code == widget.data.financeRole?.financeRoleStatus);
+    return res.name;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general = Provider.of<GeneralProvider>(context, listen: true).userGeneral;
+
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -123,7 +136,7 @@ class _BankCardState extends State<BankCard> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 3),
                         child: Text(
-                          '${widget.data.financeRole?.financeRoleStatus}',
+                          '${financeRoleStatus()}',
                           style: const TextStyle(
                             color: Colors.blue,
                             fontSize: 12,

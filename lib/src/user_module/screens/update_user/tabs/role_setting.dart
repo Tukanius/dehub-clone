@@ -2,9 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
-import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/general.dart';
-import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/src/user_module/screens/role_assign/role_assign.dart';
@@ -27,44 +25,19 @@ class RoleSetting extends StatefulWidget {
 
 class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
   final RefreshController refreshController = RefreshController();
-  Result roles = Result(rows: [], count: 0);
+  User get = User();
   General general = General();
   bool isLoading = true;
   int limit = 10;
   int page = 1;
   ListenController listenController = ListenController();
 
-  list(page, limit) async {
-    Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(userId: widget.data!.id);
-    roles = await UserApi()
-        .roleList(ResultArguments(offset: offset, filter: filter));
+  @override
+  afterFirstLayout(BuildContext context) async {
+    get = await UserApi().userGet(widget.data!.id!);
     setState(() {
       isLoading = false;
     });
-  }
-
-  onRefresh() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    setState(() {
-      isLoading = true;
-      limit = 10;
-    });
-    await list(page, limit);
-    refreshController.refreshCompleted();
-  }
-
-  onLoading() async {
-    setState(() {
-      limit += 10;
-    });
-    await list(page, limit);
-    refreshController.loadComplete();
-  }
-
-  @override
-  afterFirstLayout(BuildContext context) async {
-    list(page, limit);
   }
 
   usageType() {
@@ -79,7 +52,10 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
       setState(() {
         isLoading = true;
       });
-      await list(page, limit);
+      get = await UserApi().userGet(widget.data!.id!);
+      setState(() {
+        isLoading = false;
+      });
     });
     super.initState();
   }
@@ -112,44 +88,39 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
                 color: userColor,
               ),
             )
-          : Refresher(
-              refreshController: refreshController,
-              onLoading: roles.rows!.length == roles.count ? null : onLoading,
-              onRefresh: onRefresh,
-              color: userColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    roles.rows!.isNotEmpty
-                        ? Column(
-                            children: roles.rows!
-                                .map(
-                                  (data) => RoleCard(
-                                    data: data,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        RoleAssign.routeName,
-                                        arguments: RoleAssignArguments(
-                                          id: widget.data!.id!,
-                                          data: data,
-                                          listenController: listenController,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : const NotFound(
-                            module: 'USER',
-                            labelText: 'Хоосон байна',
-                          ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                  ],
-                ),
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  get.userRoles!.isNotEmpty
+                      ? Column(
+                          children: get.userRoles!
+                              .map(
+                                (data) => RoleCard(
+                                  index: get.userRoles!.indexOf(data),
+                                  data: data,
+                                  onClick: () {
+                                    Navigator.of(context).pushNamed(
+                                      RoleAssign.routeName,
+                                      arguments: RoleAssignArguments(
+                                        id: widget.data!.id!,
+                                        data: data,
+                                        listenController: listenController,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : const NotFound(
+                          module: 'USER',
+                          labelText: 'Хоосон байна',
+                        ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
             ),
     );

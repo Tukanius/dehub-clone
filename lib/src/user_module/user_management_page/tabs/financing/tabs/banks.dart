@@ -60,18 +60,18 @@ class BanksTabState extends State<BanksTab> with AfterLayoutMixin {
                             .map(
                               (e) => BankCard(
                                 data: e,
-                                onClick: e.financeRole == null
-                                    ? () {
-                                        Navigator.of(context).pushNamed(
-                                          FinanceRequest.routeName,
-                                          arguments: FinanceRequestArguments(
-                                            name: e.name,
-                                            bank: e.code,
-                                            listenController: listenController,
-                                          ),
-                                        );
-                                      }
-                                    : () {},
+                                onClick: () {
+                                  if (e.financeRole == null) {
+                                    Navigator.of(context).pushNamed(
+                                      FinanceRequest.routeName,
+                                      arguments: FinanceRequestArguments(
+                                        name: e.name,
+                                        bank: e.code,
+                                        listenController: listenController,
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             )
                             .toList(),

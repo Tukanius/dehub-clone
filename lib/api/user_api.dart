@@ -46,9 +46,9 @@ class UserApi extends HttpRequest {
     return User.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Result> roleList(ResultArguments data) async {
-    var res = await get('/user/role', type, true, data: data.toJson());
-    return Result.fromJson(res, User.fromJson);
+  Future<User> userGet(String id) async {
+    var res = await get('/user/$id', type, true);
+    return User.fromJson(res as Map<String, dynamic>);
   }
 
   Future<User> roleAdd(User data) async {
