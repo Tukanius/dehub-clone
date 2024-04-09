@@ -31,6 +31,7 @@ import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
+import 'package:dehub/src/network_module/screens/add_cod_term/add_cod_term.dart';
 import 'package:dehub/src/order_module/screens/create_back_order/create_back_order.dart';
 import 'package:dehub/src/order_module/screens/customers/customers.dart';
 import 'package:dehub/src/order_module/screens/delivery_management/delivery_management.dart';
@@ -1527,6 +1528,14 @@ class MyApp extends StatelessWidget {
                       return OrderSendPage(
                         onSubmit: arguments.onSubmit,
                         data: arguments.data,
+                      );
+                    });
+                  case AddCodTerm.routeName:
+                    AddCodTermArguments arguments =
+                        settings.arguments as AddCodTermArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return AddCodTerm(
+                        listenController: arguments.listenController,
                       );
                     });
                   case OrderSendCustomer.routeName:

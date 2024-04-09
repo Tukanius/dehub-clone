@@ -194,6 +194,7 @@ class _AdditionalFormState extends State<AdditionalForm> {
                   SizedBox(
                     height: 42,
                     child: FormTextField(
+                      inputType: TextInputType.url,
                       onChanged: (value) {
                         if (value == '') {
                           setState(() {

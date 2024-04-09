@@ -1,6 +1,7 @@
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/invoice_module/components/invoice_additional_line/invoice_additional_line.dart';
 import 'package:dehub/src/invoice_module/components/invoice_product_card/invoice_product_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -34,13 +35,16 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
   User user = User();
 
   approve(bool confirm) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     Invoice approval = Invoice();
     try {
+      loading.loading(true);
       approval = Invoice(
         confirm: confirm,
         respondText: '',
       );
       await InvoiceApi().respond(widget.id, approval);
+      loading.loading(false);
       showCustomDialog(
         context,
         "Амжилттай баталлаа",
@@ -50,16 +54,15 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
         },
       );
     } catch (e) {
-      debugPrint('=========err=========');
-      debugPrint(e.toString());
-      debugPrint('=========err=========');
+      loading.loading(false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    general = Provider.of<GeneralProvider>(context, listen: false).general;
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
+    general =
+        Provider.of<GeneralProvider>(context, listen: false).invoiceGeneral;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -604,7 +607,9 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                               ),
                             ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          approve(false);
+                        },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -619,7 +624,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                                 color: white,
                                 fontSize: 10,
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),

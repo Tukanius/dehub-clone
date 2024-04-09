@@ -18,6 +18,12 @@ BusinessStaffs _$BusinessStaffsFromJson(Map<String, dynamic> json) {
         ? int.parse(json['expireDayCount'].toString())
         : null,
     month: json['month'] != null ? int.parse(json['month'].toString()) : null,
+    confirmationDay: json['confirmationDay'] != null
+        ? int.parse(json['confirmationDay'].toString())
+        : null,
+    advancePercent: json['advancePercent'] != null
+        ? int.parse(json['advancePercent'].toString())
+        : null,
     paymentDay: json['paymentDay'] != null
         ? int.parse(json['paymentDay'].toString())
         : null,
@@ -44,6 +50,12 @@ Map<String, dynamic> _$BusinessStaffsToJson(BusinessStaffs instance) {
   }
   if (instance.expireDayCount != null) {
     json['expireDayCount'] = instance.expireDayCount;
+  }
+  if (instance.confirmationDay != null) {
+    json['confirmationDay'] = instance.confirmationDay;
+  }
+  if (instance.advancePercent != null) {
+    json['advancePercent'] = instance.advancePercent;
   }
   if (instance.month != null) json['month'] = instance.month;
   if (instance.paymentDay != null) json['paymentDay'] = instance.paymentDay;

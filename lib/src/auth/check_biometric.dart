@@ -63,66 +63,75 @@ class CheckBiometricState extends State<CheckBiometric> with AfterLayoutMixin {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-                margin: const EdgeInsets.only(top: 80),
-                height: 110,
-                width: 110,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(45),
-                  color: white,
+            Column(
+              children: [
+                Container(
+                    margin: const EdgeInsets.only(top: 80),
+                    height: 110,
+                    width: 110,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(45),
+                      color: white,
+                    ),
+                    alignment: Alignment.center,
+                    child: bioType == "FACE"
+                        ? SvgPicture.asset(
+                            faceIdIcon,
+                            colorFilter: const ColorFilter.mode(
+                                buttonColor, BlendMode.srcIn),
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          )
+                        : SvgPicture.asset(
+                            fingerPrintIcon,
+                            colorFilter: const ColorFilter.mode(
+                                buttonColor, BlendMode.srcIn),
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          )),
+                const SizedBox(
+                  height: 20,
                 ),
-                alignment: Alignment.center,
-                child: bioType == "FACE"
-                    ? SvgPicture.asset(
-                        faceIdIcon,
-                        colorFilter: const ColorFilter.mode(
-                            buttonColor, BlendMode.srcIn),
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      )
-                    : SvgPicture.asset(
-                        fingerPrintIcon,
-                        colorFilter: const ColorFilter.mode(
-                            buttonColor, BlendMode.srcIn),
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      )),
-            const SizedBox(
-              height: 20,
+                const Text(
+                  "Та тохиргоог идэвхжүүлснээр цаашид апп руу нэвтрэхэд нэвтрэх нэр нууц үг хийх шаардлагагүй.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: buttonColor,
+                  ),
+                ),
+              ],
             ),
-            const Text(
-              "Та тохиргоог идэвхжүүлснээр цаашид апп руу нэвтрэхэд нэвтрэх нэр нууц үг хийх шаардлагагүй.",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: buttonColor,
-              ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            CustomButton(
-              labelColor: buttonColor,
-              labelText: "Зөвшөөрөх",
-              textColor: white,
-              onClick: () {
-                _authenticate();
-              },
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            CustomButton(
-              borderColor: buttonColor,
-              labelColor: backgroundColor,
-              labelText: "Алгасах",
-              textColor: buttonColor,
-              onClick: () {
-                Navigator.of(context).pushNamed(SplashPage.routeName);
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    borderColor: buttonColor,
+                    labelColor: backgroundColor,
+                    labelText: "Алгасах",
+                    textColor: buttonColor,
+                    onClick: () {
+                      Navigator.of(context).pushNamed(SplashPage.routeName);
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: CustomButton(
+                    labelColor: buttonColor,
+                    labelText: "Зөвшөөрөх",
+                    textColor: white,
+                    onClick: () {
+                      _authenticate();
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         ),

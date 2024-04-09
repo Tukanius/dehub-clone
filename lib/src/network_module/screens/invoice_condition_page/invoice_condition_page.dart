@@ -2,6 +2,7 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/src/network_module/screens/add_cod_term/add_cod_term.dart';
 import 'package:dehub/src/product_module/components/invoice_condition_card/invoice_condition_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/reference_information.dart';
@@ -167,7 +168,11 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
                 Navigator.of(context).pushNamed(AddRank.routeName,
                     arguments:
                         AddRankArguments(listenController: listenController));
-              } else if (widget.data.type == "PAYMENT_TERM") {}
+              } else if (widget.data.listType == "COD") {
+                Navigator.of(context).pushNamed(AddCodTerm.routeName,
+                    arguments: AddCodTermArguments(
+                        listenController: listenController));
+              }
             },
           ),
         ],

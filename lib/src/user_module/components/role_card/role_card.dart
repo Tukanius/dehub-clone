@@ -66,7 +66,7 @@ class _RoleCardState extends State<RoleCard> {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: general.roles!.map(
+                  children: widget.data.roles!.map(
                     (role) {
                       return Container(
                         color: transparent,

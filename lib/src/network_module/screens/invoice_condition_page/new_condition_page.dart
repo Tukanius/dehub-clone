@@ -6,9 +6,10 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 class NewConditionPageArguments {
@@ -29,40 +30,27 @@ class NewConditionPage extends StatefulWidget {
 }
 
 class _NewConditionPageState extends State<NewConditionPage> {
-  String currentOption = "INV_NET_X";
-  int? selectedRadioValue;
-  int? index;
-  int? indexMonth;
-  int? indexDay;
   General general = General();
-  BusinessStaffs business = BusinessStaffs();
+  GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
+  int expireDayCount = 0;
 
   onSubmit() async {
-    business.configType = currentOption;
-    business.condition = 'INV_CONFIG';
-    business.expireDayCount = currentOption == "INV_NET_X" ? (index) : null;
-    await BusinessApi().createPaymentTerm(business);
-    widget.listenController.changeVariable('invoiceConditionCreate');
-    showCustomDialog(
-      context,
-      "Төлбөрийн нөхцөл амжилттай нэмлээ",
-      true,
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    selectedRadioValue = 0;
-  }
-
-  setSelectedRadioValue(int value) {
-    setState(() {
-      selectedRadioValue = value;
-    });
+    if (fbkey.currentState!.saveAndValidate()) {
+      BusinessStaffs business = BusinessStaffs();
+      business.configType = "INV_NET_X";
+      business.condition = 'INV_CONFIG';
+      business.expireDayCount = expireDayCount;
+      await BusinessApi().createPaymentTerm(business);
+      widget.listenController.changeVariable('invoiceConditionCreate');
+      showCustomDialog(
+        context,
+        "Төлбөрийн нөхцөл амжилттай нэмлээ",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+    }
   }
 
   @override
@@ -99,155 +87,90 @@ class _NewConditionPageState extends State<NewConditionPage> {
                 ),
               ),
             ),
-            Column(
-              children: general.paymentTermConfigTypes!
-                  .map(
-                    (e) => Container(
-                      color: white,
-                      child: RadioListTile(
-                        title: Text(
-                          '${e.text}',
-                          style: const TextStyle(color: dark, fontSize: 14),
-                        ),
-                        fillColor: MaterialStateColor.resolveWith(
-                            (states) => networkColor),
-                        value: general.paymentTermConfigTypes?.indexOf(e),
-                        groupValue: selectedRadioValue,
-                        onChanged: (value) {
-                          setSelectedRadioValue(value!);
-                          currentOption = e.code.toString();
-                        },
-                      ),
-                    ),
-                  )
-                  .toList(),
+            Container(
+              color: white,
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              child: const Text('Нэхэмжлэх баталснаас хойш ажлын X хоног'),
             ),
-            if (currentOption == "INV_NET_X")
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: const Text(
-                      'Нэмэлт тохиргоо',
-                      style: TextStyle(
-                        color: grey3,
-                        fontWeight: FontWeight.w600,
-                      ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Нэмэлт тохиргоо',
+                    style: TextStyle(
+                      color: grey3,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      showCupertinoModalPopup(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            color: white,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text(
-                                    'Болсон',
-                                    style: TextStyle(color: networkColor),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: CupertinoPicker(
-                                    itemExtent: 30,
-                                    onSelectedItemChanged: (index) {
-                                      setState(() {
-                                        this.index = index;
-                                      });
-                                    },
-                                    children: [
-                                      for (var i = 0; i < 31; i++)
-                                        Center(
-                                          child: Text('$i'),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
+                ),
+                FormBuilder(
+                  key: fbkey,
+                  child: FormTextField(
+                    name: 'expireDayCount',
+                    inputType: TextInputType.number,
+                    onChanged: (value) {
+                      setState(() {
+                        expireDayCount = int.tryParse(value) ?? 0;
+                      });
                     },
-                    child: Container(
-                      color: white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Хоногийн тоо',
-                            style: TextStyle(color: dark),
-                          ),
-                          Row(
-                            children: [
-                              index == null
-                                  ? const Text(
-                                      '0',
-                                      style: TextStyle(color: networkColor),
-                                    )
-                                  : Text(
-                                      '$index',
-                                      style:
-                                          const TextStyle(color: networkColor),
-                                    ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SvgPicture.asset(
-                                'assets/svg/edit.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    networkColor, BlendMode.srcIn),
-                              ),
-                            ],
-                          ),
-                        ],
+                    decoration: const InputDecoration(
+                      fillColor: white,
+                      filled: true,
+                      hintText: 'Хоногийн тоо',
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.zero,
+                        borderSide: BorderSide.none,
                       ),
                     ),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                          errorText: 'Заавал оруулна'),
+                    ]),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
             const SizedBox(
               height: 50,
             ),
             Row(
               children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10, right: 2.5),
-                    child: CustomButton(
-                      borderColor: networkColor,
-                      labelText: 'Буцах',
-                      labelColor: backgroundColor,
-                      textColor: networkColor,
-                      onClick: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
+                const SizedBox(
+                  width: 15,
                 ),
                 Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 2.5, right: 10),
-                    child: CustomButton(
-                      labelColor: networkColor,
-                      labelText: 'Хадгалах',
-                      onClick: () {
-                        onSubmit();
-                      },
-                    ),
+                  flex: 4,
+                  child: CustomButton(
+                    borderColor: networkColor,
+                    labelText: 'Буцах',
+                    labelColor: backgroundColor,
+                    textColor: networkColor,
+                    onClick: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  flex: 6,
+                  child: CustomButton(
+                    labelColor: networkColor,
+                    labelText: 'Хадгалах',
+                    onClick: () {
+                      onSubmit();
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
                 ),
               ],
             ),

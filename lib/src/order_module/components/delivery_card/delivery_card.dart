@@ -85,7 +85,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       const SizedBox(
                         width: 10,
                       ),
-                      user.currentBusiness?.type == "SUPPLIER"
+                      user.currentBusiness?.type == "SUPPLIER" &&
+                              widget.data.order?.type == "SALES"
                           ? Expanded(
                               child: Text(
                                 '${widget.data.receiverBusiness?.profileName}',
@@ -97,7 +98,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                             )
                           : Expanded(
                               child: Text(
-                                '${widget.data.receiverBusiness?.profileName}',
+                                '${widget.data.business?.profileName}',
                                 style: const TextStyle(
                                   color: buttonColor,
                                   fontWeight: FontWeight.bold,

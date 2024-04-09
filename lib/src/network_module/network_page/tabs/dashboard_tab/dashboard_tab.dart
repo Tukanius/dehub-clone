@@ -129,7 +129,6 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).businessUser;
-
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsSCrolled) {
         return <Widget>[

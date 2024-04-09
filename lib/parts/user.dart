@@ -44,6 +44,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
             .map((e) => BusinessStaffs.fromJson(e))
             .toList()
         : null,
+    permissions: json['permissions'] != null
+        ? (json['permissions'] as List).map((e) => User.fromJson(e)).toList()
+        : null,
     roles: json['roles'] != null
         ? (json['roles'] as List).map((e) => User.fromJson(e)).toList()
         : null,
@@ -272,14 +275,31 @@ User _$UserFromJson(Map<String, dynamic> json) {
     name: json['name'] != null ? json['name'] as String : null,
     roleStatus:
         json['roleStatus'] != null ? json['roleStatus'] as String : null,
+    menu: json['menu'] != null ? json['menu'] as String : null,
+    portal: json['portal'] != null ? json['portal'] as String : null,
+    isView: json['isView'] != null ? json['isView'] as bool : null,
+    isCreate: json['isCreate'] != null ? json['isCreate'] as bool : null,
+    isEdit: json['isEdit'] != null ? json['isEdit'] as bool : null,
+    isReview: json['isReview'] != null ? json['isReview'] as bool : null,
+    isDelete: json['isDelete'] != null ? json['isDelete'] as bool : null,
   );
 }
 
 Map<String, dynamic> _$UserToJson(User instance) {
   Map<String, dynamic> json = {};
 
+  if (instance.menu != null) json['menu'] = instance.menu;
+  if (instance.portal != null) json['portal'] = instance.portal;
+  if (instance.isView != null) json['isView'] = instance.isView;
+  if (instance.isCreate != null) json['isCreate'] = instance.isCreate;
+  if (instance.isEdit != null) json['isEdit'] = instance.isEdit;
+  if (instance.isReview != null) json['isReview'] = instance.isReview;
+  if (instance.isDelete != null) json['isDelete'] = instance.isDelete;
   if (instance.danVerifiedDate != null) {
     json['danVerifiedDate'] = instance.danVerifiedDate;
+  }
+  if (instance.permissions != null) {
+    json['permissions'] = instance.permissions;
   }
   if (instance.roleIds != null) json['roleIds'] = instance.roleIds;
   if (instance.roles != null) json['roles'] = instance.roles;

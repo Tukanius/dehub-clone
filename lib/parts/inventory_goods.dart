@@ -23,6 +23,11 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => InventoryGoods.fromJson(e)).toList()
         : null,
+    categoryFields: json['categoryFields'] != null
+        ? (json['categoryFields'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
     tiers: json['tiers'] != null
         ? (json['tiers'] as List)
             .map((e) => InventoryGoods.fromJson(e))
@@ -51,6 +56,8 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
         ? json['adjustmentStatus'] as String
         : null,
     createdAt: json['createdAt'] != null ? json['createdAt'] as String : null,
+    numberUnit:
+        json['numberUnit'] != null ? json['numberUnit'] as String : null,
     priceGroupStatus: json['priceGroupStatus'] != null
         ? json['priceGroupStatus'] as String
         : null,
@@ -604,6 +611,12 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.tiers != null) json['tiers'] = instance.tiers;
   if (instance.variantCount != null) {
     json['variantCount'] = instance.variantCount;
+  }
+  if (instance.categoryFields != null) {
+    json['categoryFields'] = instance.categoryFields;
+  }
+  if (instance.numberUnit != null) {
+    json['numberUnit'] = instance.numberUnit;
   }
   if (instance.priceGroupType != null) {
     json['priceGroupType'] = instance.priceGroupType;

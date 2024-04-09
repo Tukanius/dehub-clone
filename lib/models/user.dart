@@ -139,8 +139,24 @@ class User {
   String? bank;
   List<String>? roleIds = [];
   List<User>? roles;
+  List<User>? permissions;
+  String? menu;
+  String? portal;
+  bool? isView;
+  bool? isCreate;
+  bool? isEdit;
+  bool? isReview;
+  bool? isDelete;
 
   User({
+    this.menu,
+    this.portal,
+    this.isView,
+    this.isCreate,
+    this.isEdit,
+    this.isReview,
+    this.isDelete,
+    this.permissions,
     this.roles,
     this.roleIds,
     this.clientCode,

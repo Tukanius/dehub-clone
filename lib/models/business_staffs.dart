@@ -16,6 +16,8 @@ class BusinessStaffs {
   int? expireDayCount;
   int? month;
   int? paymentDay;
+  int? advancePercent;
+  int? confirmationDay;
   String? name;
   String? parentId;
   String? description;
@@ -24,6 +26,8 @@ class BusinessStaffs {
 
   BusinessStaffs({
     this.configType,
+    this.advancePercent,
+    this.confirmationDay,
     this.condition,
     this.name,
     this.parentId,

@@ -158,7 +158,7 @@ class _MenuPageState extends State<MenuPage> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '${user.email}',
+                                    '${user.phone}',
                                     style: const TextStyle(color: white),
                                   ),
                                 ),

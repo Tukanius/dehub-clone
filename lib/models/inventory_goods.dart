@@ -240,8 +240,12 @@ class InventoryGoods {
   String? perType;
   String? changeType;
   double? perValue;
+  String? numberUnit;
+  List<InventoryGoods>? categoryFields;
 
   InventoryGoods({
+    this.categoryFields,
+    this.numberUnit,
     this.perValue,
     this.perType,
     this.changeType,
