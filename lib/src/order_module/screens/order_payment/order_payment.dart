@@ -1,6 +1,7 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_payment/payment_approval_page.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/qpay_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -45,22 +46,21 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
     });
   }
 
-  // onSubmit() {
-  //   selectedMethod == "B2B"
-  //       ? Navigator.of(context).pushNamed(PaymentApprovalPage.routeName,
-  //           arguments: PaymentApprovalPageArguments(
-  //             method: selectedMethod.toString(),
-  //             id: widget.id,
-  //             refCode: widget.data.refCode,
-  //             creditAccountId: selectedValue.toString(),
-  //             amount: double.parse(textController.text),
-  //           ))
-  //       : Navigator.of(context).pushNamed(QpayPage.routeName);
-  // }
+  onSubmit() {
+    selectedMethod == "B2B"
+        ? Navigator.of(context).pushNamed(
+            PaymentApprovalPage.routeName,
+            arguments: PaymentApprovalPageArguments(
+              amount: double.parse(textController.text),
+              data: Invoice(),
+            ),
+          )
+        : Navigator.of(context).pushNamed(QpayPage.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
-    general = Provider.of<GeneralProvider>(context, listen: true).general;
+    general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -373,7 +373,7 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
                                 ),
                                 name: 'number',
                                 onChanged: (value) async {
-                                  selectedValue = value;
+                                  selectedValue = value.toString();
                                 },
                                 decoration: InputDecoration(
                                   hintText: 'Дансны дугаар сонгоно уу',
@@ -576,32 +576,32 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(right: 25),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          'Үлдэгдэл: ',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: grey2,
-                          ),
-                        ),
-                        Row(
-                          children: general.bankAccounts!
-                              .map(
-                                (item) => Text(
-                                  '${item.balance}',
-                                  style: const TextStyle(
-                                      fontSize: 12, color: grey2),
-                                ),
-                              )
-                              .toList(),
-                        )
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(right: 25),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.end,
+                  //     children: [
+                  //       const Text(
+                  //         'Үлдэгдэл: ',
+                  //         style: TextStyle(
+                  //           fontSize: 12,
+                  //           color: grey2,
+                  //         ),
+                  //       ),
+                  //       Row(
+                  //         children: general.bankAccounts!
+                  //             .map(
+                  //               (item) => Text(
+                  //                 '${item.balance}',
+                  //                 style: const TextStyle(
+                  //                     fontSize: 12, color: grey2),
+                  //               ),
+                  //             )
+                  //             .toList(),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -660,14 +660,16 @@ class _OrderPaymentState extends State<OrderPayment> with AfterLayoutMixin {
                   Row(
                     children: [
                       Checkbox(
-                        checkColor: white,
-                        activeColor: invoiceColor,
-                        fillColor: MaterialStateProperty.resolveWith(
-                          (states) => invoiceColor,
+                        side: MaterialStateBorderSide.resolveWith(
+                          (states) => const BorderSide(
+                            color: invoiceColor,
+                            width: 2,
+                          ),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
+                        activeColor: invoiceColor,
                         value: value,
                         onChanged: (value1) {
                           fillAmount();

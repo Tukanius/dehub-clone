@@ -41,6 +41,8 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         ? DateTime.parse(json['createdAt'].toString())
         : null,
     openDate: json['openDate'] != null ? json['openDate'] as String : null,
+    loanStatus:
+        json['loanStatus'] != null ? json['loanStatus'] as String : null,
     accountCategory: json['accountCategory'] != null
         ? json['accountCategory'] as String
         : null,
@@ -73,10 +75,11 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         : null,
     partnerId: json['partnerId'] != null ? json['partnerId'] as String : null,
     periodInMonths: json['periodInMonths'] != null
-        ? json['periodInMonths'] as String
+        ? int.parse(json['periodInMonths'].toString())
         : null,
-    periodInDays:
-        json['periodInDays'] != null ? json['periodInDays'] as String : null,
+    periodInDays: json['periodInDays'] != null
+        ? int.parse(json['periodInDays'].toString())
+        : null,
     participantStatus: json['participantStatus'] != null
         ? json['participantStatus'] as String
         : null,
@@ -163,10 +166,12 @@ Finance _$FinanceFromJson(Map<String, dynamic> json) {
         json['accessToken'] != null ? json['accessToken'] as String : null,
     parentRefCode:
         json['parentRefCode'] != null ? json['parentRefCode'] as String : null,
-    payOffAmount:
-        json['payOffAmount'] != null ? json['payOffAmount'] as String : null,
-    overdueAmount:
-        json['overdueAmount'] != null ? json['overdueAmount'] as String : null,
+    payOffAmount: json['payOffAmount'] != null
+        ? double.parse(json['payOffAmount'].toString())
+        : null,
+    overdueAmount: json['overdueAmount'] != null
+        ? double.parse(json['overdueAmount'].toString())
+        : null,
     invCount: json['invCount'] != null
         ? double.parse(json['invCount'].toString())
         : null,
@@ -757,6 +762,9 @@ Map<String, dynamic> _$FinanceToJson(Finance instance) {
 
   if (instance.debtLimitStartDate != null) {
     json['debtLimitStartDate'] = instance.debtLimitStartDate;
+  }
+  if (instance.loanStatus != null) {
+    json['loanStatus'] = instance.loanStatus;
   }
   if (instance.periodInDays != null) {
     json['periodInDays'] = instance.periodInDays;

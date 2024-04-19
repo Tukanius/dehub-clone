@@ -118,8 +118,22 @@ class Partner {
   Partner? departmentUnit;
   String? businessSectorName;
   String? businessSubSectorName;
+  List<Partner>? permissions;
+  String? code;
+  bool? isView;
+  bool? isCreate;
+  bool? isEdit;
+  bool? isReview;
+  bool? isDelete;
 
   Partner({
+    this.code,
+    this.isView,
+    this.isCreate,
+    this.isEdit,
+    this.isReview,
+    this.isDelete,
+    this.permissions,
     this.businessSectorName,
     this.businessSubSectorName,
     this.departmentUnit,

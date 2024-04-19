@@ -7,6 +7,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -196,40 +197,41 @@ class _ResponsibleStaffDetailState extends State<AccountSettingDetail>
                         '${business.businessOutAcc?.bankName ?? ""} ${business.businessOutAcc?.number ?? '-'}',
                     secondTextColor: networkColor,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                        SetAccount.routeName,
-                        arguments: SetAccountArguments(
-                          listenController: widget.listenController,
-                          id: widget.id,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.5),
-                      color: transparent,
-                      padding:
-                          const EdgeInsets.only(right: 15, top: 10, bottom: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SvgPicture.asset('assets/svg/person-check.svg'),
-                          const SizedBox(
-                            width: 5,
+                  if (Permission().check(user, "NET_ACC"))
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          SetAccount.routeName,
+                          arguments: SetAccountArguments(
+                            listenController: widget.listenController,
+                            id: widget.id,
                           ),
-                          const Text(
-                            'Өөрчлөх',
-                            style: TextStyle(
-                              color: networkColor,
-                              fontWeight: FontWeight.w600,
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.5),
+                        color: transparent,
+                        padding: const EdgeInsets.only(
+                            right: 15, top: 10, bottom: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset('assets/svg/person-check.svg'),
+                            const SizedBox(
+                              width: 5,
                             ),
-                          ),
-                        ],
+                            const Text(
+                              'Өөрчлөх',
+                              style: TextStyle(
+                                color: networkColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 10, bottom: 10),

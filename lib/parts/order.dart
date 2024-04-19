@@ -65,6 +65,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ? json['supplierBusinessId'] as String
         : null,
     salesType: json['salesType'] != null ? json['salesType'] as String : null,
+    proformaInvoiceId: json['proformaInvoiceId'] != null
+        ? json['proformaInvoiceId'] as String
+        : null,
     color: json['color'] != null ? json['color'] as String : null,
     type: json['type'] != null ? json['type'] as String : null,
     isDefault: json['isDefault'] != null ? json['isDefault'] as bool : null,
@@ -513,6 +516,9 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   if (instance.color != null) json['color'] = instance.color;
   if (instance.isDropshipping != null) {
     json['isDropshipping'] = instance.isDropshipping;
+  }
+  if (instance.proformaInvoiceId != null) {
+    json['proformaInvoiceId'] = instance.proformaInvoiceId;
   }
   if (instance.numberSurvey != null) {
     json['numberSurvey'] = instance.numberSurvey;

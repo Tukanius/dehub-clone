@@ -23,6 +23,7 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> with AfterLayoutMixin {
   int selectedIndex = 1;
   bool isLoading = true;
+
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<GeneralProvider>(context, listen: false)

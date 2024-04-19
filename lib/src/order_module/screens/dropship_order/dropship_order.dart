@@ -1,7 +1,12 @@
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/order_module/screens/dropship_order/tabs/dropshipping_tab.dart';
 import 'package:dehub/src/order_module/screens/dropship_order/tabs/non_dropshipping_tab.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class DropshipOrder extends StatefulWidget {
   static const routeName = '/DropshipOrder';
@@ -12,8 +17,11 @@ class DropshipOrder extends StatefulWidget {
 }
 
 class DropshipOrderState extends State<DropshipOrder> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -45,10 +53,20 @@ class DropshipOrderState extends State<DropshipOrder> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            DropshippingTab(),
-            NonDropshippingTab(),
+            Permission().check(user, "ORD_DRSHPING")
+                ? const DropshippingTab()
+                : const NotFound(
+                    module: 'ORDER',
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                  ),
+            Permission().check(user, "ORD_DROPPED")
+                ? const NonDropshippingTab()
+                : const NotFound(
+                    module: 'ORDER',
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                  ),
           ],
         ),
       ),

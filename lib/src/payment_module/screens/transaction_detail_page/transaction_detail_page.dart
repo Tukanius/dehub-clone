@@ -78,14 +78,6 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
         backgroundColor: white,
         surfaceTintColor: white,
         iconTheme: const IconThemeData(color: paymentColor),
-        // bottom: PreferredSize(
-        //   child: Container(
-        //     margin: const EdgeInsets.symmetric(horizontal: 5),
-        //     color: paymentColor,
-        //     height: 2.0,
-        //   ),
-        //   preferredSize: Size.fromHeight(3.0),
-        // ),
       ),
       body: isLoading == true
           ? const Center(
@@ -97,38 +89,6 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const SizedBox(
-                  //   height: 15,
-                  // ),
-                  // const Center(
-                  //   child: Text(
-                  //     '521****513',
-                  //     style: TextStyle(
-                  //       color: grey2,
-                  //       fontSize: 24,
-                  //       fontWeight: FontWeight.w500,
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // const Center(
-                  //   child: Text(
-                  //     'Голомт банк',
-                  //     style: TextStyle(
-                  //       color: grey2,
-                  //       fontSize: 15,
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // const Divider(
-                  //   endIndent: 20,
-                  //   indent: 20,
-                  // ),
                   const SizedBox(
                     height: 5,
                   ),
@@ -216,6 +176,16 @@ class TransactionDetailPageState extends State<TransactionDetailPage>
                     labelText: 'Гүйлгээ хийсэн',
                     secondText:
                         "${payment.payerUser?.lastName?[0]}. ${payment.payerUser?.firstName}",
+                    labelTextColor: dark,
+                    secondTextColor: neonGreen,
+                    color: white,
+                    marginBottom: 5,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 12,
+                    labelText: 'Үлдэгдэл',
+                    secondText: "${payment.balance}",
                     labelTextColor: dark,
                     secondTextColor: neonGreen,
                     color: white,

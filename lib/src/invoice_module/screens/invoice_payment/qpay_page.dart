@@ -6,6 +6,7 @@ import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/qpay_urls.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -101,14 +102,17 @@ class QpayPageState extends State<QpayPage> with AfterLayoutMixin<QpayPage> {
                       color: backgroundColor,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 15, bottom: 20),
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        color: widget.color,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
+                        margin: const EdgeInsets.only(top: 15, bottom: 20),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: widget.color,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: const Icon(
+                          CupertinoIcons.paperplane,
+                          color: white,
+                        )),
                     const Text(
                       'Төлөлт хийх заавах',
                       style: TextStyle(

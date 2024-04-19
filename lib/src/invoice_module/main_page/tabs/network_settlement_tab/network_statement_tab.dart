@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dehub/api/invoice_api.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/components/invoice_statement_card/invoice_statement_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -7,9 +8,11 @@ import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/src/invoice_module/screens/network_settlement_detail/network_settlement_detail.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NetworkSettlementTab extends StatefulWidget {
@@ -46,8 +49,10 @@ class _NetworkSettlementTabState extends State<NetworkSettlementTab>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(page, limit, '');
+  afterFirstLayout(BuildContext context) async {
+    if (Permission().check(user, "INV_NET_SETT")) {
+      await list(page, limit, '');
+    }
   }
 
   void onLoading() async {
@@ -86,56 +91,63 @@ class _NetworkSettlementTabState extends State<NetworkSettlementTab>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SearchButton(
-          color: invoiceColor,
-          onChange: (query) {
-            onChange(query);
-          },
-        ),
-        isLoading == true
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: invoiceColor,
-                ),
-              )
-            : Expanded(
-                child: Refresher(
-                  refreshController: refreshController,
-                  onLoading:
-                      invoice.rows!.length == invoice.count ? null : onLoading,
-                  onRefresh: onRefresh,
-                  color: invoiceColor,
-                  child: SingleChildScrollView(
-                    child: invoice.rows!.isNotEmpty
-                        ? Column(
-                            children: invoice.rows!
-                                .map(
-                                  (data) => InvoiceStatementCard(
-                                    data: data,
-                                    index: invoice.rows!.indexOf(data),
-                                    startAnimation: startAnimation,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        NetworkSettlementDetail.routeName,
-                                        arguments:
-                                            NetworkSettlementDetailArguments(
-                                                data: data),
-                                      );
-                                    },
-                                  ),
-                                )
-                                .toList(),
-                          )
-                        : const NotFound(
-                            module: "INVOICE",
-                            labelText: "Хоосон байна",
-                          ),
-                  ),
-                ),
+    user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
+    return Permission().check(user, "INV_NET_SETT")
+        ? Column(
+            children: [
+              SearchButton(
+                color: invoiceColor,
+                onChange: (query) {
+                  onChange(query);
+                },
               ),
-      ],
-    );
+              isLoading == true
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: invoiceColor,
+                      ),
+                    )
+                  : Expanded(
+                      child: Refresher(
+                        refreshController: refreshController,
+                        onLoading: invoice.rows!.length == invoice.count
+                            ? null
+                            : onLoading,
+                        onRefresh: onRefresh,
+                        color: invoiceColor,
+                        child: SingleChildScrollView(
+                          child: invoice.rows!.isNotEmpty
+                              ? Column(
+                                  children: invoice.rows!
+                                      .map(
+                                        (data) => InvoiceStatementCard(
+                                          data: data,
+                                          index: invoice.rows!.indexOf(data),
+                                          startAnimation: startAnimation,
+                                          onClick: () {
+                                            Navigator.of(context).pushNamed(
+                                              NetworkSettlementDetail.routeName,
+                                              arguments:
+                                                  NetworkSettlementDetailArguments(
+                                                      data: data),
+                                            );
+                                          },
+                                        ),
+                                      )
+                                      .toList(),
+                                )
+                              : const NotFound(
+                                  module: "INVOICE",
+                                  labelText: "Хоосон байна",
+                                ),
+                        ),
+                      ),
+                    ),
+            ],
+          )
+        : const NotFound(
+            module: "INVOICE",
+            labelText: 'Хандах эрх хүрэлцэхгүй байна',
+          );
   }
 }

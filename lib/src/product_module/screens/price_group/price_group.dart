@@ -1,10 +1,14 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/change_standard_price/change_standard_price.dart';
 import 'package:dehub/src/product_module/screens/price_group/tabs/special_price.dart';
 import 'package:dehub/src/product_module/screens/price_group/tabs/standard_price_history.dart';
 import 'package:dehub/src/product_module/screens/price_group/tabs/standard_price_tab.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PriceGroupPage extends StatefulWidget {
   static const routeName = '/PriceGrouPage';
@@ -17,6 +21,7 @@ class PriceGroupPage extends StatefulWidget {
 class _PriceGroupPageState extends State<PriceGroupPage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  User user = User();
 
   @override
   void dispose() {
@@ -35,6 +40,7 @@ class _PriceGroupPageState extends State<PriceGroupPage>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -50,25 +56,32 @@ class _PriceGroupPageState extends State<PriceGroupPage>
           ),
         ),
         actions: [
-          if (tabController.index != 1)
+          if (tabController.index == 0 &&
+              Permission().check(user, "ERP_STD_PRICE"))
             AddButton(
-              onClick: tabController.index == 0
-                  ? () {
-                      Navigator.of(context).pushNamed(
-                        ChangeStandardPrice.routeName,
-                        arguments: ChangeStandardPriceArguments(type: "GROUP"),
-                      );
-                    }
-                  : () {
-                      Navigator.of(context).pushNamed(
-                        ChangeStandardPrice.routeName,
-                        arguments: ChangeStandardPriceArguments(
-                          type: "SPECIAL",
-                        ),
-                      );
-                    },
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  ChangeStandardPrice.routeName,
+                  arguments: ChangeStandardPriceArguments(
+                    type: "GROUP",
+                  ),
+                );
+              },
               color: productColor,
-            ),
+            )
+          else if (tabController.index == 2 &&
+              Permission().check(user, "ERP_PG"))
+            AddButton(
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  ChangeStandardPrice.routeName,
+                  arguments: ChangeStandardPriceArguments(
+                    type: "SPECIAL",
+                  ),
+                );
+              },
+              color: productColor,
+            )
         ],
         bottom: TabBar(
           controller: tabController,

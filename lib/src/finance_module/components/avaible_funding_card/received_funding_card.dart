@@ -48,159 +48,178 @@ class _ReceivedFundingCardState extends State<ReceivedFundingCard> {
     general =
         Provider.of<GeneralProvider>(context, listen: true).financeGeneral;
     final source = Provider.of<FinanceProvider>(context, listen: true);
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: widget.onClick,
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 3),
-            padding: const EdgeInsets.all(15),
-            color: white,
-            child: Column(
+    return GestureDetector(
+      onTap: widget.onClick,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 3),
+        padding: const EdgeInsets.all(15),
+        color: white,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${widget.data.refCode ?? widget.data.lbfRequest?.refCode}',
-                      style: const TextStyle(
-                          color: dark,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 9, vertical: 7),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: source.currentColor),
-                        color: source.currentColor.withOpacity(0.1),
-                      ),
-                      child: SvgPicture.asset(
-                        'assets/svg/note.svg',
-                        colorFilter: ColorFilter.mode(
-                            source.currentColor, BlendMode.srcIn),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
+                Text(
+                  '${widget.data.refCode ?? widget.data.lbfRequest?.refCode}',
+                  style: const TextStyle(
+                      color: dark, fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(int.parse(
-                                    requestStatus().color.substring(1, 7),
-                                    radix: 16) +
-                                0xff000000)
-                            .withOpacity(0.2),
-                      ),
-                      child: Text(
-                        '${requestStatus().name}',
-                        style: TextStyle(
-                            color: Color(int.parse(
-                                    requestStatus().color.substring(1, 7),
-                                    radix: 16) +
-                                0xff000000),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: Text(
-                        widget.data.type == "SUPPLIER"
-                            ? '${widget.data.supplier?.profileName ?? widget.data.supplierBusiness?.profileName}'
-                            : '${widget.data.buyer?.profileName ?? widget.data.buyerBusiness?.profileName}',
-                        style: TextStyle(
-                          color: source.currentColor,
-                          fontWeight: FontWeight.w500,
+                    if (widget.data.loanStatus != null)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: widget.data.loanStatus == "OPEN"
+                              ? source.currentColor.withOpacity(0.1)
+                              : red.withOpacity(0.1),
                         ),
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        const Text(
-                          'Зээл авсан дүн: ',
+                        child: Text(
+                          '${widget.data.loanStatus}',
                           style: TextStyle(
-                            color: Color(0xff555555),
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          '${Utils().formatCurrency((widget.data.lbfRequest?.requestedAmount ?? widget.data.requestedAmount).toString()) + symbol()}',
-                          style: const TextStyle(
-                            fontSize: 14,
+                            color: widget.data.loanStatus == "OPEN"
+                                ? source.currentColor
+                                : red,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/svg/inv.svg',
-                            colorFilter: const ColorFilter.mode(
-                                buttonColor, BlendMode.srcIn),
-                          ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            '${widget.data.invoiceRef ?? widget.data.invRefCode}',
-                            style: const TextStyle(
-                              color: dark,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
+                      )
+                    else
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 9, vertical: 7),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: source.currentColor),
+                          color: source.currentColor.withOpacity(0.1),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/svg/note.svg',
+                          colorFilter: ColorFilter.mode(
+                              source.currentColor, BlendMode.srcIn),
+                        ),
                       ),
-                    )
                   ],
                 ),
-                if (widget.data.totalScfFeeAmount != null)
-                  const SizedBox(
-                    height: 10,
-                  ),
-                if (widget.data.totalScfFeeAmount != null)
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          widget.data.totalScfFeeAmount != null
-                              ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
-                              : 'Нийт шимтгэл:-',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff555555),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
               ],
             ),
-          ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color(int.parse(
+                                requestStatus().color.substring(1, 7),
+                                radix: 16) +
+                            0xff000000)
+                        .withOpacity(0.2),
+                  ),
+                  child: Text(
+                    '${requestStatus().name}',
+                    style: TextStyle(
+                        color: Color(int.parse(
+                                requestStatus().color.substring(1, 7),
+                                radix: 16) +
+                            0xff000000),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: Text(
+                    widget.data.type == "SUPPLIER"
+                        ? '${widget.data.supplier?.profileName ?? widget.data.supplierBusiness?.profileName}'
+                        : '${widget.data.buyer?.profileName ?? widget.data.buyerBusiness?.profileName}',
+                    style: TextStyle(
+                      color: source.currentColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      'Зээл авсан дүн: ',
+                      style: TextStyle(
+                        color: Color(0xff555555),
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      '${Utils().formatCurrency((widget.data.lbfRequest?.requestedAmount ?? widget.data.requestedAmount).toString()) + symbol()}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/svg/inv.svg',
+                        colorFilter: const ColorFilter.mode(
+                            buttonColor, BlendMode.srcIn),
+                      ),
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        '${widget.data.invoiceRef ?? widget.data.invRefCode}',
+                        style: const TextStyle(
+                          color: dark,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            if (widget.data.totalScfFeeAmount != null)
+              const SizedBox(
+                height: 10,
+              ),
+            if (widget.data.totalScfFeeAmount != null)
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.data.totalScfFeeAmount != null
+                          ? 'Нийт шимтгэл: ${Utils().formatCurrency(widget.data.totalScfFeeAmount.toString()) + symbol()}'
+                          : 'Нийт шимтгэл:-',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xff555555),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

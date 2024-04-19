@@ -7,6 +7,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/main_page/tabs/settlement_tab/components/settlement_card.dart';
 import 'package:dehub/src/invoice_module/screens/settlement_detail/settlement_detail.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,85 +64,93 @@ class _SettlementTabState extends State<SettlementTab> with AfterLayoutMixin {
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(page, limit, date);
+  afterFirstLayout(BuildContext context) async {
+    if (Permission().check(user, "INV_SETT")) {
+      await list(page, limit, date);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
-    return isLoading == true
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: invoiceColor,
-            ),
-          )
-        : Refresher(
-            refreshController: refreshController,
-            onLoading: settlements.rows!.length == settlements.count
-                ? null
-                : onLoading,
-            onRefresh: onRefresh,
-            color: invoiceColor,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      monthPick();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Тооцоо нийлэх сар:   ',
-                            style: TextStyle(
-                              color: grey2,
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 3),
-                            child: Text(date),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  settlements.rows!.isNotEmpty
-                      ? Column(
-                          children: settlements.rows!
-                              .map(
-                                (e) => SettlementCard(
-                                  data: e,
-                                  onClick: () {
-                                    Navigator.of(context).pushNamed(
-                                      SettlementDetail.routeName,
-                                      arguments: SettlementDetailArguments(
-                                        id: e.id,
-                                      ),
-                                    );
-                                  },
+    return Permission().check(user, "INV_SETT")
+        ? isLoading == true
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: invoiceColor,
+                ),
+              )
+            : Refresher(
+                refreshController: refreshController,
+                onLoading: settlements.rows!.length == settlements.count
+                    ? null
+                    : onLoading,
+                onRefresh: onRefresh,
+                color: invoiceColor,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          monthPick();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Row(
+                            children: [
+                              const Text(
+                                'Тооцоо нийлэх сар:   ',
+                                style: TextStyle(
+                                  color: grey2,
                                 ),
-                              )
-                              .toList(),
-                        )
-                      : const NotFound(
-                          module: 'INVOICE',
-                          labelText: 'Хоосон байна',
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 3),
+                                child: Text(date),
+                              ),
+                            ],
+                          ),
                         ),
-                  const SizedBox(
-                    height: 50,
+                      ),
+                      settlements.rows!.isNotEmpty
+                          ? Column(
+                              children: settlements.rows!
+                                  .map(
+                                    (e) => SettlementCard(
+                                      data: e,
+                                      onClick: () {
+                                        Navigator.of(context).pushNamed(
+                                          SettlementDetail.routeName,
+                                          arguments: SettlementDetailArguments(
+                                            id: e.id,
+                                            status: e.settlementStatus,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                          : const NotFound(
+                              module: 'INVOICE',
+                              labelText: 'Хоосон байна',
+                            ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              )
+        : const NotFound(
+            module: "INVOICE",
+            labelText: 'Хандах эрх хүрэлцэхгүй байна',
           );
   }
 

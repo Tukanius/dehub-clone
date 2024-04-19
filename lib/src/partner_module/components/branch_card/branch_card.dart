@@ -108,20 +108,21 @@ class _BranchCardState extends State<BranchCard> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: 30,
-                    width: 30,
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: partnerColor.withOpacity(0.2),
+                  if (widget.onClick != null)
+                    Container(
+                      height: 30,
+                      width: 30,
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: partnerColor.withOpacity(0.2),
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/svg/edit_rounded.svg',
+                        colorFilter: const ColorFilter.mode(
+                            partnerColor, BlendMode.srcIn),
+                      ),
                     ),
-                    child: SvgPicture.asset(
-                      'assets/svg/edit_rounded.svg',
-                      colorFilter:
-                          const ColorFilter.mode(partnerColor, BlendMode.srcIn),
-                    ),
-                  ),
                 ],
               ),
               const SizedBox(

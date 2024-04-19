@@ -22,6 +22,7 @@ class _DropshippingTabState extends State<DropshippingTab>
   Result orders = Result(rows: [], count: 0);
   bool isLoading = true;
   ListenController listenController = ListenController();
+
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
     Filter filter = Filter(isDropshipping: true, excel: false);
@@ -34,7 +35,7 @@ class _DropshippingTabState extends State<DropshippingTab>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   @override

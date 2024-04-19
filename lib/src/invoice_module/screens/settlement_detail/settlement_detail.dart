@@ -9,6 +9,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/components/settlement_invoice_card/settlement_invoice_card.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +18,20 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SettlementDetailArguments {
   String id;
+  String status;
   SettlementDetailArguments({
     required this.id,
+    required this.status,
   });
 }
 
 class SettlementDetail extends StatefulWidget {
   static const routeName = '/SettlementDetail';
   final String id;
+  final String status;
   const SettlementDetail({
     super.key,
+    required this.status,
     required this.id,
   });
 
@@ -302,9 +307,13 @@ class _SettlementDetailState extends State<SettlementDetail>
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 5),
                                 child: Text(
-                                  user.currentBusiness?.type == "SUPPLIER"
+                                  Permission().check(user, "INV_SETT_SEND")
                                       ? 'Тооцоо илгээх'
-                                      : 'Зөвшөөрөх',
+                                      : user.currentBusiness?.type == "BUYER" &&
+                                              Permission()
+                                                  .check(user, "INV_SETT_RES")!
+                                          ? 'Зөвшөөрөх'
+                                          : '',
                                   style: const TextStyle(
                                       color: white,
                                       fontWeight: FontWeight.w500),

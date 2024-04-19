@@ -34,7 +34,7 @@ class _BackOrderState extends State<BackOrder> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   @override

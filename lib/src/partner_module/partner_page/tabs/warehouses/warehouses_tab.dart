@@ -2,11 +2,15 @@ import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/components/warehouse_card/warehouse_card.dart';
 import 'package:dehub/src/partner_module/screens/warehouse_create/warehouse_create.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +30,7 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
   bool isLoading = true;
   ListenController listenController = ListenController();
   final RefreshController refreshController = RefreshController();
+  Partner user = Partner();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -38,8 +43,10 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(page, limit);
+  afterFirstLayout(BuildContext context) async {
+    if (Permission().partnerCheck(user, "PRT_WRH")) {
+      await list(page, limit);
+    }
   }
 
   onRefresh() async {
@@ -74,6 +81,7 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final load = Provider.of<LoadingProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -89,66 +97,82 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
         ),
         iconTheme: const IconThemeData(color: white),
         actions: [
-          AddButton(
-            addColor: partnerColor,
-            color: white,
-            onClick: () {
-              Navigator.of(context).pushNamed(
-                WarehouseCreate.routeName,
-                arguments: WarehouseCreateArguments(
-                  data: null,
-                  listenController: listenController,
-                ),
-              );
-            },
-          ),
+          if (Permission().partnerCheck(user, "PRT_WRH", boolean: "isCreate"))
+            AddButton(
+              addColor: partnerColor,
+              color: white,
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  WarehouseCreate.routeName,
+                  arguments: WarehouseCreateArguments(
+                    data: null,
+                    listenController: listenController,
+                  ),
+                );
+              },
+            ),
         ],
       ),
-      body: isLoading == true
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: partnerColor,
-              ),
-            )
-          : Refresher(
-              refreshController: refreshController,
-              onLoading:
-                  warehouse.rows!.length == warehouse.count ? null : onLoading,
-              onRefresh: onRefresh,
-              color: partnerColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Column(
-                      children: warehouse.rows!
-                          .map(
-                            (data) => WarehouseCard(
-                              editClick: () {
-                                Navigator.of(context).pushNamed(
-                                  WarehouseCreate.routeName,
-                                  arguments: WarehouseCreateArguments(
+      body: Permission().partnerCheck(user, "PRT_WRH")
+          ? isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: partnerColor,
+                  ),
+                )
+              : Refresher(
+                  refreshController: refreshController,
+                  onLoading: warehouse.rows!.length == warehouse.count
+                      ? null
+                      : onLoading,
+                  onRefresh: onRefresh,
+                  color: partnerColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Column(
+                          children: warehouse.rows!
+                              .map(
+                                (data) => WarehouseCard(
+                                    editClick: Permission().partnerCheck(
+                                            user, "PRT_WRH", boolean: "isEdit")
+                                        ? () {
+                                            Navigator.of(context).pushNamed(
+                                              WarehouseCreate.routeName,
+                                              arguments:
+                                                  WarehouseCreateArguments(
+                                                data: data,
+                                                listenController:
+                                                    listenController,
+                                              ),
+                                            );
+                                          }
+                                        : null,
                                     data: data,
-                                    listenController: listenController,
-                                  ),
-                                );
-                              },
-                              data: data,
-                              border: warehouse.rows?.last.id != data.id,
-                              deleteClick: () async {
-                                load.loading(true);
-                                await PartnerApi().warehouseDelete(data.id);
-                                load.loading(false);
-                              },
-                            ),
-                          )
-                          .toList(),
+                                    border: warehouse.rows?.last.id != data.id,
+                                    deleteClick: Permission().partnerCheck(
+                                            user, "PRT_WRH",
+                                            boolean: 'isdelete')
+                                        ? () async {
+                                            load.loading(true);
+                                            await PartnerApi()
+                                                .warehouseDelete(data.id);
+                                            load.loading(false);
+                                          }
+                                        : () {}),
+                              )
+                              .toList(),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                  ],
-                ),
-              ),
+                  ),
+                )
+          : const NotFound(
+              module: "PARTNER",
+              labelText: 'Хандах эрх хүрэхгүй байна',
             ),
     );
   }

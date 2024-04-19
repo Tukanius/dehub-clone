@@ -1,6 +1,8 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,6 +29,7 @@ class DeliveryManagementCard extends StatefulWidget {
 
 class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
   General general = General();
+  User user = User();
 
   status() {
     final res = general.deliveryNoteStatus!.firstWhere(
@@ -37,7 +40,7 @@ class _DeliveryManagementCardState extends State<DeliveryManagementCard> {
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
-
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return AnimatedOpacity(
       duration: Duration(milliseconds: 300 + (widget.index * 200)),
       curve: Curves.ease,

@@ -5,8 +5,11 @@ import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/payment_terms/set_payment_term/set_payment_term.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -43,6 +46,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
   bool isLoading = true;
   General general = General();
   Result configType = Result(count: 0, rows: []);
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -84,6 +88,7 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     general =
         Provider.of<GeneralProvider>(context, listen: true).businessGeneral;
 
@@ -244,45 +249,46 @@ class _SetPaymentTermDetailState extends State<SetPaymentTermDetail>
                         : '-',
                     labelTextColor: dark,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                        SetPaymentTerm.routeName,
-                        arguments: SetPaymentTermArguments(
-                          id: widget.id,
-                          listenController: widget.listenController,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      color: transparent,
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Өөрчлөх',
-                            style: TextStyle(
-                              color: networkColor,
-                              fontWeight: FontWeight.w500,
+                  if (Permission().check(user, "NET_PT_SET"))
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          SetPaymentTerm.routeName,
+                          arguments: SetPaymentTermArguments(
+                            id: widget.id,
+                            listenController: widget.listenController,
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
+                        color: transparent,
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Өөрчлөх',
+                              style: TextStyle(
+                                color: networkColor,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          SvgPicture.asset(
-                            'assets/svg/edit.svg',
-                            colorFilter: const ColorFilter.mode(
-                                networkColor, BlendMode.srcIn),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            SvgPicture.asset(
+                              'assets/svg/edit.svg',
+                              colorFilter: const ColorFilter.mode(
+                                  networkColor, BlendMode.srcIn),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
       ),

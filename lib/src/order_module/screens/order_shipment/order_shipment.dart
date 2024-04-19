@@ -41,7 +41,6 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   bool startShipment = false;
   Duration resume = const Duration();
   Duration difference1 = const Duration();
-  Duration difference2 = const Duration();
   Duration difference = const Duration();
   String? lineId;
 

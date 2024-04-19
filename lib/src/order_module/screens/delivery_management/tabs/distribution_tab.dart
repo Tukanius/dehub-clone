@@ -1,14 +1,18 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/components/delivery_management_card/delivery_management_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/set_delivery_distribution/set_delivery_distribution.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DistributionTab extends StatefulWidget {
@@ -27,6 +31,7 @@ class _DistributionTabState extends State<DistributionTab>
   bool isLoading = true;
   bool startAnimation = false;
   ListenController listenController = ListenController();
+  User user = User();
 
   void onLoading() async {
     setState(() {
@@ -82,6 +87,7 @@ class _DistributionTabState extends State<DistributionTab>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(
@@ -120,15 +126,18 @@ class _DistributionTabState extends State<DistributionTab>
                                         data: data,
                                         isFinished: false,
                                         onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            SetDeliveryDistribution.routeName,
-                                            arguments:
-                                                SetDeliveryDistributionArguments(
-                                              data: data,
-                                              listenController:
-                                                  listenController,
-                                            ),
-                                          );
+                                          if (Permission()
+                                              .check(user, 'ORD_DN_ASSIGN')) {
+                                            Navigator.of(context).pushNamed(
+                                              SetDeliveryDistribution.routeName,
+                                              arguments:
+                                                  SetDeliveryDistributionArguments(
+                                                data: data,
+                                                listenController:
+                                                    listenController,
+                                              ),
+                                            );
+                                          }
                                         },
                                       ),
                                       const SizedBox(

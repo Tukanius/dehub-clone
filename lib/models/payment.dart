@@ -87,7 +87,28 @@ class Payment {
   List<Stats>? numberSurvey;
   String? image;
 
+  int? recNum;
+  String? drOrCr;
+  double? tranAmount;
+  String? tranDesc;
+  DateTime? tranPostedDate;
+  String? tranCrnCode;
+  int? exchRate;
+  String? balance;
+  String? accName;
+  String? accNum;
+
   Payment({
+    this.recNum,
+    this.drOrCr,
+    this.tranAmount,
+    this.tranDesc,
+    this.tranPostedDate,
+    this.tranCrnCode,
+    this.exchRate,
+    this.balance,
+    this.accName,
+    this.accNum,
     this.image,
     this.numberSurvey,
     this.account,

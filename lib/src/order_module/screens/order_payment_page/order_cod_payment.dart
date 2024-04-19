@@ -2,25 +2,22 @@ import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/api/payment_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
-import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/models/order.dart';
-import 'package:dehub/models/user.dart';
-import 'package:dehub/providers/general_provider.dart';
-import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/models/result.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/qpay_page.dart';
 // import 'package:dehub/src/order_invoice/order_invoice.dart';
-import 'package:dehub/src/order_module/screens/order_cash_payment/order_cash_payment.dart';
 import 'package:dehub/src/order_module/screens/order_invoice/order_invoice.dart';
-import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderCodPaymentArguments {
   List<Order> lines;
@@ -49,19 +46,16 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
     with AfterLayoutMixin {
   String? selectedMethod;
   String? selectedImage;
-  General general = General();
-  String? selectedValue;
-  User user = User();
   bool isLoading = true;
   Invoice invoice = Invoice();
+  Invoice account = Invoice();
   List<Order> list = [];
-  String bankNumber = 'Солих';
-  String bankName = 'Банкны нэр';
-  String accountName = 'Дансны нэр';
+  Result accounts = Result(rows: []);
 
   @override
   afterFirstLayout(BuildContext context) async {
     invoice = await InvoiceApi().getInvoice(widget.id);
+    accounts = await PaymentApi().bankAccountSelect();
     setState(() {
       isLoading = false;
     });
@@ -90,86 +84,82 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
           firstName: "Төлөх огноо цаг",
           lastName: DateFormat("yyyy-MM-dd").format(invoice.paymentDate!)),
       Order(
-          firstName: "Дансны дугаар",
-          lastName: "${invoice.receiverAcc?.number}"),
-      Order(firstName: "Дансны нэр", lastName: "${invoice.receiverAcc?.name}"),
+          firstName: "Дансны дугаар", lastName: "${invoice.senderAcc?.number}"),
+      Order(firstName: "Дансны нэр", lastName: "${invoice.senderAcc?.name}"),
       Order(
-          firstName: "Банкны нэр",
-          lastName: "${invoice.receiverAcc?.bankName}"),
+          firstName: "Банкны нэр", lastName: "${invoice.senderAcc?.bankName}"),
     ];
   }
 
   payment() async {
-    try {
-      await PaymentApi().pay(
-        Invoice(
-          method: "B2B",
-          amount: invoice.totalAmount,
-          invoiceId: invoice.id,
-          invoiceRefCode: invoice.refCode,
-          receiverBusinessId: invoice.senderBusinessId,
-          description: invoice.refCode,
-          creditAccountId: invoice.receiverAcc?.id,
-          creditAccountBank: invoice.receiverAcc?.bankName,
-          creditAccountName: invoice.receiverAcc?.name,
-          creditAccountNumber: invoice.receiverAcc?.number,
-          creditAccountCurrency: invoice.receiverAcc?.currency,
-          debitAccountId: invoice.senderAcc?.id,
-          debitAccountBank: invoice.senderAcc?.bankName,
-          debitAccountName: invoice.senderAcc?.name,
-          debitAccountNumber: invoice.senderAcc?.number,
-          debitAccountCurrency: invoice.senderAcc?.currency,
-        ),
-      );
-      showCustomDialog(
-        context,
-        "Төлбөр амжилттай төлөгдлөө",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-      );
-    } catch (e) {
-      debugPrint(e.toString());
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    if (selectedMethod != null) {
+      Invoice data = Invoice();
+      data.amount = invoice.paymentTerm?.advancePercent != null
+          ? (invoice.totalAmount! * invoice.paymentTerm!.advancePercent!) / 100
+          : invoice.totalAmount;
+      data.invoiceId = invoice.id;
+      data.invoiceRefCode = invoice.refCode;
+      data.receiverBusinessId = invoice.senderBusinessId;
+      data.description = invoice.refCode;
+      data.creditAccountId = account.id;
+      data.creditAccountBank = account.bankName;
+      data.creditAccountName = account.name;
+      data.creditAccountNumber = account.number;
+      data.creditAccountCurrency = account.currency;
+      data.debitAccountId = invoice.senderAcc?.id;
+      data.debitAccountBank = invoice.senderAcc?.bankName;
+      data.debitAccountName = invoice.senderAcc?.name;
+      data.debitAccountNumber = invoice.senderAcc?.number;
+      data.debitAccountCurrency = invoice.senderAcc?.currency;
+      try {
+        if (selectedMethod != "Qpay") {
+          Invoice pay = Invoice();
+          if (account.id != null) {
+            data.method = 'B2B';
+            loading.loading(true);
+            pay = await PaymentApi().pay(data);
+            loading.loading(false);
+            if (pay.url == null) {
+              showCustomDialog(context, "Төлбөр амжилттай төлөгдлөө", true,
+                  onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              });
+            } else {
+              showCustomDialog(context, "Данс баталгаажуулна уу", false,
+                  onPressed: () {
+                launchUrl(pay.url!);
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              });
+            }
+          } else {
+            showCustomDialog(context, "Төлбөр төлөх данс сонгоно уу", false);
+          }
+        } else {
+          await Navigator.of(context).pushNamed(
+            QpayPage.routeName,
+            arguments: QpayPageArguments(
+              color: orderColor,
+              data: data,
+            ),
+          );
+        }
+      } catch (e) {
+        loading.loading(false);
+      }
+    } else {
+      showCustomDialog(context, "Төлбөрийн хэрэгсэл сонгоно уу", false);
     }
-  }
-
-  qpay() {
-    Navigator.of(context).pushNamed(
-      QpayPage.routeName,
-      arguments: QpayPageArguments(
-        color: orderColor,
-        data: Invoice(
-          method: "QPAY",
-          invoiceId: invoice.id,
-          invoiceRefCode: invoice.refCode,
-          receiverBusinessId: invoice.senderBusinessId,
-          description: invoice.refCode,
-          creditAccountId: invoice.receiverAcc?.id,
-          creditAccountBank: invoice.receiverAcc?.bankName,
-          creditAccountName: invoice.receiverAcc?.name,
-          creditAccountNumber: invoice.receiverAcc?.number,
-          creditAccountCurrency: invoice.receiverAcc?.currency,
-          debitAccountId: invoice.senderAcc?.id,
-          debitAccountBank: invoice.senderAcc?.bankName,
-          debitAccountName: invoice.senderAcc?.name,
-          debitAccountNumber: invoice.senderAcc?.number,
-          debitAccountCurrency: invoice.senderAcc?.currency,
-        ),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    general = Provider.of<GeneralProvider>(context, listen: false).orderGeneral;
-    user = Provider.of<UserProvider>(context, listen: false).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: white),
-        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: orderColor,
         surfaceTintColor: orderColor,
@@ -263,11 +253,12 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                         children: [
                           Row(
                             children: [
-                              selectedImage?[0] == "i"
-                                  ? Image.asset(selectedImage.toString())
-                                  : SvgPicture.asset(selectedImage.toString(),
-                                      colorFilter: const ColorFilter.mode(
-                                          grey3, BlendMode.srcIn)),
+                              if (selectedImage != null)
+                                selectedImage?[0] == "i"
+                                    ? Image.asset(selectedImage.toString())
+                                    : SvgPicture.asset(selectedImage.toString(),
+                                        colorFilter: const ColorFilter.mode(
+                                            grey3, BlendMode.srcIn)),
                               SizedBox(
                                 width: selectedMethod == null ? 0 : 15,
                               ),
@@ -313,7 +304,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                           paddingHorizontal: 15,
                           paddingVertical: 15,
                           labelText: "Дансны дугаар",
-                          secondText: bankNumber,
+                          secondText: account.number,
                           color: white,
                           labelTextColor: grey2,
                           onClick: () {
@@ -326,7 +317,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                           paddingHorizontal: 15,
                           paddingVertical: 15,
                           labelText: "Банкны нэр",
-                          secondText: bankName,
+                          secondText: account.bankName,
                           color: white,
                           labelTextColor: grey2,
                           secondTextColor: orderColor,
@@ -335,7 +326,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                           paddingHorizontal: 15,
                           paddingVertical: 15,
                           labelText: "Дансны нэр",
-                          secondText: accountName,
+                          secondText: account.name,
                           color: white,
                           labelTextColor: grey2,
                           secondTextColor: orderColor,
@@ -346,29 +337,10 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                     height: 70,
                   ),
                   invoice.paymentTerm?.configType == "INV_COD" ||
-                          invoice.paymentTerm?.configType == "CIA"
+                          invoice.paymentTerm?.configType == "CIA" ||
+                          invoice.paymentTerm?.configType == "CBD"
                       ? CustomButton(
-                          onClick: () {
-                            if (selectedMethod == "QPay") {
-                              qpay();
-                            } else {
-                              if (selectedMethod == "Бизнес тооцооны дансаар") {
-                                Navigator.of(context).pushNamed(
-                                  PinCheckScreen.routeName,
-                                  arguments: PinCheckScreenArguments(
-                                    onSubmit: payment,
-                                    color: orderColor,
-                                    labelText: "Захиалгын төлбөр төлөх",
-                                  ),
-                                );
-                              } else if (selectedMethod == "Бэлэн мөнгөөр") {
-                                Navigator.of(context).pushNamed(
-                                    OrderCashPayment.routeName,
-                                    arguments: OrderCashPaymentArguments(
-                                        data: invoice));
-                              }
-                            }
-                          },
+                          onClick: payment,
                           labelColor: orderColor,
                           labelText: "Ок, Төлбөр төлье.",
                         )
@@ -380,31 +352,7 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                             Expanded(
                               child: CustomButton(
                                 borderColor: orderColor,
-                                onClick: () {
-                                  if (selectedMethod == "Qpay") {
-                                    qpay();
-                                  } else {
-                                    if (selectedMethod ==
-                                        "Бизнес тооцооны дансаар") {
-                                      Navigator.of(context).pushNamed(
-                                        PinCheckScreen.routeName,
-                                        arguments: PinCheckScreenArguments(
-                                          onSubmit: payment,
-                                          color: orderColor,
-                                          labelText: "Захиалгын төлбөр төлөх",
-                                        ),
-                                      );
-                                    } else if (selectedMethod ==
-                                        "Бэлэн мөнгөөр") {
-                                      Navigator.of(context).pushNamed(
-                                        OrderCashPayment.routeName,
-                                        arguments: OrderCashPaymentArguments(
-                                          data: invoice,
-                                        ),
-                                      );
-                                    }
-                                  }
-                                },
+                                onClick: payment,
                                 labelColor: white,
                                 labelText: "Төлөх",
                                 textColor: orderColor,
@@ -452,22 +400,22 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
       image: 'images/qpay_logo.png',
       name: 'Qpay',
     ),
-    Order(
-      image: 'images/social_pay_logo.png',
-      name: 'Social Pay',
-    ),
-    Order(
-      image: 'assets/svg/bank_card.svg',
-      name: 'Картаар',
-    ),
-    Order(
-      image: 'assets/svg/sanhuujilt.svg',
-      name: 'Бэлэн мөнгөөр',
-    ),
-    Order(
-      image: 'assets/svg/bank_account.svg',
-      name: 'Дансаар',
-    ),
+    // Order(
+    //   image: 'images/social_pay_logo.png',
+    //   name: 'Social Pay',
+    // ),
+    // Order(
+    //   image: 'assets/svg/bank_card.svg',
+    //   name: 'Картаар',
+    // ),
+    // Order(
+    //   image: 'assets/svg/sanhuujilt.svg',
+    //   name: 'Бэлэн мөнгөөр',
+    // ),
+    // Order(
+    //   image: 'assets/svg/bank_account.svg',
+    //   name: 'Дансаар',
+    // ),
   ];
 
   showModal() {
@@ -482,32 +430,21 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
       builder: (context) {
         return SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 30,
+                Text(
+                  selectedMethod == null
+                      ? 'Төлбөрийн хэлбэр сонгох'
+                      : 'Төлбөрийн хэлбэр солих',
+                  style: const TextStyle(
+                    color: grey2,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                selectedMethod == null
-                    ? const Text(
-                        'Төлбөрийн хэлбэр сонгох',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      )
-                    : const Text(
-                        'Төлбөрийн хэлбэр солих',
-                        style: TextStyle(
-                          color: grey2,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
                 const SizedBox(
-                  height: 25,
+                  height: 15,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -522,7 +459,8 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                             Navigator.of(context).pop();
                           },
                           child: Container(
-                            margin: const EdgeInsets.only(bottom: 25),
+                            color: transparent,
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Row(
                               children: [
                                 const SizedBox(
@@ -590,14 +528,12 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: general.bankAccounts!
+                  children: accounts.rows!
                       .map(
                         (data) => GestureDetector(
                           onTap: () {
                             setState(() {
-                              bankName = data.bankName!;
-                              bankNumber = data.number!;
-                              accountName = data.name!;
+                              account = data;
                             });
                             Navigator.of(ctx).pop();
                           },

@@ -1,8 +1,12 @@
 import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class PriceSettingCard extends StatefulWidget {
   final InventoryGoods data;
@@ -23,12 +27,15 @@ class PriceSettingCard extends StatefulWidget {
 
 class _PriceSettingCardState extends State<PriceSettingCard> {
   int? index;
+  User user = User();
 
   @override
   Widget build(BuildContext context) {
     index = widget.list?.indexWhere((element) => element.id == widget.data.id);
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
+    bool permission = Permission().check(user, "ERP_NET_PRICE_SET");
     return GestureDetector(
-      onTap: widget.onClick,
+      onTap: permission ? widget.onClick : null,
       child: Container(
         margin: const EdgeInsets.only(bottom: 3),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -87,7 +94,9 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                     activeColor: productColor,
                     value: index! > -1,
                     onChanged: (value) {
-                      widget.onChange!();
+                      if (permission) {
+                        widget.onChange!();
+                      }
                     },
                   ),
               ],
@@ -201,9 +210,13 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                           children: [
                             CircleAvatar(
                               radius: 14,
-                              backgroundImage: NetworkImage(
-                                "${widget.data.coBusinessStaff?.avatar}",
-                              ),
+                              backgroundColor: grey,
+                              backgroundImage:
+                                  widget.data.coBusinessStaff?.avatar != null
+                                      ? NetworkImage(
+                                          "${widget.data.coBusinessStaff?.avatar}",
+                                        )
+                                      : null,
                             ),
                             const SizedBox(
                               width: 3,
@@ -241,19 +254,17 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            widget.data.coBusinessFinStaffs?.first.avatar !=
-                                    null
-                                ? CircleAvatar(
-                                    radius: 14,
-                                    backgroundImage: NetworkImage(
+                            CircleAvatar(
+                              radius: 14,
+                              backgroundColor: grey,
+                              backgroundImage: widget.data.coBusinessFinStaffs
+                                          ?.first.avatar !=
+                                      null
+                                  ? NetworkImage(
                                       "${widget.data.coBusinessFinStaffs?.first.avatar}",
-                                    ),
-                                  )
-                                : const CircleAvatar(
-                                    radius: 14,
-                                    backgroundImage:
-                                        AssetImage('images/avatar.png'),
-                                  ),
+                                    )
+                                  : null,
+                            ),
                             const SizedBox(
                               width: 3,
                             ),

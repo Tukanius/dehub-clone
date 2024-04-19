@@ -1,11 +1,15 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/product_module/screens/new_product/new_product.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class GoodsCard extends StatefulWidget {
   final Function()? onClick;
@@ -29,6 +33,8 @@ class GoodsCard extends StatefulWidget {
 }
 
 class _GoodsCardState extends State<GoodsCard> {
+  User user = User();
+
   onSubmit(String id, String status) async {
     await InventoryApi().statusChange(
       InventoryGoods(
@@ -49,6 +55,7 @@ class _GoodsCardState extends State<GoodsCard> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return GestureDetector(
       onTap: widget.onClick,
       child: AnimatedContainer(
@@ -148,36 +155,39 @@ class _GoodsCardState extends State<GoodsCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 widget.data.variantStatus == "ACTIVE"
-                    ? GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            PinCheckScreen.routeName,
-                            arguments: PinCheckScreenArguments(
-                              onSubmit: () {
-                                onSubmit(widget.data.variantId!, "INACTIVE");
-                              },
-                              color: productColor,
-                              labelText: "Бараа идэвхигүй болгох",
+                    ? Permission().check(user, "ERP_GDS_PRICE_SET")
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                PinCheckScreen.routeName,
+                                arguments: PinCheckScreenArguments(
+                                  onSubmit: () {
+                                    onSubmit(
+                                        widget.data.variantId!, "INACTIVE");
+                                  },
+                                  color: productColor,
+                                  labelText: "Бараа идэвхигүй болгох",
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              height: 36,
+                              width: 36,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: productColor.withOpacity(0.1),
+                              ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/svg/stop-sign.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      productColor, BlendMode.srcIn),
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          height: 36,
-                          width: 36,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: productColor.withOpacity(0.1),
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              'assets/svg/stop-sign.svg',
-                              colorFilter: const ColorFilter.mode(
-                                  productColor, BlendMode.srcIn),
-                            ),
-                          ),
-                        ),
-                      )
+                          )
+                        : const SizedBox()
                     : widget.data.variantStatus == "DRAFT"
                         ? GestureDetector(
                             onTap: () {
@@ -212,89 +222,93 @@ class _GoodsCardState extends State<GoodsCard> {
                           )
                         : Row(
                             children: [
-                              GestureDetector(
-                                onTap: widget.warehouseClick,
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  height: 36,
-                                  width: 36,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: productColor.withOpacity(0.1),
-                                  ),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      'assets/svg/in-home.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          widget.data.isWarehouseSet == false
-                                              ? productColor
-                                              : productColor.withOpacity(0.4),
-                                          BlendMode.srcIn),
+                              if (Permission().check(user, "ERP_GDS_WRH_SET"))
+                                GestureDetector(
+                                  onTap: widget.warehouseClick,
+                                  child: Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    height: 36,
+                                    width: 36,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: productColor.withOpacity(0.1),
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        'assets/svg/in-home.svg',
+                                        colorFilter: ColorFilter.mode(
+                                            widget.data.isWarehouseSet == false
+                                                ? productColor
+                                                : productColor.withOpacity(0.4),
+                                            BlendMode.srcIn),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: widget.priceClick,
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  height: 36,
-                                  width: 36,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: productColor.withOpacity(0.1),
-                                  ),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      'assets/svg/double-pin.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          widget.data.isPriceSet == false
-                                              ? productColor
-                                              : productColor.withOpacity(0.4),
-                                          BlendMode.srcIn),
+                              if (Permission().check(user, "ERP_GDS_PRICE_SET"))
+                                GestureDetector(
+                                  onTap: widget.priceClick,
+                                  child: Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    height: 36,
+                                    width: 36,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: productColor.withOpacity(0.1),
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        'assets/svg/double-pin.svg',
+                                        colorFilter: ColorFilter.mode(
+                                            widget.data.isPriceSet == false
+                                                ? productColor
+                                                : productColor.withOpacity(0.4),
+                                            BlendMode.srcIn),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: widget.data.isPriceSet == true &&
-                                        widget.data.isWarehouseSet == true
-                                    ? () {
-                                        Navigator.of(context).pushNamed(
-                                          PinCheckScreen.routeName,
-                                          arguments: PinCheckScreenArguments(
-                                            onSubmit: () {
-                                              onSubmit(widget.data.variantId!,
-                                                  "ACTIVE");
-                                            },
-                                            color: productColor,
-                                            labelText: "Бараа идэвхижүүлэх",
-                                          ),
-                                        );
-                                      }
-                                    : () {},
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 10),
-                                  height: 36,
-                                  width: 36,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8),
-                                    color: productColor.withOpacity(0.1),
-                                  ),
-                                  child: Center(
-                                    child: SvgPicture.asset(
-                                      'assets/svg/double-check.svg',
-                                      colorFilter: ColorFilter.mode(
-                                          widget.data.isPriceSet == true &&
-                                                  widget.data.isWarehouseSet ==
-                                                      true
-                                              ? productColor
-                                              : productColor.withOpacity(0.4),
-                                          BlendMode.srcIn),
+                              if (Permission().check(user, "ERP_GDS_STATUS"))
+                                GestureDetector(
+                                  onTap: widget.data.isPriceSet == true &&
+                                          widget.data.isWarehouseSet == true
+                                      ? () {
+                                          Navigator.of(context).pushNamed(
+                                            PinCheckScreen.routeName,
+                                            arguments: PinCheckScreenArguments(
+                                              onSubmit: () {
+                                                onSubmit(widget.data.variantId!,
+                                                    "ACTIVE");
+                                              },
+                                              color: productColor,
+                                              labelText: "Бараа идэвхижүүлэх",
+                                            ),
+                                          );
+                                        }
+                                      : () {},
+                                  child: Container(
+                                    margin: const EdgeInsets.only(left: 10),
+                                    height: 36,
+                                    width: 36,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: productColor.withOpacity(0.1),
+                                    ),
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        'assets/svg/double-check.svg',
+                                        colorFilter: ColorFilter.mode(
+                                            widget.data.isPriceSet == true &&
+                                                    widget.data
+                                                            .isWarehouseSet ==
+                                                        true
+                                                ? productColor
+                                                : productColor.withOpacity(0.4),
+                                            BlendMode.srcIn),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
                             ],
                           ),
               ],

@@ -55,11 +55,12 @@ class _SelectionFieldState extends State<SelectionField> {
                     ),
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: grey3,
-                  size: 16,
-                ),
+                if (widget.onClick != null)
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    color: grey3,
+                    size: 16,
+                  ),
               ],
             ),
           ),

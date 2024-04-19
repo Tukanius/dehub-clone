@@ -4,6 +4,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +122,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     const SizedBox(
                       width: 5,
                     ),
-                    widget.data.type == "SALES" && widget.data.salesCode != null
+                    user.currentBusiness?.type == "SUPPLIER" &&
+                            widget.data.salesCode != null
                         ? Text(
                             '${widget.data.salesCode}',
                             style: const TextStyle(
@@ -129,7 +131,7 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                               fontWeight: FontWeight.w500,
                             ),
                           )
-                        : widget.data.type == "PURCHASE" &&
+                        : user.currentBusiness?.type == "BUYER" &&
                                 widget.data.purchaseCode != null
                             ? Text(
                                 '${widget.data.purchaseCode}',
@@ -147,7 +149,8 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                               ),
                     if (user.currentBusiness?.type == "SUPPLIER" &&
                         widget.data.type == "PURCHASE" &&
-                        widget.data.orderStatus == "REVIEWED")
+                        widget.data.orderStatus == "REVIEWED" &&
+                        Permission().check(user, "ORD_BCK_ORD"))
                       Container(
                         margin: const EdgeInsets.only(left: 5),
                         height: 30,

@@ -226,7 +226,7 @@ class _AccountInformationState extends State<AccountInformation> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хугацаа сараар',
-            secondText: widget.data.periodInMonths,
+            secondText: "${widget.data.periodInMonths}",
             color: white,
             secondTextColor: source.currentColor,
           ),
@@ -242,7 +242,7 @@ class _AccountInformationState extends State<AccountInformation> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Хугацаа хэтэрсэн дүн',
-            secondText: Utils().formatCurrency(widget.data.overdueAmount) +
+            secondText: Utils().formatCurrency("${widget.data.overdueAmount}") +
                 currency().symbol,
             color: white,
             secondTextColor: source.currentColor,
@@ -251,7 +251,7 @@ class _AccountInformationState extends State<AccountInformation> {
             paddingHorizontal: 15,
             paddingVertical: 10,
             labelText: 'Нийт үлдэгдэл',
-            secondText: Utils().formatCurrency(widget.data.payOffAmount) +
+            secondText: Utils().formatCurrency("${widget.data.payOffAmount}") +
                 currency().symbol,
             color: white,
             secondTextColor: source.currentColor,
@@ -265,6 +265,7 @@ class _AccountInformationState extends State<AccountInformation> {
                 width: 25,
               ),
               Expanded(
+                flex: 4,
                 child: CustomButton(
                   onClick: () {
                     Navigator.of(context).pop();
@@ -279,12 +280,12 @@ class _AccountInformationState extends State<AccountInformation> {
                 width: 10,
               ),
               Expanded(
+                flex: 6,
                 child: CustomButton(
                   onClick: () {
                     Navigator.of(context).pushNamed(
                       PaymentReceivedFunds.routeName,
                       arguments: PaymentReceivedFundsArguments(
-                        id: null,
                         data: widget.data,
                       ),
                     );

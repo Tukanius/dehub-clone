@@ -38,13 +38,19 @@ class TransactionInformationCardState
           .firstWhere(
               (element) => element.code == widget.data?.creditAccountCurrency)
           .symbol;
-    } else {
+      return res;
+    } else if (widget.data?.debitAccountCurrency != null) {
       res = general.currencies!
           .firstWhere(
               (element) => element.code == widget.data?.debitAccountCurrency)
           .symbol;
+      return res;
+    } else {
+      res = general.currencies!
+          .firstWhere((element) => element.code == widget.data?.tranCrnCode)
+          .symbol;
+      return res;
     }
-    return res;
   }
 
   inOutType() {
@@ -77,7 +83,7 @@ class TransactionInformationCardState
               children: [
                 Expanded(
                   child: Text(
-                    '${widget.data?.description}',
+                    '${widget.data?.description ?? widget.data?.tranDesc}',
                     style: const TextStyle(
                         color: grey2, fontWeight: FontWeight.w600),
                   ),
@@ -99,21 +105,27 @@ class TransactionInformationCardState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  DateFormat("yyyy-MM-dd HH:mm")
-                      .format(widget.data!.createdAt!),
+                  widget.data?.createdAt != null
+                      ? DateFormat("yyyy-MM-dd HH:mm")
+                          .format(widget.data!.createdAt!)
+                      : DateFormat("yyyy-MM-dd HH:mm")
+                          .format(widget.data!.tranPostedDate!),
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xff555555),
                   ),
                 ),
                 Text(
-                  '${Utils().formatCurrency(widget.data?.amount.toString())} ${getCurrency()}',
+                  '${Utils().formatCurrency("${widget.data?.amount ?? widget.data?.tranAmount}")} ${getCurrency()}',
                   style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: inOutType() > -1 ? neonGreen : red),
-                )
+                    fontWeight: FontWeight.w500,
+                    color: inOutType() > -1 || widget.data?.drOrCr == "Debit"
+                        ? neonGreen
+                        : red,
+                  ),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

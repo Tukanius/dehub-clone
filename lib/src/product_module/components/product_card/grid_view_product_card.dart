@@ -1,7 +1,11 @@
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class GridViewProductCard extends StatefulWidget {
   final InventoryGoods data;
@@ -17,8 +21,10 @@ class GridViewProductCard extends StatefulWidget {
 }
 
 class _GridViewProductCardState extends State<GridViewProductCard> {
+  User user = User();
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return Container(
       color: white,
       margin: const EdgeInsets.all(5),
@@ -39,20 +45,21 @@ class _GridViewProductCardState extends State<GridViewProductCard> {
                   fit: BoxFit.cover,
                 ),
               ),
-              Positioned(
-                right: 10,
-                top: 10,
-                child: FloatingActionButton.small(
-                  shape: const CircleBorder(),
-                  backgroundColor: white,
-                  onPressed: widget.buttonClick,
-                  child: const Icon(
-                    Icons.add_shopping_cart,
-                    color: buttonColor,
-                    size: 24,
+              if (Permission().check(user, 'ERP_STORE_FETCH'))
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: FloatingActionButton.small(
+                    shape: const CircleBorder(),
+                    backgroundColor: white,
+                    onPressed: widget.buttonClick,
+                    child: const Icon(
+                      Icons.add_shopping_cart,
+                      color: buttonColor,
+                      size: 24,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
           Column(

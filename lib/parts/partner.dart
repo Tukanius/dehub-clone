@@ -195,6 +195,9 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
             .map((e) => BusinessStaffs.fromJson(e))
             .toList()
         : null,
+    permissions: json['permissions'] != null
+        ? (json['permissions'] as List).map((e) => Partner.fromJson(e)).toList()
+        : null,
     nameEng: json['nameEng'] != null ? json['nameEng'] as String : null,
     branchStatus:
         json['branchStatus'] != null ? json['branchStatus'] as String : null,
@@ -223,12 +226,23 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
     supplierIds: json['supplierIds'] != null
         ? (json['supplierIds'] as List).map((e) => e as String).toList()
         : null,
+    code: json['code'] != null ? json['code'] as String : null,
+    isView: json['isView'] != null ? json['isView'] as bool : null,
+    isCreate: json['isCreate'] != null ? json['isCreate'] as bool : null,
+    isEdit: json['isEdit'] != null ? json['isEdit'] as bool : null,
+    isReview: json['isReview'] != null ? json['isReview'] as bool : null,
+    isDelete: json['isDelete'] != null ? json['isDelete'] as bool : null,
   );
 }
 
 Map<String, dynamic> _$PartnerToJson(Partner instance) {
   Map<String, dynamic> json = {};
-
+  if (instance.code != null) json['code'] = instance.code;
+  if (instance.isView != null) json['isView'] = instance.isView;
+  if (instance.isCreate != null) json['isCreate'] = instance.isCreate;
+  if (instance.isEdit != null) json['isEdit'] = instance.isEdit;
+  if (instance.isReview != null) json['isReview'] = instance.isReview;
+  if (instance.isDelete != null) json['isDelete'] = instance.isDelete;
   if (instance.warehouseUser != null) {
     json['warehouseUser'] = instance.warehouseUser;
   }
@@ -262,6 +276,9 @@ Map<String, dynamic> _$PartnerToJson(Partner instance) {
   }
   if (instance.businessSubSector != null) {
     json['businessSubSector'] = instance.businessSubSector;
+  }
+  if (instance.permissions != null) {
+    json['permissions'] = instance.permissions;
   }
   if (instance.businessSector != null) {
     json['businessSector'] = instance.businessSector;

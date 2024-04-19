@@ -144,182 +144,187 @@ class TransactionHistoryState extends State<TransactionHistory>
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          Center(
-            child: Text(
-              '${widget.data.number}',
-              style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: paymentColor),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Text(
-              '${widget.data.bankName}',
-              style: const TextStyle(fontSize: 15, color: grey2),
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          GestureDetector(
-            onTap: () {
-              pickDateRange();
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: grey2.withOpacity(0.5), width: 0.5),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+              child: Column(
                 children: [
-                  Text(
-                    '${start.year} - ${start.month} - ${start.day}',
-                    style: const TextStyle(color: grey2),
+                  const SizedBox(
+                    height: 15,
                   ),
-                  SvgPicture.asset('assets/svg/calendar.svg'),
-                  const Icon(
-                    Icons.arrow_forward,
-                    size: 15,
-                    color: paymentColor,
+                  Center(
+                    child: Text(
+                      '${widget.data.number}',
+                      style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: paymentColor),
+                    ),
                   ),
-                  Text(
-                    '${end.year} - ${end.month} - ${end.day}',
-                    style: const TextStyle(color: grey2),
+                  const SizedBox(
+                    height: 10,
                   ),
-                  SvgPicture.asset('assets/svg/calendar.svg')
+                  Center(
+                    child: Text(
+                      '${widget.data.bankName}',
+                      style: const TextStyle(fontSize: 15, color: grey2),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      pickDateRange();
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: grey2.withOpacity(0.5), width: 0.5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            '${start.year} - ${start.month} - ${start.day}',
+                            style: const TextStyle(color: grey2),
+                          ),
+                          SvgPicture.asset('assets/svg/calendar.svg'),
+                          const Icon(
+                            Icons.arrow_forward,
+                            size: 15,
+                            color: paymentColor,
+                          ),
+                          Text(
+                            '${end.year} - ${end.month} - ${end.day}',
+                            style: const TextStyle(color: grey2),
+                          ),
+                          SvgPicture.asset('assets/svg/calendar.svg')
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: filter
+                        .map(
+                          (item) => TransactionFilterCard(
+                            onClick: filterText != item
+                                ? () {
+                                    setState(() {
+                                      filterText = item;
+                                      isLoading = true;
+                                      groupItems = {};
+                                      page = 1;
+                                    });
+                                    list(page, limit, "$filterText",
+                                        start.toString(), end.toString());
+                                  }
+                                : () {},
+                            isTap: item == filterText,
+                            text: item == "ALL"
+                                ? 'Бүгд'
+                                : item == "DEBIT"
+                                    ? "Орлого"
+                                    : "Зарлага",
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ],
               ),
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: filter
-                .map(
-                  (item) => TransactionFilterCard(
-                    onClick: filterText != item
-                        ? () {
-                            setState(() {
-                              filterText = item;
-                              isLoading = true;
-                              groupItems = {};
-                              page = 1;
-                            });
-                            list(page, limit, "$filterText", start.toString(),
-                                end.toString());
-                          }
-                        : () {},
-                    isTap: item == filterText,
-                    text: item == "ALL"
-                        ? 'Бүгд'
-                        : item == "DEBIT"
-                            ? "Орлого"
-                            : "Зарлага",
-                  ),
-                )
-                .toList(),
-          ),
-          isLoading == true
-              ? Container(
-                  margin: const EdgeInsets.only(top: 50),
-                  child: const Center(
-                    child: CircularProgressIndicator(
-                      color: paymentColor,
-                    ),
-                  ),
-                )
-              : Expanded(
-                  child: Refresher(
-                    refreshController: _refreshController,
-                    onLoading: onLoading,
-                    onRefresh: onRefresh,
-                    color: networkColor,
-                    child: SingleChildScrollView(
-                      child: groupedList.isNotEmpty
-                          ? Column(
-                              children: groupedList
-                                  .map(
-                                    (data) => Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AnimatedContainer(
-                                          transform: Matrix4.translationValues(
-                                              startAnimation
-                                                  ? 0
-                                                  : -MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                              0,
-                                              0),
-                                          curve: Curves.ease,
-                                          duration: Duration(
-                                              milliseconds: 200 +
-                                                  (groupedList.indexOf(data) +
-                                                      200)),
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 10),
-                                          child: Text(
-                                            DateFormat("yyyy-MM-dd")
-                                                .format(data.header!),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              color: grey2,
-                                            ),
-                                          ),
-                                        ),
-                                        Column(
-                                          children: data.values!
-                                              .map(
-                                                (item) =>
-                                                    TransactionInformationCard(
-                                                  index: transaction.rows!
-                                                      .indexOf(item),
-                                                  startAnimation:
-                                                      startAnimation,
-                                                  onClick: () {
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                      TransactionDetailPage
-                                                          .routeName,
-                                                      arguments:
-                                                          TransactionDetailPageArguments(
-                                                        data: item,
-                                                      ),
-                                                    );
-                                                  },
-                                                  data: item,
-                                                ),
-                                              )
-                                              .toList(),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          : const NotFound(
-                              module: "PAYMENT",
-                              labelText: "Гүйлгээний түүх хоосон байна",
-                            ),
-                    ),
+          ];
+        },
+        body: isLoading == true
+            ? Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: const Center(
+                  child: CircularProgressIndicator(
+                    color: paymentColor,
                   ),
                 ),
-        ],
+              )
+            : Refresher(
+                refreshController: _refreshController,
+                onLoading: onLoading,
+                onRefresh: onRefresh,
+                color: networkColor,
+                child: SingleChildScrollView(
+                  child: groupedList.isNotEmpty
+                      ? Column(
+                          children: groupedList
+                              .map(
+                                (data) => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    AnimatedContainer(
+                                      transform: Matrix4.translationValues(
+                                          startAnimation
+                                              ? 0
+                                              : -MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                          0,
+                                          0),
+                                      curve: Curves.ease,
+                                      duration: Duration(
+                                          milliseconds: 200 +
+                                              (groupedList.indexOf(data) +
+                                                  200)),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      child: Text(
+                                        DateFormat("yyyy-MM-dd")
+                                            .format(data.header!),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: grey2,
+                                        ),
+                                      ),
+                                    ),
+                                    Column(
+                                      children: data.values!
+                                          .map(
+                                            (item) =>
+                                                TransactionInformationCard(
+                                              index: transaction.rows!
+                                                  .indexOf(item),
+                                              startAnimation: startAnimation,
+                                              onClick: () {
+                                                Navigator.of(context).pushNamed(
+                                                  TransactionDetailPage
+                                                      .routeName,
+                                                  arguments:
+                                                      TransactionDetailPageArguments(
+                                                    data: item,
+                                                  ),
+                                                );
+                                              },
+                                              data: item,
+                                            ),
+                                          )
+                                          .toList(),
+                                    )
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : const NotFound(
+                          module: "PAYMENT",
+                          labelText: "Гүйлгээний түүх хоосон байна",
+                        ),
+                ),
+              ),
       ),
     );
   }

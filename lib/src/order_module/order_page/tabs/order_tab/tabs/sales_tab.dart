@@ -9,6 +9,7 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/received_order_detail.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -51,7 +52,9 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(page, limit);
+    if (Permission().check(user, "ORD_LIST")) {
+      await list(page, limit);
+    }
   }
 
   list(page, limit) async {
@@ -116,114 +119,125 @@ class _SalesTabState extends State<SalesTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Column(
-        children: [
-          const SearchButton(
-            color: orderColor,
-            textColor: orderColor,
-          ),
-          isLoading == true
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: orderColor,
-                  ),
-                )
-              : Expanded(
-                  child: Refresher(
-                    refreshController: refreshController,
-                    onLoading: onLoading,
-                    onRefresh: onRefresh,
-                    color: orderColor,
-                    child: groupedList.isNotEmpty
-                        ? SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Column(
-                                  children: groupedList
-                                      .map(
-                                        (data) => Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            AnimatedContainer(
-                                              curve: Curves.ease,
-                                              transform:
-                                                  Matrix4.translationValues(
-                                                      startAnimation
-                                                          ? 0
-                                                          : -MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
-                                                      0,
-                                                      0),
-                                              duration: Duration(
-                                                milliseconds: 300 +
-                                                    (groupedList.indexOf(data) *
-                                                        300),
-                                              ),
-                                              margin: const EdgeInsets.only(
-                                                  left: 15,
-                                                  bottom: 10,
-                                                  top: 10),
-                                              child: Text(
-                                                DateFormat("yyyy-MM-dd")
-                                                    .format(data.header!),
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: grey2),
-                                              ),
-                                            ),
-                                            Column(
-                                              children: data.values!
-                                                  .map(
-                                                    (item) => SalesOrderCard(
-                                                      index: order.rows!
-                                                          .indexOf(item),
-                                                      startAnimation:
-                                                          startAnimation,
-                                                      onClick: () {
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                          ReceivedOrderDetail
-                                                              .routeName,
-                                                          arguments:
-                                                              ReceivedOrderDetailArguments(
-                                                            listenController:
-                                                                listenController,
-                                                            id: item.id!,
-                                                          ),
-                                                        );
-                                                      },
-                                                      data: item,
-                                                    ),
-                                                  )
-                                                  .toList(),
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                      .toList(),
-                                )
-                              ],
-                            ),
-                          )
-                        : const NotFound(
-                            module: "ORDER",
-                            labelText: "Захиалга олдсонгүй",
-                          ),
-                  ),
+    return Permission().check(user, "ORD_LIST")
+        ? GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Column(
+              children: [
+                const SearchButton(
+                  color: orderColor,
+                  textColor: orderColor,
                 ),
-        ],
-      ),
-    );
+                isLoading == true
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: orderColor,
+                        ),
+                      )
+                    : Expanded(
+                        child: Refresher(
+                          refreshController: refreshController,
+                          onLoading: onLoading,
+                          onRefresh: onRefresh,
+                          color: orderColor,
+                          child: groupedList.isNotEmpty
+                              ? SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Column(
+                                        children: groupedList
+                                            .map(
+                                              (data) => Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  AnimatedContainer(
+                                                    curve: Curves.ease,
+                                                    transform: Matrix4
+                                                        .translationValues(
+                                                            startAnimation
+                                                                ? 0
+                                                                : -MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            0,
+                                                            0),
+                                                    duration: Duration(
+                                                      milliseconds: 300 +
+                                                          (groupedList.indexOf(
+                                                                  data) *
+                                                              300),
+                                                    ),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            left: 15,
+                                                            bottom: 10,
+                                                            top: 10),
+                                                    child: Text(
+                                                      DateFormat("yyyy-MM-dd")
+                                                          .format(data.header!),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color: grey2),
+                                                    ),
+                                                  ),
+                                                  Column(
+                                                    children: data.values!
+                                                        .map(
+                                                          (item) =>
+                                                              SalesOrderCard(
+                                                            index: order.rows!
+                                                                .indexOf(item),
+                                                            startAnimation:
+                                                                startAnimation,
+                                                            onClick: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushNamed(
+                                                                ReceivedOrderDetail
+                                                                    .routeName,
+                                                                arguments:
+                                                                    ReceivedOrderDetailArguments(
+                                                                  listenController:
+                                                                      listenController,
+                                                                  id: item.id!,
+                                                                ),
+                                                              );
+                                                            },
+                                                            data: item,
+                                                          ),
+                                                        )
+                                                        .toList(),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                            .toList(),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const NotFound(
+                                  module: "ORDER",
+                                  labelText: "Захиалга олдсонгүй",
+                                ),
+                        ),
+                      ),
+              ],
+            ),
+          )
+        : const NotFound(
+            module: "ORDER",
+            labelText: "Хандах эрх хүрэлцэхгүй байна",
+          );
   }
 }

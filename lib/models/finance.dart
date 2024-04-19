@@ -288,13 +288,15 @@ class Finance {
   List<Stats>? numberSurvey;
   String? openDate;
   String? maturityDate;
-  String? periodInDays;
-  String? periodInMonths;
+  int? periodInDays;
+  int? periodInMonths;
   String? nextInstallmentDueDate;
-  String? overdueAmount;
-  String? payOffAmount;
+  double? overdueAmount;
+  double? payOffAmount;
+  String? loanStatus;
 
   Finance({
+    this.loanStatus,
     this.maturityDate,
     this.overdueAmount,
     this.payOffAmount,

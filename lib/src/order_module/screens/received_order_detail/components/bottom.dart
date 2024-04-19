@@ -1,11 +1,15 @@
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/general.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
+import 'package:dehub/src/order_module/screens/order_payment_page/order_cod_payment.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +36,7 @@ class Bottom extends StatefulWidget {
 class _BottomState extends State<Bottom> {
   User user = User();
   Order approve = Order();
+  General general = General();
 
   respond(bool isApprove) async {
     approve.approve = isApprove;
@@ -91,9 +96,24 @@ class _BottomState extends State<Bottom> {
     );
   }
 
+  cancel() async {
+    await OrderApi().cancel(widget.id);
+    widget.listenController.changeVariable('review');
+    showCustomDialog(
+      context,
+      'Амжилттай татгалзлаа',
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
+    general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
     return Container(
       padding: const EdgeInsets.only(bottom: 50, left: 15, right: 15, top: 15),
       decoration: const BoxDecoration(
@@ -189,8 +209,13 @@ class _BottomState extends State<Bottom> {
                   ],
                 )
               : user.currentBusiness?.type == "SUPPLIER" &&
-                      widget.order.type == "PURCHASE" &&
-                      widget.order.orderStatus == "REVIEWED"
+                          widget.order.type == "PURCHASE" &&
+                          widget.order.orderStatus == "REVIEWED" &&
+                          Permission().check(user, "ORD_RES") ||
+                      user.currentBusiness?.type == "BUYER" &&
+                          widget.order.type == "SALES" &&
+                          widget.order.orderStatus == "REVIEWED" &&
+                          Permission().check(user, "ORD_RES")
                   ? Row(
                       children: [
                         GestureDetector(
@@ -320,132 +345,101 @@ class _BottomState extends State<Bottom> {
                             ),
                           ],
                         )
-                      : user.currentBusiness?.type == "BUYER" &&
-                              widget.order.type == "SALES" &&
-                              widget.order.orderStatus == "REVIEWED"
-                          ? Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    onSubmit(
-                                      false,
-                                      "Захиалга цуцлах",
-                                      (approve) => respond(false),
-                                    );
-                                  },
-                                  child: Container(
-                                    color: transparent,
-                                    height: 40,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/svg/alert-circle.svg',
-                                        ),
-                                        const Text(
-                                          'Татгалзах',
-                                          style: TextStyle(
-                                            color: Color(0xffFE2413),
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                      ],
+                      : user.currentBusiness?.type == "SUPPLIER" &&
+                              widget.order.deliveryNote == null &&
+                              widget.order.orderStatus == "AUTHORIZED" &&
+                              Permission().check(user, "ORD_DN_ASSIGN")
+                          ? GestureDetector(
+                              onTap: () {
+                                onSubmit(
+                                  true,
+                                  "Хүргэлт хуваарилах",
+                                  (approve) => create(),
+                                );
+                              },
+                              child: Container(
+                                color: transparent,
+                                height: 38,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/svg/create-so.svg',
+                                      colorFilter: const ColorFilter.mode(
+                                          orderColor, BlendMode.srcIn),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    onSubmit(true, "Захиалга зөвшөөрөх",
-                                        (approve) => respond(true));
-                                  },
-                                  child: Container(
-                                    color: transparent,
-                                    height: 40,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/svg/create-so.svg',
-                                          colorFilter: const ColorFilter.mode(
-                                              orderColor, BlendMode.srcIn),
-                                        ),
-                                        const Text(
-                                          'Зөвшөөрөх',
-                                          style: TextStyle(
-                                            color: orderColor,
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                      ],
+                                    const Text(
+                                      'Хүргэлт хуваарилах',
+                                      style: TextStyle(
+                                        color: orderColor,
+                                        fontSize: 10,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                              ],
+                              ),
                             )
-                          : user.currentBusiness?.type == "SUPPLIER" &&
-                                  widget.order.deliveryNote == null &&
-                                  widget.order.orderStatus == "AUTHORIZED"
+                          : widget.order.orderStatus == "DRAFT"
                               ? GestureDetector(
                                   onTap: () {
-                                    onSubmit(
-                                      true,
-                                      "Хүргэлт хуваарилах",
-                                      (approve) => create(),
+                                    Navigator.of(context).pushNamed(
+                                      NewOrder.routeName,
+                                      arguments: NewOrderArguments(
+                                        data: widget.order,
+                                        id: widget.order.receiverBusinessId,
+                                      ),
                                     );
                                   },
                                   child: Container(
                                     color: transparent,
-                                    height: 38,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                    child: const Column(
                                       children: [
-                                        SvgPicture.asset(
-                                          'assets/svg/create-so.svg',
-                                          colorFilter: const ColorFilter.mode(
-                                              orderColor, BlendMode.srcIn),
+                                        Icon(
+                                          Icons.edit_square,
+                                          color: orderColor,
+                                          size: 18,
                                         ),
-                                        const Text(
-                                          'Хүргэлт хуваарилах',
+                                        Text(
+                                          'Засах',
                                           style: TextStyle(
                                             color: orderColor,
-                                            fontSize: 10,
+                                            fontSize: 12,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 )
-                              : widget.order.orderStatus == "DRAFT"
+                              : widget.order.orderStatus == "APPROVED" &&
+                                      widget.order.paymentTerm?.condition ==
+                                          "COD"
                                   ? GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).pushNamed(
-                                          NewOrder.routeName,
-                                          arguments: NewOrderArguments(
-                                            data: widget.order,
-                                            id: widget.order.receiverBusinessId,
+                                          OrderCodPayment.routeName,
+                                          arguments: OrderCodPaymentArguments(
+                                            id: widget.order.proformaInvoiceId!,
+                                            lines: widget.order.lines!,
                                           ),
                                         );
                                       },
                                       child: Container(
                                         color: transparent,
-                                        child: const Column(
+                                        height: 40,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Icon(
-                                              Icons.edit_square,
-                                              color: orderColor,
-                                              size: 18,
+                                            SvgPicture.asset(
+                                              'assets/svg/bank_card.svg',
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                      orderColor,
+                                                      BlendMode.srcIn),
                                             ),
-                                            Text(
-                                              'Засах',
+                                            const Text(
+                                              'Төлбөр батлах',
                                               style: TextStyle(
                                                 color: orderColor,
                                                 fontSize: 12,
@@ -455,7 +449,47 @@ class _BottomState extends State<Bottom> {
                                         ),
                                       ),
                                     )
-                                  : const SizedBox(),
+                                  : widget.order.orderStatus == "REVIEWED" &&
+                                              user.currentBusiness?.type ==
+                                                  "SUPPLIER" &&
+                                              widget.order.type == "SALES" &&
+                                              Permission()
+                                                  .check(user, "ORD_CANCEL") ||
+                                          widget.order.orderStatus ==
+                                                  "REVIEWED" &&
+                                              user.currentBusiness?.type ==
+                                                  "BUYER" &&
+                                              widget.order.type == "PURCHASE" &&
+                                              Permission()
+                                                  .check(user, "ORD_CANCEL")
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            onSubmit(false, "Захиалга цуцлах",
+                                                (approve) => cancel());
+                                          },
+                                          child: Container(
+                                            color: transparent,
+                                            height: 38,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/svg/alert-circle.svg',
+                                                ),
+                                                const Text(
+                                                  'Цуцлах',
+                                                  style: TextStyle(
+                                                    color: Color(0xffFE2413),
+                                                    fontSize: 10,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox(),
         ],
       ),
     );

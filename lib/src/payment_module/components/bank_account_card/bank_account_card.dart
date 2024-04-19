@@ -3,6 +3,7 @@ import 'package:dehub/models/payment.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -173,25 +174,27 @@ class BankAccountCardState extends State<BankAccountCard> {
                 ),
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: widget.transactionClick,
-                      child: Container(
-                        height: 36,
-                        width: 36,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: networkColor.withOpacity(0.1),
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                              'assets/svg/transaction-history.svg'),
+                    if (Permission().check(user, "PAY_TRX"))
+                      GestureDetector(
+                        onTap: widget.transactionClick,
+                        child: Container(
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: networkColor.withOpacity(0.1),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                                'assets/svg/transaction-history.svg'),
+                          ),
                         ),
                       ),
-                    ),
                     SizedBox(
                       width: widget.data?.bankName == "GOLOMT" ? 10 : 0,
                     ),
-                    if (widget.data?.bankName == "GOLOMT")
+                    if (widget.data?.bankName == "GOLOMT" &&
+                        Permission().check(user, "PAY_STM"))
                       GestureDetector(
                         onTap: widget.statementClick,
                         child: Container(

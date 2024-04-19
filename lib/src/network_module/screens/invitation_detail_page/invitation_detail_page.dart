@@ -3,12 +3,16 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/invitation_received.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/auth/pin_check/pin_check.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class InvitationDetailPageArguments {
   ListenController listenController;
@@ -39,6 +43,7 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
   Invitation invitation = Invitation();
   Invitation respond = Invitation();
   List<Invitation> list = [];
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -101,6 +106,7 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -405,7 +411,8 @@ class InvitationDetailPageState extends State<InvitationDetailPage>
                   const SizedBox(
                     height: 25,
                   ),
-                  if (invitation.invitationStatus == "SENT")
+                  if (invitation.invitationStatus == "SENT" &&
+                      Permission().check(user, "NET_INV_RES"))
                     Container(
                       margin: const EdgeInsets.only(bottom: 50),
                       child: Row(

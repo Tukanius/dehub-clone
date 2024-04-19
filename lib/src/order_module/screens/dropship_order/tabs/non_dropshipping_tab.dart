@@ -34,7 +34,7 @@ class _NonDropshippingTabState extends State<NonDropshippingTab>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   @override

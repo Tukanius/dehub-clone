@@ -3,12 +3,16 @@ import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/business_network.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/client_classifications/set_client_classification/set_client_classification.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class ClientClassificationDetailArguments {
   String id;
@@ -39,6 +43,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
   bool isLoading = true;
   BusinessNetwork get = BusinessNetwork();
   TextEditingController controller = TextEditingController();
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -64,6 +69,7 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -153,40 +159,41 @@ class _ClientClassificationDetailState extends State<ClientClassificationDetail>
                     secondText: get.classificationPriority?.name,
                     secondTextColor: networkColor,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                        SetClientClassification.routeName,
-                        arguments: SetClientClassificationArguments(
-                          listenController: widget.listenController,
-                          id: widget.id,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.5),
-                      color: transparent,
-                      padding:
-                          const EdgeInsets.only(right: 15, top: 10, bottom: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          SvgPicture.asset('assets/svg/person-check.svg'),
-                          const SizedBox(
-                            width: 5,
+                  if (Permission().check(user, "NET_CLS_SET"))
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          SetClientClassification.routeName,
+                          arguments: SetClientClassificationArguments(
+                            listenController: widget.listenController,
+                            id: widget.id,
                           ),
-                          const Text(
-                            'Өөрчлөх',
-                            style: TextStyle(
-                              color: networkColor,
-                              fontWeight: FontWeight.w600,
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.5),
+                        color: transparent,
+                        padding: const EdgeInsets.only(
+                            right: 15, top: 10, bottom: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SvgPicture.asset('assets/svg/person-check.svg'),
+                            const SizedBox(
+                              width: 5,
                             ),
-                          ),
-                        ],
+                            const Text(
+                              'Өөрчлөх',
+                              style: TextStyle(
+                                color: networkColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                   Container(
                     margin:
                         const EdgeInsets.only(left: 15, top: 10, bottom: 10),

@@ -12,6 +12,7 @@ import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/screens/dropship_create/dropship_create.dart';
 import 'package:dehub/src/order_module/screens/received_order_detail/components/bottom.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -72,41 +73,49 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   splitCreate() async {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<String>? ids = [];
-    try {
-      loading.loading(true);
-      for (var data in splitList) {
-        ids.add(data.id!);
+    if (Permission().check(user, "ORD_SPLIT")) {
+      try {
+        loading.loading(true);
+        for (var data in splitList) {
+          ids.add(data.id!);
+        }
+        await OrderApi().splitCreate(
+          Order(ids: ids),
+          widget.id,
+        );
+        loading.loading(false);
+        showCustomDialog(context, "Амжилттай", true, onPressed: () {
+          Navigator.of(context).pop();
+        });
+      } catch (e) {
+        loading.loading(false);
       }
-      await OrderApi().splitCreate(
-        Order(ids: ids),
-        widget.id,
-      );
-      loading.loading(false);
-      showCustomDialog(context, "Амжилттай", true, onPressed: () {
-        Navigator.of(context).pop();
-      });
-    } catch (e) {
-      loading.loading(false);
+    } else {
+      showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
     }
   }
 
   dropshipping() {
     List<Order> data =
         splitList.where((element) => element.isDropshipping == false).toList();
-    if (data.isEmpty) {
-      Navigator.of(context).pushNamed(
-        DropshipCreate.routeName,
-        arguments: DropshipCreateArguments(
-          id: widget.id,
-          lines: splitList,
-        ),
-      );
+    if (Permission().check(user, "ORD_DRSHP")) {
+      if (data.isEmpty) {
+        Navigator.of(context).pushNamed(
+          DropshipCreate.routeName,
+          arguments: DropshipCreateArguments(
+            id: widget.id,
+            lines: splitList,
+          ),
+        );
+      } else {
+        showCustomDialog(
+          context,
+          "(${data.map((e) => "${e.skuCode}").join(', ')}) эдгээр бараанууд dropship хийх эрхгүй байна",
+          false,
+        );
+      }
     } else {
-      showCustomDialog(
-        context,
-        "(${data.map((e) => "${e.skuCode}").join(', ')}) эдгээр бараанууд dropship хийх эрхгүй байна",
-        false,
-      );
+      showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
     }
   }
 
@@ -139,80 +148,82 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      List<Order> data = splitList
-                          .where((element) => element.isSplit == false)
-                          .toList();
-                      if (data.isEmpty) {
-                        Navigator.of(context).pushNamed(
-                          PinCheckScreen.routeName,
-                          arguments: PinCheckScreenArguments(
-                            onSubmit: splitCreate,
+                  if (Permission().check(user, "ORD_SPLIT"))
+                    GestureDetector(
+                      onTap: () {
+                        List<Order> data = splitList
+                            .where((element) => element.isSplit == false)
+                            .toList();
+                        if (data.isEmpty) {
+                          Navigator.of(context).pushNamed(
+                            PinCheckScreen.routeName,
+                            arguments: PinCheckScreenArguments(
+                              onSubmit: splitCreate,
+                              color: orderColor,
+                              labelText: 'Захиалга салгах',
+                            ),
+                          );
+                        } else {
+                          showCustomDialog(
+                            context,
+                            "(${data.map((e) => "${e.name}").join(', ')}) эдгээр бараа захиалга салгах эрхгүй байна",
+                            false,
+                          );
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: orderColor),
+                          borderRadius: BorderRadius.circular(5),
+                          color: white,
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              color: Colors.grey.withOpacity(0.5),
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          'Захиалга салгах',
+                          style: TextStyle(
                             color: orderColor,
-                            labelText: 'Захиалга салгах',
+                            fontWeight: FontWeight.w600,
                           ),
-                        );
-                      } else {
-                        showCustomDialog(
-                          context,
-                          "(${data.map((e) => "${e.name}").join(', ')}) эдгээр бараа захиалга салгах эрхгүй байна",
-                          false,
-                        );
-                      }
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: orderColor),
-                        borderRadius: BorderRadius.circular(5),
-                        color: white,
-                        boxShadow: [
-                          BoxShadow(
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            color: Colors.grey.withOpacity(0.5),
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: const Text(
-                        'Захиалга салгах',
-                        style: TextStyle(
-                          color: orderColor,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ),
                   const SizedBox(
                     width: 10,
                   ),
-                  GestureDetector(
-                    onTap: dropshipping,
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: orderColor,
-                        boxShadow: [
-                          BoxShadow(
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            color: Colors.grey.withOpacity(0.5),
-                            offset: const Offset(0, 2),
+                  if (Permission().check(user, "ORD_DRSHP"))
+                    GestureDetector(
+                      onTap: dropshipping,
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: orderColor,
+                          boxShadow: [
+                            BoxShadow(
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              color: Colors.grey.withOpacity(0.5),
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          'Dropship захиалах',
+                          style: TextStyle(
+                            color: white,
+                            fontWeight: FontWeight.w600,
                           ),
-                        ],
-                      ),
-                      child: const Text(
-                        'Dropship захиалах',
-                        style: TextStyle(
-                          color: white,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ),
                 ],
               )
             : null,
@@ -288,8 +299,11 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                       ),
                                       child: Text(
                                         user.currentBusiness?.type ==
-                                                    "SUPPLIER" &&
-                                                order.type == "SALES"
+                                                        "SUPPLIER" &&
+                                                    order.type == "SALES" ||
+                                                user.currentBusiness?.type ==
+                                                        "BUYER" &&
+                                                    order.type == "PURCHASE"
                                             ? '${orderStatus().sentName}'
                                             : '${orderStatus().receivedName}',
                                         style: TextStyle(
@@ -831,10 +845,10 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             labelTextColor: buttonColor,
                             paddingHorizontal: 15,
                             paddingVertical: 10,
-                            labelText: 'Үнийн дүнгийн хөнгөлөлт',
+                            labelText: 'Хөнгөлөлтийн дүн',
                             secondTextColor: orderColor,
                             secondText:
-                                '${Utils().formatCurrency(order.lineTotalDiscountAmount.toString())}₮',
+                                '${Utils().formatCurrency(order.discountValue.toString())}₮',
                             arrowColor: orderColor,
                             color: white,
                           ),
@@ -972,7 +986,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                   ),
                   if (splitList.isEmpty)
                     Bottom(
-                      totalAmount: totalAmount!,
+                      totalAmount: order.totalAmount!,
                       listenController: widget.listenController,
                       id: widget.id,
                       order: order,

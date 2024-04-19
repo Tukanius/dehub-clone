@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:dehub/src/invoice_module/components/invoice_card/invoice_card.dart';
+import 'package:dehub/src/invoice_module/components/closed_invoice_card/closed_invoice_card.dart';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/src/invoice_module/components/invoice_empty/invoice_empty.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -105,8 +104,8 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
   groupMaker() {
     List<Invoice> group = [];
     for (var data in invoice.rows!) {
-      DateTime date =
-          DateTime.parse(DateFormat("yyyy-MM-dd").format(data.createdAt));
+      DateTime date = DateTime.parse(
+          DateFormat("yyyy-MM-dd").format(data.paidDate ?? DateTime.now()));
       if (groupItems.containsKey(date)) {
         groupItems[date]!.add(data);
       } else {
@@ -180,23 +179,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          AnimatedContainer(
-                                            duration: Duration(
-                                              milliseconds: 300 +
-                                                  (groupedList.indexOf(data) *
-                                                      300),
-                                            ),
-                                            curve: Curves.ease,
-                                            transform:
-                                                Matrix4.translationValues(
-                                                    startAnimation
-                                                        ? 0
-                                                        : -MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                    0,
-                                                    0),
+                                          Container(
                                             margin: const EdgeInsets.symmetric(
                                                 horizontal: 15, vertical: 10),
                                             child: Text(
@@ -211,9 +194,7 @@ class _ClosedInvoicePageState extends State<ClosedInvoicePage>
                                           Column(
                                             children: data.values!
                                                 .map(
-                                                  (item) => InvoiceCard(
-                                                    startAnimation: true,
-                                                    index: 0,
+                                                  (item) => ClosedInvoiceCard(
                                                     data: item,
                                                     onClick: () {
                                                       Navigator.of(context)

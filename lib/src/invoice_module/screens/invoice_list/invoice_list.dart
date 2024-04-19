@@ -152,7 +152,6 @@ class _GivePageState extends State<InvoiceListPage>
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     general =
         Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(

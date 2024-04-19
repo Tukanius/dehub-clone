@@ -174,11 +174,40 @@ Payment _$PaymentFromJson(Map<String, dynamic> json) {
     redirectUri:
         json['redirectUri'] != null ? json['redirectUri'] as String : null,
     url: json['url'] != null ? Uri.parse(json['url'].toString()) : null,
+    recNum: json['recNum'] != null ? int.parse("${json['recNum']}") : null,
+    drOrCr: json['drOrCr'] != null ? json['drOrCr'] as String : null,
+    tranAmount: json['tranAmount'] != null
+        ? double.parse("${json['tranAmount']}")
+        : null,
+    tranDesc: json['tranDesc'] != null ? json['tranDesc'] as String : null,
+    tranPostedDate: json['tranPostedDate'] != null
+        ? DateTime.parse("${json['tranPostedDate']}")
+        : null,
+    tranCrnCode:
+        json['tranCrnCode'] != null ? json['tranCrnCode'] as String : null,
+    exchRate:
+        json['exchRate'] != null ? int.parse("${json['exchRate']}") : null,
+    balance: json['balance'] != null ? json['balance'] as String : null,
+    accName: json['accName'] != null ? json['accName'] as String : null,
+    accNum: json['accNum'] != null ? json['accNum'] as String : null,
   );
 }
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) {
   Map<String, dynamic> json = {};
+  if (instance.recNum != null) json['recNum'] = instance.recNum;
+  if (instance.drOrCr != null) json['drOrCr'] = instance.drOrCr;
+  if (instance.tranAmount != null) json['tranAmount'] = instance.tranAmount;
+  if (instance.tranDesc != null) json['tranDesc'] = instance.tranDesc;
+  if (instance.tranPostedDate != null) {
+    json['tranPostedDate'] = instance.tranPostedDate;
+  }
+  if (instance.tranCrnCode != null) json['tranCrnCode'] = instance.tranCrnCode;
+  if (instance.exchRate != null) json['exchRate'] = instance.exchRate;
+  if (instance.balance != null) json['balance'] = instance.balance;
+  if (instance.accName != null) json['accName'] = instance.accName;
+  if (instance.accNum != null) json['accNum'] = instance.accNum;
+
   if (instance.byInterval != null) json['byInterval'] = instance.byInterval;
   if (instance.account != null) json['account'] = instance.account;
   if (instance.payerUser != null) json['payerUser'] = instance.payerUser;

@@ -10,6 +10,7 @@ import 'package:dehub/src/network_module/screens/payment_terms/payment_terms.dar
 import 'package:dehub/src/network_module/screens/partner_page/partner_page.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
 import 'package:dehub/components/pie_chart/pie_chart.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:dehub/api/business_api.dart';
@@ -89,22 +90,24 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    pieChart = await BusinessApi().pieChart();
-    Map<String, double> pieData = {};
-    pieChart.forEach((key, value) {
-      pieData[key] = double.parse(value.toString());
-      legend.add(
-        Business(
-          count: value,
-          profileName: key,
-        ),
-      );
-    });
-    setState(() {
-      data = pieData;
-    });
-    received = await BusinessApi().dashboardReceived();
-    sent = await BusinessApi().dashboardSent();
+    if (Permission().check(user, "NET_DASH")) {
+      pieChart = await BusinessApi().pieChart();
+      Map<String, double> pieData = {};
+      pieChart.forEach((key, value) {
+        pieData[key] = double.parse(value.toString());
+        legend.add(
+          Business(
+            count: value,
+            profileName: key,
+          ),
+        );
+      });
+      setState(() {
+        data = pieData;
+      });
+      received = await BusinessApi().dashboardReceived();
+      sent = await BusinessApi().dashboardSent();
+    }
     setState(() {
       isLoading = false;
     });
@@ -146,134 +149,138 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                SizedBox(
-                  height: 100,
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(NetworkPartnerPage.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 10,
-                        labelText: 'Манай харилцагч',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/partners.svg',
-                      ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(ClientStaffs.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 9,
-                        labelText: 'Хариуцсан ажилтан',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/double-person.svg',
-                      ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(ClientClassifications.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 9,
-                        labelText: 'Ангилал, зэрэглэл',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/double-person.svg',
-                      ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(PaymentTerms.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 8,
-                        labelText: 'Төлбөрийн нөхцөл',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/payment-term.svg',
-                      ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(AccountSetting.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 9,
-                        labelText: 'Данс тохиргоо',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/wallet.svg',
-                      ),
-                      DashboardCard(
-                        onClick: () {
-                          Navigator.of(context)
-                              .pushNamed(DistributionAreas.routeName);
-                        },
-                        boxColor: networkColor.withOpacity(0.1),
-                        padding: 10,
-                        labelText: 'Чиглэл, бүсчлэл',
-                        svgColor: networkColor,
-                        svg: 'assets/svg/map.svg',
-                      ),
-                      if (user.currentBusiness?.type == "SUPPLIER")
+                if (Permission().check(user, "NET_LIST"))
+                  SizedBox(
+                    height: 100,
+                    child: ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      scrollDirection: Axis.horizontal,
+                      children: [
                         DashboardCard(
                           onClick: () {
                             Navigator.of(context)
-                                .pushNamed(ReferenceInformationPage.routeName);
+                                .pushNamed(NetworkPartnerPage.routeName);
                           },
                           boxColor: networkColor.withOpacity(0.1),
-                          padding: 7,
-                          labelText: 'Лавлах мэдээлэл',
+                          padding: 10,
+                          labelText: 'Манай харилцагч',
                           svgColor: networkColor,
-                          svg: 'assets/svg/bag.svg',
+                          svg: 'assets/svg/partners.svg',
                         ),
-                    ],
+                        if (Permission().check(user, "NET_STF"))
+                          DashboardCard(
+                            onClick: () {
+                              Navigator.of(context)
+                                  .pushNamed(ClientStaffs.routeName);
+                            },
+                            boxColor: networkColor.withOpacity(0.1),
+                            padding: 9,
+                            labelText: 'Хариуцсан ажилтан',
+                            svgColor: networkColor,
+                            svg: 'assets/svg/double-person.svg',
+                          ),
+                        DashboardCard(
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(ClientClassifications.routeName);
+                          },
+                          boxColor: networkColor.withOpacity(0.1),
+                          padding: 9,
+                          labelText: 'Ангилал, зэрэглэл',
+                          svgColor: networkColor,
+                          svg: 'assets/svg/double-person.svg',
+                        ),
+                        if (Permission().check(user, "NET_PT"))
+                          DashboardCard(
+                            onClick: () {
+                              Navigator.of(context)
+                                  .pushNamed(PaymentTerms.routeName);
+                            },
+                            boxColor: networkColor.withOpacity(0.1),
+                            padding: 8,
+                            labelText: 'Төлбөрийн нөхцөл',
+                            svgColor: networkColor,
+                            svg: 'assets/svg/payment-term.svg',
+                          ),
+                        DashboardCard(
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(AccountSetting.routeName);
+                          },
+                          boxColor: networkColor.withOpacity(0.1),
+                          padding: 9,
+                          labelText: 'Данс тохиргоо',
+                          svgColor: networkColor,
+                          svg: 'assets/svg/wallet.svg',
+                        ),
+                        DashboardCard(
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(DistributionAreas.routeName);
+                          },
+                          boxColor: networkColor.withOpacity(0.1),
+                          padding: 10,
+                          labelText: 'Чиглэл, бүсчлэл',
+                          svgColor: networkColor,
+                          svg: 'assets/svg/map.svg',
+                        ),
+                        if (user.currentBusiness?.type == "SUPPLIER")
+                          DashboardCard(
+                            onClick: () {
+                              Navigator.of(context).pushNamed(
+                                  ReferenceInformationPage.routeName);
+                            },
+                            boxColor: networkColor.withOpacity(0.1),
+                            padding: 7,
+                            labelText: 'Лавлах мэдээлэл',
+                            svgColor: networkColor,
+                            svg: 'assets/svg/bag.svg',
+                          ),
+                      ],
+                    ),
                   ),
-                ),
                 const SizedBox(
                   height: 15,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          pageController.animateToPage(0,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.ease);
-                        });
-                      },
-                      child: CircleAvatar(
-                        radius: 8,
-                        backgroundColor: currentPage == 0
-                            ? Colors.grey
-                            : Colors.grey.shade300,
+                if (Permission().check(user, "NET_DASH"))
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            pageController.animateToPage(0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease);
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: currentPage == 0
+                              ? Colors.grey
+                              : Colors.grey.shade300,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          pageController.animateToPage(1,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.ease);
-                        });
-                      },
-                      child: CircleAvatar(
-                        radius: 8,
-                        backgroundColor: currentPage == 1
-                            ? Colors.grey
-                            : Colors.grey.shade300,
+                      const SizedBox(
+                        width: 15,
                       ),
-                    ),
-                  ],
-                ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            pageController.animateToPage(1,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease);
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: currentPage == 1
+                              ? Colors.grey
+                              : Colors.grey.shade300,
+                        ),
+                      ),
+                    ],
+                  ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -282,196 +289,200 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
           ),
         ];
       },
-      body: PageView(
-        controller: pageController,
-        onPageChanged: (value) {
-          setState(() {
-            currentPage = value;
-          });
-        },
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Permission().check(user, "NET_DASH")
+          ? PageView(
+              controller: pageController,
+              onPageChanged: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
               children: [
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child: const Text(
-                            'Харилцагч бизнесүүд',
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(NetworkPartnerPage.routeName);
-                          },
-                          child: Container(
-                            color: transparent,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  "Бүгдийг",
-                                  style: TextStyle(
-                                    color: networkColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: networkColor,
-                                  size: 16,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    PieChart(
-                      legend: dummyLegend,
-                      colorList: colorList,
-                      data: dummy,
-                      module: "NETWORK",
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-                NetworkHorizontalChart(
-                  index: 2,
-                  data: dummyInvitation,
-                  labelText: 'Танайд ирсэн',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                NetworkHorizontalChart(
-                  index: 3,
-                  labelText: 'Танай илгээсэн',
-                  data: dummyInvitation,
-                ),
-              ],
-            ),
-          ),
-          isLoading == true
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: networkColor,
-                  ),
-                )
-              : SingleChildScrollView(
+                SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (data.isNotEmpty)
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(left: 15),
-                                  child: const Text(
-                                    'Харилцагч бизнесүүд',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(left: 15),
+                                child: const Text(
+                                  'Харилцагч бизнесүүд',
+                                  style: TextStyle(
+                                    color: black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.of(context).pushNamed(
-                                        NetworkPartnerPage.routeName);
-                                  },
-                                  child: Container(
-                                    color: transparent,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: const Row(
-                                      children: [
-                                        Text(
-                                          "Бүгдийг",
-                                          style: TextStyle(
-                                            color: networkColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(NetworkPartnerPage.routeName);
+                                },
+                                child: Container(
+                                  color: transparent,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        "Бүгдийг",
+                                        style: TextStyle(
                                           color: networkColor,
-                                          size: 16,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: networkColor,
+                                        size: 16,
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            PieChart(
-                              legend: legend,
-                              colorList: colorList,
-                              data: data,
-                              module: "NETWORK",
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
-                      if (received.stats != null)
-                        NetworkHorizontalChart(
-                          index: 2,
-                          data: received,
-                          labelText: 'Танайд ирсэн',
-                        ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          PieChart(
+                            legend: dummyLegend,
+                            colorList: colorList,
+                            data: dummy,
+                            module: "NETWORK",
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                      NetworkHorizontalChart(
+                        index: 2,
+                        data: dummyInvitation,
+                        labelText: 'Танайд ирсэн',
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
-                      if (sent.stats != null)
-                        NetworkHorizontalChart(
-                          index: 3,
-                          labelText: 'Танай илгээсэн',
-                          data: sent,
-                        ),
+                      NetworkHorizontalChart(
+                        index: 3,
+                        labelText: 'Танай илгээсэн',
+                        data: dummyInvitation,
+                      ),
                     ],
                   ),
                 ),
-        ],
-      ),
+                isLoading == true
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: networkColor,
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (data.isNotEmpty)
+                              Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(left: 15),
+                                        child: const Text(
+                                          'Харилцагч бизнесүүд',
+                                          style: TextStyle(
+                                            color: black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              NetworkPartnerPage.routeName);
+                                        },
+                                        child: Container(
+                                          color: transparent,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          child: const Row(
+                                            children: [
+                                              Text(
+                                                "Бүгдийг",
+                                                style: TextStyle(
+                                                  color: networkColor,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: networkColor,
+                                                size: 16,
+                                              ),
+                                              SizedBox(
+                                                width: 15,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  PieChart(
+                                    legend: legend,
+                                    colorList: colorList,
+                                    data: data,
+                                    module: "NETWORK",
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
+                            if (received.stats != null)
+                              NetworkHorizontalChart(
+                                index: 2,
+                                data: received,
+                                labelText: 'Танайд ирсэн',
+                              ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            if (sent.stats != null)
+                              NetworkHorizontalChart(
+                                index: 3,
+                                labelText: 'Танай илгээсэн',
+                                data: sent,
+                              ),
+                          ],
+                        ),
+                      ),
+              ],
+            )
+          : const SizedBox(),
     );
   }
 }

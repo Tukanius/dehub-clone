@@ -69,7 +69,7 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
         shape: const CircleBorder(),
         backgroundColor: userColor,
         child: const Icon(
-          Icons.add,
+          Icons.edit,
           color: white,
         ),
         onPressed: () {
@@ -99,16 +99,6 @@ class _RoleSettingState extends State<RoleSetting> with AfterLayoutMixin {
                                 (data) => RoleCard(
                                   index: get.userRoles!.indexOf(data),
                                   data: data,
-                                  onClick: () {
-                                    Navigator.of(context).pushNamed(
-                                      RoleAssign.routeName,
-                                      arguments: RoleAssignArguments(
-                                        id: widget.data!.id!,
-                                        data: data,
-                                        listenController: listenController,
-                                      ),
-                                    );
-                                  },
                                 ),
                               )
                               .toList(),

@@ -507,21 +507,26 @@ class _AddClassificationState extends State<AddClassification> {
                       Container(
                         color: white,
                         padding: const EdgeInsets.all(15),
-                        child: const FormTextField(
+                        child: FormTextField(
                           textAlign: TextAlign.left,
                           name: 'description',
                           maxLines: 5,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.zero,
                               borderSide: BorderSide(color: grey),
                             ),
                             fillColor: white,
                             filled: true,
+                            hintText: 'Энд оруулна уу',
                             hintStyle: TextStyle(
                               color: grey2,
                             ),
                           ),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                                errorText: 'Заавал оруулна'),
+                          ]),
                         ),
                       ),
                       const SizedBox(

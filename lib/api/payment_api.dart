@@ -64,4 +64,9 @@ class PaymentApi extends HttpRequest {
         await put('/bank_account/$id', "PAYMENT", true, data: data.toJson());
     return Payment.fromJson(res as Map<String, dynamic>);
   }
+
+  Future<Result> bankAccountSelect() async {
+    var res = await get('/bank_account/select', "PAYMENT", true);
+    return Result.fromJson(res, Invoice.fromJson);
+  }
 }

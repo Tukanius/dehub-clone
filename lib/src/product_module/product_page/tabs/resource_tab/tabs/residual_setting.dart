@@ -2,10 +2,13 @@ import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/components/adjustment_card/adjustment_card.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ResidualSetting extends StatefulWidget {
@@ -23,6 +26,7 @@ class _ResidualSettingState extends State<ResidualSetting>
   Result adjustment = Result(rows: [], count: 0);
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  User user = User();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -54,11 +58,12 @@ class _ResidualSettingState extends State<ResidualSetting>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(

@@ -41,6 +41,7 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         ? json['orderSalesCode'] as String
         : null,
     updatedAt: json['updatedAt'] != null ? json['updatedAt'] as String : null,
+    url: json['url'] != null ? Uri.parse(json['url'].toString()) : null,
     logType: json['logType'] != null ? json['logType'] as String : null,
     trxRefCode:
         json['trxRefCode'] != null ? json['trxRefCode'] as String : null,
@@ -95,6 +96,9 @@ Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
         : null,
     shippingAmount: json['shippingAmount'] != null
         ? double.parse("${json['shippingAmount']}")
+        : null,
+    advancePercent: json['advancePercent'] != null
+        ? double.parse("${json['advancePercent']}")
         : null,
     trxAmount:
         json['trxAmount'] != null ? double.parse("${json['trxAmount']}") : null,
@@ -451,7 +455,11 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) {
     json['numberSurvey'] = instance.numberSurvey;
   }
   if (instance.confirmed != null) json['confirmed'] = instance.confirmed;
+  if (instance.advancePercent != null) {
+    json['advancePercent'] = instance.advancePercent;
+  }
   if (instance.overdue != null) json['overdue'] = instance.overdue;
+  if (instance.url != null) json['url'] = instance.url;
   if (instance.changedAmount != null) {
     json['changedAmount'] = instance.changedAmount;
   }

@@ -7,11 +7,9 @@ import 'package:provider/provider.dart';
 
 class RoleCard extends StatefulWidget {
   final User data;
-  final Function()? onClick;
   final int index;
   const RoleCard({
     super.key,
-    this.onClick,
     required this.index,
     required this.data,
   });

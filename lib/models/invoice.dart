@@ -197,8 +197,12 @@ class Invoice {
   int? invoiceCount;
   int? businessCount;
   double? averageAmount;
+  double? advancePercent;
+  Uri? url;
 
   Invoice({
+    this.url,
+    this.advancePercent,
     this.numberSurvey,
     this.confirmed,
     this.overdue,

@@ -2,6 +2,8 @@ import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/add_cod_term/add_cod_term.dart';
 import 'package:dehub/src/product_module/components/invoice_condition_card/invoice_condition_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -17,9 +19,11 @@ import 'package:dehub/src/network_module/screens/rank_page/add_rank.dart';
 import 'package:dehub/src/network_module/screens/rank_page/rank_detail_page.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/add_zoning.dart';
 import 'package:dehub/src/network_module/screens/zoning_page/zoning_detail_page.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class InvoiceConditionPageArguments {
@@ -49,6 +53,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
   bool isLoading = true;
   RefreshController refreshController = RefreshController();
   ListenController listenController = ListenController();
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -135,6 +140,7 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -144,37 +150,45 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
         leadingWidth: 100,
         leading: const CustomBackButton(color: networkColor),
         actions: [
-          AddButton(
-            addColor: white,
-            color: networkColor,
-            onClick: () {
-              if (widget.data.listType == "INV_CONFIG") {
-                Navigator.of(context).pushNamed(NewConditionPage.routeName,
-                    arguments: NewConditionPageArguments(
-                        listenController: listenController));
-              } else if (widget.data.listType == "DIRECTION") {
-                Navigator.of(context).pushNamed(AddDirection.routeName,
-                    arguments: AddDirectionArguments(
-                        listenController: listenController));
-              } else if (widget.data.listType == "REGION") {
-                Navigator.of(context).pushNamed(AddZoning.routeName,
-                    arguments:
-                        AddZoningArguments(listenController: listenController));
-              } else if (widget.data.listType == "CLIENT_CATEGORY") {
-                Navigator.of(context).pushNamed(AddCategory.routeName,
-                    arguments: AddCategoryArguments(
-                        listenController: listenController));
-              } else if (widget.data.listType == "CLIENT_PRIORITY") {
-                Navigator.of(context).pushNamed(AddRank.routeName,
-                    arguments:
-                        AddRankArguments(listenController: listenController));
-              } else if (widget.data.listType == "COD") {
-                Navigator.of(context).pushNamed(AddCodTerm.routeName,
-                    arguments: AddCodTermArguments(
-                        listenController: listenController));
-              }
-            },
-          ),
+          if (!Permission().check(user, "NET_REF_AREA") &&
+                  widget.data.listType == "REGION" ||
+              !Permission().check(user, "NET_REF_AREA") &&
+                  widget.data.listType == "DIRECTION" ||
+              !Permission().check(user, "NET_REF_CLS") &&
+                  widget.data.listType == "CLIENT_CATEGORY")
+            const SizedBox()
+          else
+            AddButton(
+              addColor: white,
+              color: networkColor,
+              onClick: () {
+                if (widget.data.listType == "INV_CONFIG") {
+                  Navigator.of(context).pushNamed(NewConditionPage.routeName,
+                      arguments: NewConditionPageArguments(
+                          listenController: listenController));
+                } else if (widget.data.listType == "DIRECTION") {
+                  Navigator.of(context).pushNamed(AddDirection.routeName,
+                      arguments: AddDirectionArguments(
+                          listenController: listenController));
+                } else if (widget.data.listType == "REGION") {
+                  Navigator.of(context).pushNamed(AddZoning.routeName,
+                      arguments: AddZoningArguments(
+                          listenController: listenController));
+                } else if (widget.data.listType == "CLIENT_CATEGORY") {
+                  Navigator.of(context).pushNamed(AddCategory.routeName,
+                      arguments: AddCategoryArguments(
+                          listenController: listenController));
+                } else if (widget.data.listType == "CLIENT_PRIORITY") {
+                  Navigator.of(context).pushNamed(AddRank.routeName,
+                      arguments:
+                          AddRankArguments(listenController: listenController));
+                } else if (widget.data.listType == "COD") {
+                  Navigator.of(context).pushNamed(AddCodTerm.routeName,
+                      arguments: AddCodTermArguments(
+                          listenController: listenController));
+                }
+              },
+            ),
         ],
       ),
       body: isLoading == true

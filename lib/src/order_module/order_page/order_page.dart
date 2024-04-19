@@ -74,9 +74,11 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                     ),
                   )
                 : index.selectedIndex == 2
-                    ? const Text(
-                        'Харилцагчийн захиалга',
-                        style: TextStyle(
+                    ? Text(
+                        user.currentBusiness?.type == "SUPPLIER"
+                            ? 'Харилцагчийн захиалга'
+                            : 'Худалдан авалт',
+                        style: const TextStyle(
                           color: buttonColor,
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
@@ -235,15 +237,21 @@ class _OrderPageState extends State<OrderPage> with AfterLayoutMixin {
                         ),
                       ),
                       if (index.selectedIndex != 2)
-                        const Column(
+                        Column(
                           children: [
                             Text(
-                              'Харилцагч',
-                              style: TextStyle(color: orderColor, fontSize: 12),
+                              user.currentBusiness?.type == "SUPPLIER"
+                                  ? 'Харилцагч'
+                                  : "Худалдан",
+                              style: const TextStyle(
+                                  color: orderColor, fontSize: 12),
                             ),
                             Text(
-                              'захиалга',
-                              style: TextStyle(color: orderColor, fontSize: 12),
+                              user.currentBusiness?.type == "SUPPLIER"
+                                  ? 'захиалга'
+                                  : 'авалт',
+                              style: const TextStyle(
+                                  color: orderColor, fontSize: 12),
                             ),
                           ],
                         ),

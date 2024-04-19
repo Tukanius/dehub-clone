@@ -58,16 +58,20 @@ class _RoleAssignState extends State<RoleAssign> with AfterLayoutMixin {
         ),
       );
     }
-    try {
-      loading.loading(true);
-      await UserApi().roleAdd(User(userId: widget.id, roles: data));
-      loading.loading(false);
-      widget.listenController.changeVariable('asdf');
-      showCustomDialog(context, "Амжилттай", true, onPressed: () {
-        Navigator.of(context).pop();
-      });
-    } catch (e) {
-      loading.loading(false);
+    if (data.isNotEmpty) {
+      try {
+        loading.loading(true);
+        await UserApi().roleAdd(User(userId: widget.id, roles: data));
+        loading.loading(false);
+        widget.listenController.changeVariable('asdf');
+        showCustomDialog(context, "Амжилттай", true, onPressed: () {
+          Navigator.of(context).pop();
+        });
+      } catch (e) {
+        loading.loading(false);
+      }
+    } else {
+      showCustomDialog(context, 'Роль сонгоно уу', false);
     }
   }
 

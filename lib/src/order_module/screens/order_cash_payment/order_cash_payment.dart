@@ -346,6 +346,9 @@ class _OrderCashPaymentState extends State<OrderCashPayment>
                     labelColor: orderColor,
                     labelText: 'Бэлэн төлбөр батлуулах',
                   ),
+                  const SizedBox(
+                    height: 50,
+                  ),
                 ],
               ),
             ),

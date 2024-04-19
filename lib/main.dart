@@ -190,8 +190,8 @@ import 'package:dehub/services/dialog.dart';
 import 'package:dehub/services/navigation.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/dialog_manager/dialog_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dehub/src/finance_module/screens/funding_request_page/funding_request_page.dart';
@@ -286,7 +286,6 @@ class MyApp extends StatelessWidget {
                         settings.arguments as PaymentReceivedFundsArguments;
                     return MaterialPageRoute(builder: (context) {
                       return PaymentReceivedFunds(
-                        id: arguments.id,
                         data: arguments.data,
                       );
                     });
@@ -1164,6 +1163,7 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return SettlementDetail(
                         id: arguments.id,
+                        status: arguments.status,
                       );
                     });
                   case InvoiceTransaction.routeName:
@@ -1906,10 +1906,11 @@ class MyApp extends StatelessWidget {
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 color: black.withOpacity(0.3),
-                child: const CupertinoActivityIndicator(
-                  color: black,
-                  radius: 18,
-                ),
+                child: Lottie.asset('assets/lottie/loading.json'),
+                // const CupertinoActivityIndicator(
+                //   color: black,
+                //   radius: 18,
+                // ),
               ),
           ],
         ),

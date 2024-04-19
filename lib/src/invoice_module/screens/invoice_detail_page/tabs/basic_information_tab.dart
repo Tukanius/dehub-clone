@@ -11,6 +11,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/payment_page.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -508,169 +509,188 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
           const SizedBox(
             height: 70,
           ),
-          user.currentBusiness?.type == "BUYER"
-              ? Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: black,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                            Harah.routeName,
-                            arguments: HarahArguments(
-                              isNewInvoice: false,
-                              invoice: widget.data,
+          if (Permission().check(user, "INV_RES"))
+            user.currentBusiness?.type == "BUYER"
+                ? Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: black,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              Harah.routeName,
+                              arguments: HarahArguments(
+                                isNewInvoice: false,
+                                invoice: widget.data,
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            color: transparent,
+                            child: const Column(
+                              children: [
+                                Icon(
+                                  Icons.visibility_outlined,
+                                  color: white,
+                                  size: 20,
+                                ),
+                                Text(
+                                  'Харах',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 10,
+                                  ),
+                                )
+                              ],
                             ),
-                          );
-                        },
-                        child: const Column(
+                          ),
+                        ),
+                        widget.data.invoiceStatus == "CONFIRMED"
+                            ? GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    InvoicePaymentPage.routeName,
+                                    arguments: InvoicePaymentPageArguments(
+                                      data: widget.data,
+                                      id: widget.data.id.toString(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  color: transparent,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      SvgPicture.asset(
+                                        'assets/svg/tuloh.svg',
+                                        height: 14,
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      const Text(
+                                        'Төлөх',
+                                        style: TextStyle(
+                                          color: white,
+                                          fontSize: 10,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  approve(true);
+                                },
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  color: transparent,
+                                  child: const Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 3,
+                                      ),
+                                      Icon(
+                                        Icons.approval,
+                                        color: white,
+                                        size: 16,
+                                      ),
+                                      SizedBox(
+                                        height: 3,
+                                      ),
+                                      Text(
+                                        'Батлах',
+                                        style: TextStyle(
+                                          color: white,
+                                          fontSize: 10,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                        GestureDetector(
+                          onTap: () {
+                            approve(false);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            color: transparent,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/svg/cancel.svg',
+                                  height: 17,
+                                  width: 17,
+                                ),
+                                const Text(
+                                  'Цуцлах',
+                                  style: TextStyle(
+                                    color: white,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        Harah.routeName,
+                        arguments: HarahArguments(
+                          isNewInvoice: false,
+                          invoice: widget.data,
+                        ),
+                      );
+                    },
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: 130,
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        margin: const EdgeInsets.only(right: 15),
+                        decoration: BoxDecoration(
+                          color: black,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
                               Icons.visibility_outlined,
                               color: white,
-                              size: 20,
+                            ),
+                            SizedBox(
+                              width: 10,
                             ),
                             Text(
                               'Харах',
-                              style: TextStyle(
-                                color: white,
-                                fontSize: 10,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      widget.data.invoiceStatus == "CONFIRMED"
-                          ? GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  InvoicePaymentPage.routeName,
-                                  arguments: InvoicePaymentPageArguments(
-                                    data: widget.data,
-                                    id: widget.data.id.toString(),
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/svg/tuloh.svg',
-                                    height: 14,
-                                  ),
-                                  const SizedBox(
-                                    height: 3,
-                                  ),
-                                  const Text(
-                                    'Төлөх',
-                                    style: TextStyle(
-                                      color: white,
-                                      fontSize: 10,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                approve(true);
-                              },
-                              child: const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 3,
-                                  ),
-                                  Icon(
-                                    Icons.approval,
-                                    color: white,
-                                    size: 16,
-                                  ),
-                                  SizedBox(
-                                    height: 3,
-                                  ),
-                                  Text(
-                                    'Батлах',
-                                    style: TextStyle(
-                                      color: white,
-                                      fontSize: 10,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                      GestureDetector(
-                        onTap: () {
-                          approve(false);
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svg/cancel.svg',
-                              height: 17,
-                              width: 17,
-                            ),
-                            const Text(
-                              'Цуцлах',
-                              style: TextStyle(
-                                color: white,
-                                fontSize: 10,
-                              ),
+                              style: TextStyle(color: white),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(
-                      Harah.routeName,
-                      arguments: HarahArguments(
-                        isNewInvoice: false,
-                        invoice: widget.data,
-                      ),
-                    );
-                  },
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      width: 130,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      margin: const EdgeInsets.only(right: 15),
-                      decoration: BoxDecoration(
-                        color: black,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.visibility_outlined,
-                            color: white,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Харах',
-                            style: TextStyle(color: white),
-                          ),
-                        ],
                       ),
                     ),
                   ),
-                ),
           const SizedBox(
             height: 40,
           ),

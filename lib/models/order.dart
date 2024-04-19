@@ -216,12 +216,13 @@ class Order {
   double? byPieAmount;
   List<Order>? recentDelivered;
   List<Order>? byPie;
-
   double? ordersCount;
   double? amount;
   String? color;
+  String? proformaInvoiceId;
 
   Order({
+    this.proformaInvoiceId,
     this.color,
     this.amount,
     this.ordersCount,

@@ -2,12 +2,16 @@ import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/order_shipment/order_shipment.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +34,7 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
   double screenWidth = 0;
   List<Order> groupedList = [];
   Map<DateTime, List<Order>> groupItems = {};
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) {
@@ -100,6 +105,7 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return isLoading == true
         ? const Center(
             child: CircularProgressIndicator(
@@ -163,14 +169,17 @@ class _ShippingMadeState extends State<ShippingMade> with AfterLayoutMixin {
                                                     .indexOf(item),
                                                 data: item,
                                                 onClick: () {
-                                                  Navigator.of(context)
-                                                      .pushNamed(
-                                                    OrderShipment.routeName,
-                                                    arguments:
-                                                        OrderShipmentArguments(
-                                                      data: item,
-                                                    ),
-                                                  );
+                                                  if (Permission().check(
+                                                      user, "ORD_PS_MNG")) {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      OrderShipment.routeName,
+                                                      arguments:
+                                                          OrderShipmentArguments(
+                                                        data: item,
+                                                      ),
+                                                    );
+                                                  }
                                                 },
                                               ),
                                             )

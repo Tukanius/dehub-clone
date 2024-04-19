@@ -9,6 +9,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/payment_module/screens/account_statement/account_statement.dart';
 import 'package:dehub/src/payment_module/screens/bank_account_detail/bank_account_detail.dart';
 import 'package:dehub/src/payment_module/screens/transaction_history/transaction_history.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,6 @@ class AddBankAccountPage extends StatefulWidget {
   AddBankAccountPageState createState() => AddBankAccountPageState();
 }
 
-User user = User();
-
 class AddBankAccountPageState extends State<AddBankAccountPage>
     with AfterLayoutMixin {
   int page = 1;
@@ -34,6 +33,7 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
   ListenController listenController = ListenController();
+  User user = User();
 
   list(page, limit) async {
     Filter filter = Filter(query: '');
@@ -47,8 +47,10 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(page, limit);
+  afterFirstLayout(BuildContext context) async {
+    if (Permission().check(user, "PAY_ACC")) {
+      await list(page, limit);
+    }
   }
 
   void onRefresh() async {
@@ -80,96 +82,108 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).user;
+    user = Provider.of<UserProvider>(context, listen: false).paymentMe;
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: isLoading == true
-          ? const Center(
-              child: CircularProgressIndicator(color: paymentColor),
-            )
-          : Refresher(
-              refreshController: refreshController,
-              onLoading:
-                  payment.rows!.length == payment.count ? null : onLoading,
-              onRefresh: onRefresh,
-              color: paymentColor,
-              child: payment.rows!.isNotEmpty
-                  ? SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 25),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 15),
-                                  child: const Text(
-                                    'Холбосон данснууд',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                Column(
-                                  children: payment.rows!
-                                      .map(
-                                        (data) => Column(
-                                          children: [
-                                            BankAccountCard(
-                                              transactionClick: () {
-                                                Navigator.of(context).pushNamed(
-                                                  TransactionHistory.routeName,
-                                                  arguments:
-                                                      TransactionHistoryArguments(
-                                                    data: data,
-                                                  ),
-                                                );
-                                              },
-                                              data: data,
-                                              onClick: () {
-                                                Navigator.of(context).pushNamed(
-                                                  BankAccountDetail.routeName,
-                                                  arguments:
-                                                      BankAccountDetailArguments(
-                                                    id: data.id,
-                                                  ),
-                                                );
-                                              },
-                                              statementClick: () {
-                                                Navigator.of(context).pushNamed(
-                                                  AccountStatement.routeName,
-                                                  arguments:
-                                                      AccountStatementArguments(
-                                                    data: data,
-                                                  ),
-                                                );
-                                              },
+      body: Permission().check(user, "ORD_SPLIT")
+          ? isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(color: paymentColor),
+                )
+              : Refresher(
+                  refreshController: refreshController,
+                  onLoading:
+                      payment.rows!.length == payment.count ? null : onLoading,
+                  onRefresh: onRefresh,
+                  color: paymentColor,
+                  child: payment.rows!.isNotEmpty
+                      ? SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      child: const Text(
+                                        'Холбосон данснууд',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Column(
+                                      children: payment.rows!
+                                          .map(
+                                            (data) => Column(
+                                              children: [
+                                                BankAccountCard(
+                                                  transactionClick: () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      TransactionHistory
+                                                          .routeName,
+                                                      arguments:
+                                                          TransactionHistoryArguments(
+                                                        data: data,
+                                                      ),
+                                                    );
+                                                  },
+                                                  data: data,
+                                                  onClick: () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      BankAccountDetail
+                                                          .routeName,
+                                                      arguments:
+                                                          BankAccountDetailArguments(
+                                                        id: data.id,
+                                                      ),
+                                                    );
+                                                  },
+                                                  statementClick: () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      AccountStatement
+                                                          .routeName,
+                                                      arguments:
+                                                          AccountStatementArguments(
+                                                        data: data,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                      .toList(),
+                                          )
+                                          .toList(),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    )
+                                  ],
                                 ),
-                                const SizedBox(
-                                  height: 15,
-                                )
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  : const NotFound(
-                      module: "PAYMENT",
-                      labelText:
-                          'Та данс холбоогүй байна. "+" сонгож дансаа холбоно уу',
-                      textColor: grey2,
-                    ),
+                        )
+                      : const NotFound(
+                          module: "PAYMENT",
+                          labelText:
+                              'Та данс холбоогүй байна. "+" сонгож дансаа холбоно уу',
+                          textColor: grey2,
+                        ),
+                )
+          : const NotFound(
+              module: "PAYMENT",
+              labelText: "Хандах эрх хүрэлцэхгүй байна",
             ),
     );
   }

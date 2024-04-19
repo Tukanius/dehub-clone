@@ -1,10 +1,8 @@
-import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/index_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/network_page/tabs/inbox_tab/inbox_tab.dart';
-import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitation_page.dart';
 import 'package:dehub/src/network_module/network_page/tabs/sent_tab/sent_tab.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
@@ -49,53 +47,47 @@ class NetworkPageState extends State<NetworkPage> with AfterLayoutMixin {
     final index = Provider.of<IndexProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        leadingWidth: 100,
-        elevation: 0,
-        backgroundColor:
-            index.selectedIndex != 3 ? backgroundColor : networkColor,
-        surfaceTintColor:
-            index.selectedIndex != 3 ? backgroundColor : networkColor,
-        leading: CustomBackButton(
-          color: index.selectedIndex != 3 ? networkColor : white,
-        ),
-        title: index.selectedIndex == 0
-            ? FormTextField(
-                inputType: TextInputType.text,
-                color: const Color(0xff767680).withOpacity(0.12),
-                name: 'search',
-                prefixIcon: const Icon(Icons.search),
-                hintText: 'Партнер нэрээр хайх',
-              )
-            : const SizedBox(),
-        actions: [
-          index.selectedIndex == 0
-              ? Container(
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.only(right: 15, top: 9, bottom: 9),
-                  decoration: BoxDecoration(
-                    color: const Color(0xff767680).withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/svg/grid.svg',
-                    colorFilter: ColorFilter.mode(
-                        index.selectedIndex != 3 ? networkColor : white,
-                        BlendMode.srcIn),
-                  ),
-                )
-              : index.selectedIndex == 3
-                  ? AddButton(
-                      color: white,
-                      addColor: networkColor,
-                      onClick: () {
-                        Navigator.of(context)
-                            .pushNamed(NewInvitationPage.routeName);
-                      },
+      appBar: index.selectedIndex != 3
+          ? AppBar(
+              leadingWidth: 100,
+              elevation: 0,
+              backgroundColor:
+                  index.selectedIndex != 3 ? backgroundColor : networkColor,
+              surfaceTintColor:
+                  index.selectedIndex != 3 ? backgroundColor : networkColor,
+              leading: CustomBackButton(
+                color: index.selectedIndex != 3 ? networkColor : white,
+              ),
+              title: index.selectedIndex == 0
+                  ? FormTextField(
+                      inputType: TextInputType.text,
+                      color: const Color(0xff767680).withOpacity(0.12),
+                      name: 'search',
+                      prefixIcon: const Icon(Icons.search),
+                      hintText: 'Партнер нэрээр хайх',
                     )
                   : const SizedBox(),
-        ],
-      ),
+              actions: [
+                index.selectedIndex == 0
+                    ? Container(
+                        padding: const EdgeInsets.all(10),
+                        margin:
+                            const EdgeInsets.only(right: 15, top: 9, bottom: 9),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff767680).withOpacity(0.12),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/svg/grid.svg',
+                          colorFilter: ColorFilter.mode(
+                              index.selectedIndex != 3 ? networkColor : white,
+                              BlendMode.srcIn),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            )
+          : null,
       body: isLoading == true
           ? const SizedBox()
           : Container(

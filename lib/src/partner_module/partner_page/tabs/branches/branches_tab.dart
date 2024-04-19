@@ -1,7 +1,11 @@
 import 'package:dehub/api/partner_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/models/partner.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/screens/branch_create/branch_create.dart';
+import 'package:dehub/utils/permission.dart';
+import 'package:provider/provider.dart';
 import '../../../components/branch_card/branch_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -26,6 +30,7 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
   bool startAnimation = false;
   final RefreshController refreshController = RefreshController();
   ListenController listenController = ListenController();
+  Partner user = Partner();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -61,8 +66,10 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(page, limit);
+  afterFirstLayout(BuildContext context) async {
+    if (Permission().partnerCheck(user, "PRT_BRNCH")) {
+      await list(page, limit);
+    }
   }
 
   @override
@@ -78,6 +85,7 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -93,67 +101,80 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
         ),
         iconTheme: const IconThemeData(color: partnerColor),
         actions: [
-          AddButton(
-            addColor: white,
-            color: partnerColor,
-            onClick: () {
-              Navigator.of(context).pushNamed(
-                BranchCreate.routeName,
-                arguments: BranchCreateArguments(
-                  data: null,
-                  listenController: listenController,
-                ),
-              );
-            },
-          ),
+          if (Permission().partnerCheck(user, "PRT_BRNCH", boolean: 'isCreate'))
+            AddButton(
+              addColor: white,
+              color: partnerColor,
+              onClick: () {
+                Navigator.of(context).pushNamed(
+                  BranchCreate.routeName,
+                  arguments: BranchCreateArguments(
+                    data: null,
+                    listenController: listenController,
+                  ),
+                );
+              },
+            ),
         ],
       ),
-      body: isLoading == true
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: partnerColor,
-              ),
-            )
-          : Refresher(
-              refreshController: refreshController,
-              onLoading:
-                  branches.rows!.length == branches.count ? null : onLoading,
-              onRefresh: onRefresh,
-              color: partnerColor,
-              child: SingleChildScrollView(
-                child: branches.rows!.isNotEmpty
-                    ? Column(
-                        children: [
-                          Column(
-                            children: branches.rows!
-                                .map(
-                                  (e) => BranchCard(
-                                    index: branches.rows!.indexOf(e),
-                                    startAnimation: startAnimation,
-                                    data: e,
-                                    onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        BranchCreate.routeName,
-                                        arguments: BranchCreateArguments(
-                                          listenController: listenController,
-                                          data: e,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                                .toList(),
+      body: Permission().partnerCheck(user, "PRT_BRNCH")
+          ? isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: partnerColor,
+                  ),
+                )
+              : Refresher(
+                  refreshController: refreshController,
+                  onLoading: branches.rows!.length == branches.count
+                      ? null
+                      : onLoading,
+                  onRefresh: onRefresh,
+                  color: partnerColor,
+                  child: SingleChildScrollView(
+                    child: branches.rows!.isNotEmpty
+                        ? Column(
+                            children: [
+                              Column(
+                                children: branches.rows!
+                                    .map(
+                                      (e) => BranchCard(
+                                        index: branches.rows!.indexOf(e),
+                                        startAnimation: startAnimation,
+                                        data: e,
+                                        onClick: Permission().partnerCheck(
+                                                user, "PRT_BRNCH",
+                                                boolean: 'isEdit')
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                  BranchCreate.routeName,
+                                                  arguments:
+                                                      BranchCreateArguments(
+                                                    listenController:
+                                                        listenController,
+                                                    data: e,
+                                                  ),
+                                                );
+                                              }
+                                            : null,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          )
+                        : const NotFound(
+                            module: "PARTNER",
+                            labelText: 'Салбар тохируулаагүй байна',
                           ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      )
-                    : const NotFound(
-                        module: "PARTNER",
-                        labelText: 'Салбар тохируулаагүй байна',
-                      ),
-              ),
+                  ),
+                )
+          : const NotFound(
+              module: "PARNTER",
+              labelText: 'Хандах эрх хүрэхгүй байна',
             ),
     );
   }

@@ -280,4 +280,9 @@ class OrderApi extends HttpRequest {
 
     return Order.fromJson(res as Map<String, dynamic>);
   }
+
+  cancel(String id) async {
+    var res = await put('/order/$id/cancel', "ORDER", true);
+    return res;
+  }
 }

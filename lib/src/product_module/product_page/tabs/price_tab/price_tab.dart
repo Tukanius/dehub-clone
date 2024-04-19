@@ -4,11 +4,15 @@ import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/components/price_setting_card/price_setting_card.dart';
 import 'package:dehub/src/product_module/screens/set_price_group/set_price_group.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -29,6 +33,7 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
   List<InventoryGoods> priceList = [];
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
+  User user = User();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -60,7 +65,9 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    await list(page, limit);
+    if (Permission().check(user, "ERP_NET_PRICE")) {
+      await list(page, limit);
+    }
   }
 
   @override
@@ -78,116 +85,124 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading == true
-        ? const Center(
-            child: CircularProgressIndicator(
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
+
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      floatingActionButton: priceList.isNotEmpty
+          ? Material(
+              borderRadius: BorderRadius.circular(5),
               color: productColor,
-            ),
-          )
-        : Scaffold(
-            backgroundColor: backgroundColor,
-            floatingActionButton: priceList.isNotEmpty
-                ? Material(
-                    borderRadius: BorderRadius.circular(5),
-                    color: productColor,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          SetPriceGroup.routeName,
-                          arguments: SetPriceGroupArguments(
-                            list: priceList,
-                            listenController: listenController,
-                          ),
-                        );
-                      },
-                      borderRadius: BorderRadius.circular(5),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: const Text(
-                          'Үнэ тохируулах',
-                          style: TextStyle(color: white),
-                        ),
-                      ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                    SetPriceGroup.routeName,
+                    arguments: SetPriceGroupArguments(
+                      list: priceList,
+                      listenController: listenController,
                     ),
-                  )
-                : null,
-            body: Refresher(
-              onLoading: goods.rows!.length == goods.count ? null : onLoading,
-              color: productColor,
-              refreshController: refreshController,
-              onRefresh: onRefresh,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 13, vertical: 7),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Харилцагчийн үнэ тохиргоо',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          goods.excelUrl != null
-                              ? GestureDetector(
-                                  onTap: () {
-                                    launchUrl(goods.excelUrl!);
-                                  },
-                                  child: Container(
-                                    color: transparent,
-                                    padding: const EdgeInsets.all(3),
-                                    child: const Icon(Icons.print_rounded),
-                                  ),
-                                )
-                              : const SizedBox(),
-                        ],
-                      ),
-                    ),
-                    goods.rows!.isNotEmpty
-                        ? Column(
-                            children: goods.rows!.map((data) {
-                              int index = priceList.indexWhere(
-                                  (element) => element.id == data.id);
-                              return PriceSettingCard(
-                                list: priceList,
-                                data: data,
-                                onClick: () {
-                                  if (index >= 0) {
-                                    setState(() {
-                                      priceList.removeAt(index);
-                                    });
-                                  } else {
-                                    setState(() {
-                                      priceList.add(data);
-                                    });
-                                  }
-                                },
-                                onChange: () {
-                                  if (index >= 0) {
-                                    setState(() {
-                                      priceList.removeAt(index);
-                                    });
-                                  } else {
-                                    setState(() {
-                                      priceList.add(data);
-                                    });
-                                  }
-                                },
-                              );
-                            }).toList(),
-                          )
-                        : const NotFound(
-                            module: "INVENTORY",
-                            labelText: 'Хоосон байна',
-                          ),
-                  ],
+                  );
+                },
+                borderRadius: BorderRadius.circular(5),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: const Text(
+                    'Үнэ тохируулах',
+                    style: TextStyle(color: white),
+                  ),
                 ),
               ),
+            )
+          : null,
+      body: Permission().check(user, "ERP_NET_PRICE")
+          ? isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: productColor,
+                  ),
+                )
+              : Refresher(
+                  onLoading:
+                      goods.rows!.length == goods.count ? null : onLoading,
+                  color: productColor,
+                  refreshController: refreshController,
+                  onRefresh: onRefresh,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 13, vertical: 7),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Харилцагчийн үнэ тохиргоо',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              goods.excelUrl != null
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        launchUrl(goods.excelUrl!);
+                                      },
+                                      child: Container(
+                                        color: transparent,
+                                        padding: const EdgeInsets.all(3),
+                                        child: const Icon(Icons.print_rounded),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ),
+                        goods.rows!.isNotEmpty
+                            ? Column(
+                                children: goods.rows!.map((data) {
+                                  int index = priceList.indexWhere(
+                                      (element) => element.id == data.id);
+                                  return PriceSettingCard(
+                                    list: priceList,
+                                    data: data,
+                                    onClick: () {
+                                      if (index >= 0) {
+                                        setState(() {
+                                          priceList.removeAt(index);
+                                        });
+                                      } else {
+                                        setState(() {
+                                          priceList.add(data);
+                                        });
+                                      }
+                                    },
+                                    onChange: () {
+                                      if (index >= 0) {
+                                        setState(() {
+                                          priceList.removeAt(index);
+                                        });
+                                      } else {
+                                        setState(() {
+                                          priceList.add(data);
+                                        });
+                                      }
+                                    },
+                                  );
+                                }).toList(),
+                              )
+                            : const NotFound(
+                                module: "INVENTORY",
+                                labelText: 'Хоосон байна',
+                              ),
+                      ],
+                    ),
+                  ),
+                )
+          : const NotFound(
+              module: "INVENTORY",
+              labelText: 'Хандах эрх хүрэлцэхгүй байна',
             ),
-          );
+    );
   }
 }
