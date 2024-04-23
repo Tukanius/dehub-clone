@@ -1,4 +1,5 @@
 import 'package:dehub/components/add_button/add_button.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/change_standard_price/change_standard_price.dart';
@@ -70,7 +71,7 @@ class _PriceGroupPageState extends State<PriceGroupPage>
               color: productColor,
             )
           else if (tabController.index == 2 &&
-              Permission().check(user, "ERP_PG"))
+              Permission().check(user, "ERP_PG", boolean: 'isCreate'))
             AddButton(
               onClick: () {
                 Navigator.of(context).pushNamed(
@@ -107,10 +108,20 @@ class _PriceGroupPageState extends State<PriceGroupPage>
       body: TabBarView(
         controller: tabController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          StandardPriceTab(),
-          StandardPriceHistory(),
-          SpecialPrice(),
+        children: [
+          const StandardPriceTab(),
+          Permission().check(user, "ERP_PG", boolean: 'isview')
+              ? const StandardPriceHistory()
+              : const NotFound(
+                  module: "INVENTORY",
+                  labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                ),
+          Permission().check(user, "ERP_PG", boolean: 'isview')
+              ? const SpecialPrice()
+              : const NotFound(
+                  module: "INVENTORY",
+                  labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                ),
         ],
       ),
     );

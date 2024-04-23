@@ -5,6 +5,7 @@ import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/inventory_provider.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/category_sheet.dart';
 import 'package:dehub/src/product_module/screens/new_product/sheet/item_type_sheet.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -48,26 +49,36 @@ class _AddClassificationState extends State<AddClassification> {
 
   onSubmit() async {
     final source = Provider.of<InventoryProvider>(context, listen: false);
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
-      InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
-      data.itemTypeId = source.product.itemTypeId;
-      data.parentId = widget.type == "SUB_CLASSIFICATION"
-          ? source.product.classificationId
-          : widget.type == "CATEGORY"
-              ? source.product.subClassificationId
-              : widget.type == "SUB_CATEGORY"
-                  ? source.product.categoryId
-                  : null;
-      if (widget.type != 'SUB_CATEGORY') {
-        data.type = widget.type;
-        await InventoryApi().categoryCreate(data);
-      } else {
-        data.categoryFields = dynamics;
-        await InventoryApi().subCategoryCreate(data);
+      try {
+        InventoryGoods data =
+            InventoryGoods.fromJson(fbKey.currentState!.value);
+        data.itemTypeId = source.product.itemTypeId;
+        data.parentId = widget.type == "SUB_CLASSIFICATION"
+            ? source.product.classificationId
+            : widget.type == "CATEGORY"
+                ? source.product.subClassificationId
+                : widget.type == "SUB_CATEGORY"
+                    ? source.product.categoryId
+                    : null;
+        if (widget.type != 'SUB_CATEGORY') {
+          data.type = widget.type;
+          loading.loading(true);
+          await InventoryApi().categoryCreate(data);
+          loading.loading(false);
+        } else {
+          data.categoryFields = dynamics;
+          loading.loading(true);
+          await InventoryApi().subCategoryCreate(data);
+          loading.loading(false);
+        }
+        showCustomDialog(context, "Амжилттай нэмлээ", true, onPressed: () {
+          Navigator.of(context).pop();
+        });
+      } catch (e) {
+        loading.loading(false);
       }
-      showCustomDialog(context, "Амжилттай нэмлээ", true, onPressed: () {
-        Navigator.of(context).pop();
-      });
     }
   }
 

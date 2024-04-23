@@ -88,7 +88,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               scrollDirection: Axis.horizontal,
               children: [
                 if (user.currentBusiness?.type == "SUPPLIER" &&
-                    Permission().check(user, "ERP_GDS"))
+                    Permission().check(user, "ERP_GDS", boolean: 'isView'))
                   DashboardCard(
                     onClick: () {
                       Navigator.of(context).pushNamed(

@@ -1,11 +1,13 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/item_type/add_item_type.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -91,18 +93,26 @@ class _InventoryItemTypeState extends State<InventoryItemType>
 
   update(InventoryGoods data) {
     updateSheet(context, updateClick: () {
-      Navigator.of(context).pop();
-      showModalBottomSheet(
-        useSafeArea: true,
-        context: context,
-        builder: (context) => AddItemType(
-          data: data,
-        ),
-      );
+      if (Permission().check(user, 'ERP_REF_ITM_CLS', boolean: 'isedit')) {
+        Navigator.of(context).pop();
+        showModalBottomSheet(
+          useSafeArea: true,
+          context: context,
+          builder: (context) => AddItemType(
+            data: data,
+          ),
+        );
+      } else {
+        showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+      }
     }, deleteClick: () async {
-      await InventoryApi().itemTypeDelete(data.id!);
-      await list(page, limit);
-      Navigator.of(context).pop();
+      if (Permission().check(user, 'ERP_REF_ITM_CLS', boolean: 'isDelete')) {
+        await InventoryApi().itemTypeDelete(data.id!);
+        await list(page, limit);
+        Navigator.of(context).pop();
+      } else {
+        showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+      }
     });
   }
 
@@ -124,20 +134,23 @@ class _InventoryItemTypeState extends State<InventoryItemType>
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) => const AddItemType(),
-          );
-        },
-        shape: const CircleBorder(),
-        backgroundColor: productColor,
-        child: const Icon(
-          Icons.add,
-          color: white,
-        ),
-      ),
+      floatingActionButton:
+          Permission().check(user, 'ERP_REF_ITM_CLS', boolean: 'isCreate')
+              ? FloatingActionButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) => const AddItemType(),
+                    );
+                  },
+                  shape: const CircleBorder(),
+                  backgroundColor: productColor,
+                  child: const Icon(
+                    Icons.add,
+                    color: white,
+                  ),
+                )
+              : null,
       body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(

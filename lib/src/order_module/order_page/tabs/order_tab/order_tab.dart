@@ -3,6 +3,7 @@ import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/order_page/tabs/order_tab/tabs/sales_tab.dart';
 import 'package:dehub/src/order_module/order_page/tabs/order_tab/tabs/split_order.dart';
 import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,10 +32,10 @@ class _OrderTabState extends State<OrderTab>
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).orderMe;
-
     return Scaffold(
       backgroundColor: backgroundColor,
-      floatingActionButton: tabController.index == 0
+      floatingActionButton: tabController.index == 0 &&
+              Permission().check(user, "ORD_LIST", boolean: 'isCreate')
           ? FloatingActionButton(
               shape: const CircleBorder(),
               backgroundColor: orderColor,

@@ -1,12 +1,14 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/package_type/add_package_type.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -101,25 +103,33 @@ class _PackageTypeState extends State<PackageType> with AfterLayoutMixin {
     updateSheet(
       context,
       updateClick: () {
-        Navigator.of(context).pop();
-        showModalBottomSheet(
-          context: context,
-          useSafeArea: true,
-          builder: (context) => AddPackageType(
-            name: data.name,
-            id: data.id,
-          ),
-        );
+        if (Permission().check(user, "ERP_REF_PCK", boolean: 'isEdit')) {
+          Navigator.of(context).pop();
+          showModalBottomSheet(
+            context: context,
+            useSafeArea: true,
+            builder: (context) => AddPackageType(
+              name: data.name,
+              id: data.id,
+            ),
+          );
+        } else {
+          showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+        }
       },
       deleteClick: () async {
-        await InventoryApi().packageTypeDelete(data.id!);
-        setState(() {
-          isLoading = true;
-          groupItems = {};
-          page = 1;
-        });
-        await list(page, limit);
-        Navigator.of(context).pop();
+        if (Permission().check(user, "ERP_REF_PCK", boolean: 'isDelete')) {
+          await InventoryApi().packageTypeDelete(data.id!);
+          setState(() {
+            isLoading = true;
+            groupItems = {};
+            page = 1;
+          });
+          await list(page, limit);
+          Navigator.of(context).pop();
+        } else {
+          showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+        }
       },
     );
   }
@@ -142,18 +152,21 @@ class _PackageTypeState extends State<PackageType> with AfterLayoutMixin {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            useSafeArea: true,
-            builder: (context) => const AddPackageType(),
-          );
-        },
-        shape: const CircleBorder(),
-        backgroundColor: productColor,
-        child: const Icon(Icons.add, color: white),
-      ),
+      floatingActionButton:
+          Permission().check(user, "ERP_REF_PCK", boolean: 'isCreate')
+              ? FloatingActionButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) => const AddPackageType(),
+                    );
+                  },
+                  shape: const CircleBorder(),
+                  backgroundColor: productColor,
+                  child: const Icon(Icons.add, color: white),
+                )
+              : null,
       body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(

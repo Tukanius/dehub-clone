@@ -98,21 +98,23 @@ class _UserCardState extends State<UserCard> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 35,
-                  width: 35,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: userColor.withOpacity(0.2),
+                if (widget.onClick != null)
+                  Container(
+                    height: 35,
+                    width: 35,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: userColor.withOpacity(0.2),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/svg/edit_rounded.svg',
+                      colorFilter:
+                          const ColorFilter.mode(userColor, BlendMode.srcIn),
+                    ),
                   ),
-                  child: SvgPicture.asset(
-                    'assets/svg/edit_rounded.svg',
-                    colorFilter:
-                        const ColorFilter.mode(userColor, BlendMode.srcIn),
-                  ),
-                ),
-                if (widget.data.registerStatus != "SUCCESS")
+                if (widget.data.registerStatus != "SUCCESS" &&
+                    widget.onPress != null)
                   GestureDetector(
                     onTap: widget.onPress,
                     child: Container(

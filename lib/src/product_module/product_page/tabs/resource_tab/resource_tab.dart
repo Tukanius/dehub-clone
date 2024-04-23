@@ -35,20 +35,20 @@ class _ResourceTabState extends State<ResourceTab>
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return Scaffold(
       backgroundColor: backgroundColor,
-      floatingActionButton:
-          tabController.index == 1 && Permission().check(user, "ERP_STOCK_ADJ")
-              ? FloatingActionButton(
-                  shape: const CircleBorder(),
-                  backgroundColor: productColor,
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(Adjustment.routeName);
-                  },
-                  child: const Icon(
-                    Icons.add,
-                    color: white,
-                  ),
-                )
-              : null,
+      floatingActionButton: tabController.index == 1 &&
+              Permission().check(user, "ERP_STOCK_ADJ", boolean: 'isCreate')
+          ? FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: productColor,
+              onPressed: () {
+                Navigator.of(context).pushNamed(Adjustment.routeName);
+              },
+              child: const Icon(
+                Icons.add,
+                color: white,
+              ),
+            )
+          : null,
       body: Column(
         children: [
           TabBar(
@@ -73,7 +73,7 @@ class _ResourceTabState extends State<ResourceTab>
               controller: tabController,
               children: [
                 const RemainingStock(),
-                Permission().check(user, "ERP_STOCK_ADJ")
+                Permission().check(user, "ERP_STOCK_ADJ", boolean: 'isView')
                     ? const ResidualSetting()
                     : const NotFound(
                         module: "INVENTORY",

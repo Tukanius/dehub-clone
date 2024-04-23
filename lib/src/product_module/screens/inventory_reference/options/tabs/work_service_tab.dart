@@ -36,10 +36,6 @@ class _WorkServiceTabState extends State<WorkServiceTab> with AfterLayoutMixin {
     });
   }
 
-  onLoading() {
-    refreshController.loadComplete();
-  }
-
   onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
@@ -94,7 +90,6 @@ class _WorkServiceTabState extends State<WorkServiceTab> with AfterLayoutMixin {
             ),
           )
         : Refresher(
-            onLoading: onLoading,
             onRefresh: onRefresh,
             color: productColor,
             refreshController: refreshController,

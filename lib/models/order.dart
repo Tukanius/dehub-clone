@@ -220,8 +220,10 @@ class Order {
   double? amount;
   String? color;
   String? proformaInvoiceId;
+  String? supplierStaffId;
 
   Order({
+    this.supplierStaffId,
     this.proformaInvoiceId,
     this.color,
     this.amount,

@@ -56,7 +56,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<OrderProvider>(context, listen: false).clearData();
-    if (Permission().check(user, "ORD_LIST")) {
+    if (Permission().check(user, "ORD_LIST", boolean: 'isview')) {
       await list(page, limit);
     }
   }
@@ -128,7 +128,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
-    return Permission().check(user, "ORD_LIST")
+    return Permission().check(user, "ORD_LIST", boolean: 'isview')
         ? GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();

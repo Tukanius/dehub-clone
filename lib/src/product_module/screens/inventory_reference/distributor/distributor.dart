@@ -1,12 +1,14 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/distributor/add_distributor_sheet.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -100,18 +102,26 @@ class _InventoryDistributorState extends State<InventoryDistributor>
 
   update(InventoryGoods data) {
     updateSheet(context, updateClick: () {
-      Navigator.of(context).pop();
-      showModalBottomSheet(
-        context: context,
-        useSafeArea: true,
-        builder: (context) => AddDistributor(
-          name: data.name,
-          id: data.id,
-        ),
-      );
+      if (Permission().check(user, "ERP_REF_DIST", boolean: 'isEdit')) {
+        Navigator.of(context).pop();
+        showModalBottomSheet(
+          context: context,
+          useSafeArea: true,
+          builder: (context) => AddDistributor(
+            name: data.name,
+            id: data.id,
+          ),
+        );
+      } else {
+        showCustomDialog(context, 'Хандах эрх хүрэлцэхгүй байна', false);
+      }
     }, deleteClick: () async {
-      await InventoryApi().distributorDelete(data.id!);
-      Navigator.of(context).pop();
+      if (Permission().check(user, "ERP_REF_DIST", boolean: 'isDelete')) {
+        await InventoryApi().distributorDelete(data.id!);
+        Navigator.of(context).pop();
+      } else {
+        showCustomDialog(context, 'Хандах эрх хүрэлцэхгүй байна', false);
+      }
     });
   }
 
@@ -133,18 +143,21 @@ class _InventoryDistributorState extends State<InventoryDistributor>
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            useSafeArea: true,
-            builder: (context) => const AddDistributor(),
-          );
-        },
-        shape: const CircleBorder(),
-        backgroundColor: productColor,
-        child: const Icon(Icons.add, color: white),
-      ),
+      floatingActionButton:
+          Permission().check(user, "ERP_REF_DIST", boolean: 'isCreate')
+              ? FloatingActionButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) => const AddDistributor(),
+                    );
+                  },
+                  shape: const CircleBorder(),
+                  backgroundColor: productColor,
+                  child: const Icon(Icons.add, color: white),
+                )
+              : null,
       body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(
@@ -195,19 +208,22 @@ class _InventoryDistributorState extends State<InventoryDistributor>
                                                   style: const TextStyle(
                                                       color: dark),
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    update(item);
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                    'assets/svg/edit_rounded.svg',
-                                                    colorFilter:
-                                                        const ColorFilter.mode(
-                                                      productColor,
-                                                      BlendMode.srcIn,
+                                                if (data.businessId ==
+                                                    user.currentBusinessId)
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      update(item);
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      'assets/svg/edit_rounded.svg',
+                                                      colorFilter:
+                                                          const ColorFilter
+                                                              .mode(
+                                                        productColor,
+                                                        BlendMode.srcIn,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
                                               ],
                                             ),
                                           ),

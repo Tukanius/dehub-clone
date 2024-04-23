@@ -144,7 +144,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: false).orderMe;
+    user = Provider.of<UserProvider>(context, listen: false).paymentMe;
     return Permission().check(user, "PAY_DASH")
         ? NestedScrollView(
             headerSliverBuilder:

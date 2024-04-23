@@ -162,7 +162,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
           color: orderColor,
           labelText: 'Бараа нэмнэ үү!',
         );
-      } else {
+      } else if (order.buyerStaff?.id != null &&
+          order.supplierStaff?.id != null) {
         Navigator.of(context).pushNamed(
           OrderSendPage.routeName,
           arguments: OrderSendPageArguments(
@@ -189,6 +190,8 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                 onSubmit(toReview, send);
               }),
         );
+      } else {
+        showCustomDialog(context, "Ажилтан тохируулаагүй байна", false);
       }
     }
   }

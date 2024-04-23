@@ -1,11 +1,16 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/brand/add_brand_sheet.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 
 class InventoryBrand extends StatefulWidget {
   static const routeName = '/InventoryBrand';
@@ -18,6 +23,7 @@ class InventoryBrand extends StatefulWidget {
 class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
   Result brand = Result(rows: []);
   bool isLoading = true;
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -29,37 +35,46 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
 
   update(String id, String name, String logo) {
     updateSheet(context, updateClick: () {
-      Navigator.of(context).pop();
-      showModalBottomSheet(
-        context: context,
-        useSafeArea: true,
-        builder: (context) => AddBrandSheet(
-          id: id,
-          brandName: name,
-          brandLogo: logo,
-        ),
-      );
-    }, deleteClick: () async {
-      try {
-        setState(() {
-          isLoading = true;
-        });
-        InventoryApi().brandDelete(id);
-        brand = await InventoryApi().brandList();
+      if (Permission().check(user, "ERP_REF_BRND", boolean: 'isEdit')) {
         Navigator.of(context).pop();
-        setState(() {
-          isLoading = false;
-        });
-      } catch (e) {
-        setState(() {
-          isLoading = false;
-        });
+        showModalBottomSheet(
+          context: context,
+          useSafeArea: true,
+          builder: (context) => AddBrandSheet(
+            id: id,
+            brandName: name,
+            brandLogo: logo,
+          ),
+        );
+      } else {
+        showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+      }
+    }, deleteClick: () async {
+      if (Permission().check(user, "ERP_REF_BRND", boolean: 'isDelete')) {
+        try {
+          setState(() {
+            isLoading = true;
+          });
+          InventoryApi().brandDelete(id);
+          brand = await InventoryApi().brandList();
+          Navigator.of(context).pop();
+          setState(() {
+            isLoading = false;
+          });
+        } catch (e) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      } else {
+        showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -74,21 +89,24 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: productColor,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: white,
-        ),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            useSafeArea: true,
-            builder: (context) => const AddBrandSheet(),
-          );
-        },
-      ),
+      floatingActionButton:
+          Permission().check(user, "ERP_REF_BRND", boolean: 'isCreate')
+              ? FloatingActionButton(
+                  backgroundColor: productColor,
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.add,
+                    color: white,
+                  ),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) => const AddBrandSheet(),
+                    );
+                  },
+                )
+              : null,
       body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(

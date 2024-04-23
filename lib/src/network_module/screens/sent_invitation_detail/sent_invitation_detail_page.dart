@@ -7,6 +7,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -394,7 +395,9 @@ class SentInvitationDetailState extends State<SentInvitationDetail>
                   const SizedBox(
                     height: 50,
                   ),
-                  if (invitation.invitationStatus == "DRAFT")
+                  if (invitation.invitationStatus == "DRAFT" &&
+                      Permission()
+                          .check(user, "NET_INV_SENT", boolean: 'isEdit'))
                     Row(
                       children: [
                         const SizedBox(

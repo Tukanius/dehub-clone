@@ -190,18 +190,17 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           svgColor: networkColor,
                           svg: 'assets/svg/double-person.svg',
                         ),
-                        if (Permission().check(user, "NET_PT"))
-                          DashboardCard(
-                            onClick: () {
-                              Navigator.of(context)
-                                  .pushNamed(PaymentTerms.routeName);
-                            },
-                            boxColor: networkColor.withOpacity(0.1),
-                            padding: 8,
-                            labelText: 'Төлбөрийн нөхцөл',
-                            svgColor: networkColor,
-                            svg: 'assets/svg/payment-term.svg',
-                          ),
+                        DashboardCard(
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(PaymentTerms.routeName);
+                          },
+                          boxColor: networkColor.withOpacity(0.1),
+                          padding: 8,
+                          labelText: 'Төлбөрийн нөхцөл',
+                          svgColor: networkColor,
+                          svg: 'assets/svg/payment-term.svg',
+                        ),
                         DashboardCard(
                           onClick: () {
                             Navigator.of(context)

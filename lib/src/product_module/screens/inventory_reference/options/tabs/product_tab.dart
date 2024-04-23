@@ -37,10 +37,6 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
     });
   }
 
-  onLoading() {
-    refreshController.loadComplete();
-  }
-
   onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     setState(() {
@@ -95,7 +91,6 @@ class _ProductTabState extends State<ProductTab> with AfterLayoutMixin {
             ),
           )
         : Refresher(
-            onLoading: onLoading,
             onRefresh: onRefresh,
             color: productColor,
             refreshController: refreshController,

@@ -48,7 +48,7 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    if (Permission().check(user, "PAY_ACC")) {
+    if (Permission().check(user, "PAY_ACC", boolean: 'isView')) {
       await list(page, limit);
     }
   }
@@ -85,7 +85,7 @@ class AddBankAccountPageState extends State<AddBankAccountPage>
     user = Provider.of<UserProvider>(context, listen: false).paymentMe;
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: Permission().check(user, "ORD_SPLIT")
+      body: Permission().check(user, "PAY_ACC", boolean: 'isView')
           ? isLoading == true
               ? const Center(
                   child: CircularProgressIndicator(color: paymentColor),

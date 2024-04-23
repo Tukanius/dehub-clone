@@ -6,12 +6,16 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/user_module/screens/create_user/create_user.dart';
 import 'package:dehub/src/user_module/screens/invitation_send/invitation_send.dart';
 import 'package:dehub/src/user_module/screens/update_user/update_user_page.dart';
 import 'package:dehub/src/user_module/components/user_card/user_card.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class UsersTab extends StatefulWidget {
@@ -28,6 +32,7 @@ class _UsersTabState extends State<UsersTab> with AfterLayoutMixin {
   ListenController listenController = ListenController();
   int page = 1;
   int limit = 10;
+  User user = User();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -59,7 +64,9 @@ class _UsersTabState extends State<UsersTab> with AfterLayoutMixin {
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    if (Permission().check(user, "USR_USER", boolean: 'isView')) {
+      await list(page, limit);
+    }
   }
 
   @override
@@ -75,97 +82,117 @@ class _UsersTabState extends State<UsersTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading == true
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: userColor,
-            ),
-          )
-        : Scaffold(
-            backgroundColor: backgroundColor,
-            appBar: AppBar(
-              backgroundColor: backgroundColor,
-              surfaceTintColor: backgroundColor,
-              leadingWidth: 130,
-              leading: const CustomBackButton(color: userColor),
-              actions: [
-                AddButton(
+    user = Provider.of<UserProvider>(context, listen: true).userModule;
+    return Permission().check(user, "USR_USER", boolean: 'isView')
+        ? isLoading == true
+            ? const Center(
+                child: CircularProgressIndicator(
                   color: userColor,
-                  addColor: white,
-                  onClick: () {
-                    Navigator.of(context).pushNamed(
-                      CreateUser.routeName,
-                      arguments: CreateUserArguments(
-                        listenController: listenController,
-                        data: null,
-                      ),
-                    );
-                  },
                 ),
-              ],
-            ),
-            body: Refresher(
-              refreshController: refreshController,
-              onLoading: users.rows!.length == users.count ? null : onLoading,
-              onRefresh: onRefresh,
-              color: userColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: const Text(
-                        'Системийн хэрэглэгч',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+              )
+            : Scaffold(
+                backgroundColor: backgroundColor,
+                appBar: AppBar(
+                  backgroundColor: backgroundColor,
+                  surfaceTintColor: backgroundColor,
+                  leadingWidth: 130,
+                  leading: const CustomBackButton(color: userColor),
+                  actions: [
+                    if (Permission()
+                        .check(user, "USR_USER", boolean: 'isCreate'))
+                      AddButton(
+                        color: userColor,
+                        addColor: white,
+                        onClick: () {
+                          Navigator.of(context).pushNamed(
+                            CreateUser.routeName,
+                            arguments: CreateUserArguments(
+                              listenController: listenController,
+                              data: null,
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                    users.rows!.isNotEmpty
-                        ? Column(
-                            children: [
-                              Column(
-                                children: users.rows!
-                                    .map(
-                                      (data) => UserCard(
-                                        onPress: () {
-                                          Navigator.of(context).pushNamed(
-                                            UserInvitationSend.routeName,
-                                            arguments:
-                                                UserInvitationSendArguments(
-                                              data: data,
-                                            ),
-                                          );
-                                        },
-                                        data: data,
-                                        onClick: () {
-                                          Navigator.of(context).pushNamed(
-                                            UpdateUserPage.routeName,
-                                            arguments: UpdateUserPageArguments(
-                                              listenController:
-                                                  listenController,
-                                              data: data,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                            ],
-                          )
-                        : const NotFound(
-                            module: "USER",
-                            labelText: 'Хоосон байна',
-                          ),
                   ],
                 ),
-              ),
-            ),
+                body: Refresher(
+                  refreshController: refreshController,
+                  onLoading:
+                      users.rows!.length == users.count ? null : onLoading,
+                  onRefresh: onRefresh,
+                  color: userColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: const Text(
+                            'Системийн хэрэглэгч',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        users.rows!.isNotEmpty
+                            ? Column(
+                                children: [
+                                  Column(
+                                    children: users.rows!
+                                        .map(
+                                          (data) => UserCard(
+                                            onPress: Permission()
+                                                    .check(user, "USR_USER_INV")
+                                                ? () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      UserInvitationSend
+                                                          .routeName,
+                                                      arguments:
+                                                          UserInvitationSendArguments(
+                                                        data: data,
+                                                      ),
+                                                    );
+                                                  }
+                                                : null,
+                                            data: data,
+                                            onClick: Permission().check(
+                                                    user, "USR_USER",
+                                                    boolean: 'isEdit')
+                                                ? () {
+                                                    Navigator.of(context)
+                                                        .pushNamed(
+                                                      UpdateUserPage.routeName,
+                                                      arguments:
+                                                          UpdateUserPageArguments(
+                                                        listenController:
+                                                            listenController,
+                                                        data: data,
+                                                      ),
+                                                    );
+                                                  }
+                                                : null,
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                ],
+                              )
+                            : const NotFound(
+                                module: "USER",
+                                labelText: 'Хоосон байна',
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+        : const NotFound(
+            module: "USER",
+            labelText: 'Хандах эрх хүрэлцэхгүй байна',
           );
   }
 }

@@ -3,8 +3,11 @@ import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/payment.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/payment_module/sheets/update_account_sheet.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,6 +41,7 @@ class BankAccountDetailState extends State<BankAccountDetail>
   General general = General();
   bool isLoading = true;
   ListenController listenController = ListenController();
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -67,6 +71,7 @@ class BankAccountDetailState extends State<BankAccountDetail>
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).paymentMe;
     general =
         Provider.of<GeneralProvider>(context, listen: true).paymentGeneral;
     return Scaffold(
@@ -128,16 +133,19 @@ class BankAccountDetailState extends State<BankAccountDetail>
                   ),
                   GestureDetector(
                     onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        useSafeArea: true,
-                        builder: (context) => UpdateAccountSheet(
-                          shortName: get.shortName!,
-                          isDefault: get.isDefault ?? false,
-                          id: get.id!,
-                          listenController: listenController,
-                        ),
-                      );
+                      if (Permission()
+                          .check(user, "PAC_ACC", boolean: 'isEdit')) {
+                        showModalBottomSheet(
+                          context: context,
+                          useSafeArea: true,
+                          builder: (context) => UpdateAccountSheet(
+                            shortName: get.shortName!,
+                            isDefault: get.isDefault ?? false,
+                            id: get.id!,
+                            listenController: listenController,
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       color: white,

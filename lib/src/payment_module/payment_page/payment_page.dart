@@ -1,15 +1,16 @@
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/back_button/back_button.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/payment_module/payment_page/tabs/add_bank_account_page/add_bank_account_page.dart';
+import 'package:dehub/utils/permission.dart';
 import './tabs/dashboard_tab/dashboard_tab.dart';
 import 'package:dehub/src/payment_module/screens/link_account_page/link_account_page.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dehub/src/payment_module/payment_page/tabs/home_page_tab.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,8 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
   int selectedIndex = 1;
   bool isLoading = true;
+  User user = User();
+
   @override
   afterFirstLayout(BuildContext context) async {
     await Provider.of<UserProvider>(context, listen: false).payment(true);
@@ -35,7 +38,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
   }
 
   static const List<Widget> currentPages = [
-    HomePageTab(),
+    SizedBox(),
     DashboardTab(),
     AddBankAccountPage(),
   ];
@@ -52,6 +55,7 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).paymentMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -88,7 +92,8 @@ class _PaymentPageState extends State<PaymentPage> with AfterLayoutMixin {
                     ),
                   ),
                 )
-              : selectedIndex == 2
+              : selectedIndex == 2 &&
+                      Permission().check(user, 'PAY_ACC', boolean: 'isCreate')
                   ? AddButton(
                       color: paymentColor,
                       addColor: white,

@@ -1,7 +1,12 @@
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/reference_information.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/invoice_condition_page/invoice_condition_page.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ReferenceInformationCard extends StatefulWidget {
   final ReferenceInformation? data;
@@ -20,16 +25,45 @@ class ReferenceInformationCard extends StatefulWidget {
 }
 
 class _ReferenceInformationCardState extends State<ReferenceInformationCard> {
+  User user = User();
+
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(
-          InvoiceConditionPage.routeName,
-          arguments: InvoiceConditionPageArguments(
-            data: widget.data!,
-          ),
-        );
+        if (widget.data?.listType == 'REGION' ||
+            widget.data?.listType == "DIRECTION") {
+          if (Permission().check(user, "NET_REF_AREA", boolean: 'isview')) {
+            Navigator.of(context).pushNamed(
+              InvoiceConditionPage.routeName,
+              arguments: InvoiceConditionPageArguments(
+                data: widget.data!,
+              ),
+            );
+          } else {
+            showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+          }
+        } else if (widget.data?.listType == 'CLIENT_CATEGORY' ||
+            widget.data?.listType == "CLIENT_PRIORITY") {
+          if (Permission().check(user, "NET_REF_CLS", boolean: 'isview')) {
+            Navigator.of(context).pushNamed(
+              InvoiceConditionPage.routeName,
+              arguments: InvoiceConditionPageArguments(
+                data: widget.data!,
+              ),
+            );
+          } else {
+            showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+          }
+        } else {
+          Navigator.of(context).pushNamed(
+            InvoiceConditionPage.routeName,
+            arguments: InvoiceConditionPageArguments(
+              data: widget.data!,
+            ),
+          );
+        }
       },
       child: AnimatedContainer(
         curve: Curves.ease,

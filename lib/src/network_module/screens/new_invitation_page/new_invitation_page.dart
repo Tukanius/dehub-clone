@@ -1,7 +1,12 @@
+import 'package:dehub/components/not_found/not_found.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/tabs/from_dehub.dart';
 import 'package:dehub/src/network_module/screens/new_invitation_page/tabs/onboard_tab.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewInvitationPage extends StatefulWidget {
   static const routeName = '/NewInvitationPage';
@@ -12,8 +17,10 @@ class NewInvitationPage extends StatefulWidget {
 }
 
 class _NewInvitationPageState extends State<NewInvitationPage> {
+  User user = User();
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).userModule;
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -63,10 +70,20 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            FromDehubTab(),
-            OnboardTab(),
+            Permission().check(user, "NET_INV_SENT", boolean: 'isCreate')
+                ? const FromDehubTab()
+                : const NotFound(
+                    module: 'NETWORK',
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                  ),
+            Permission().check(user, "NET_INV_ONB", boolean: 'isCreate')
+                ? const OnboardTab()
+                : const NotFound(
+                    module: 'NETWORK',
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                  ),
           ],
         ),
       ),

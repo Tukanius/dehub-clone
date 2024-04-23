@@ -1,11 +1,14 @@
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/inventory_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/classification/add_classification.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -40,9 +43,9 @@ class _InventoryClassificationState extends State<InventoryClassification>
   bool isLoading = true;
   Map<String, List<InventoryGoods>> groupItems = {};
   List<InventoryGoods> groupList = [];
+  User user = User();
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
-  User user = User();
 
   type() {
     switch (widget.type) {
@@ -123,6 +126,43 @@ class _InventoryClassificationState extends State<InventoryClassification>
     api(page, limit);
   }
 
+  update(String id) {
+    updateSheet(context, updateClick: () {
+      if (Permission().check(user, "ERP_REF_ITM_CLS", boolean: 'isEdit')) {
+        Navigator.of(context).pop();
+        showModalBottomSheet(
+          context: context,
+          useSafeArea: true,
+          builder: (context) => AddClassification(
+            type: widget.type,
+          ),
+        );
+      } else {
+        showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+      }
+    }, deleteClick: () async {
+      if (Permission().check(user, "ERP_REF_ITM_CLS", boolean: 'isDelete')) {
+        try {
+          setState(() {
+            isLoading = true;
+          });
+          InventoryApi().brandDelete(id);
+          api(page, limit);
+          Navigator.of(context).pop();
+          setState(() {
+            isLoading = false;
+          });
+        } catch (e) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      } else {
+        showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
@@ -151,23 +191,26 @@ class _InventoryClassificationState extends State<InventoryClassification>
                           'Дэд категори',
                           style: TextStyle(color: productColor, fontSize: 16),
                         )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            useSafeArea: true,
-            builder: (context) => AddClassification(
-              type: widget.type,
-            ),
-          );
-        },
-        backgroundColor: productColor,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: white,
-        ),
-      ),
+      floatingActionButton:
+          Permission().check(user, "ERP_REF_ITM_CLS", boolean: 'isCreate')
+              ? FloatingActionButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      useSafeArea: true,
+                      builder: (context) => AddClassification(
+                        type: widget.type,
+                      ),
+                    );
+                  },
+                  backgroundColor: productColor,
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.add,
+                    color: white,
+                  ),
+                )
+              : null,
       body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(
@@ -200,7 +243,9 @@ class _InventoryClassificationState extends State<InventoryClassification>
                                     (data) => GestureDetector(
                                       onTap: user.currentBusinessId ==
                                               item.businessId
-                                          ? () {}
+                                          ? () {
+                                              update(data.id!);
+                                            }
                                           : () {},
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(

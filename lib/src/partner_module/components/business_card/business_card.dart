@@ -84,20 +84,21 @@ class _BusinessCardState extends State<BusinessCard> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 35,
-                  width: 35,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: partnerColor.withOpacity(0.2),
+                if (widget.onClick != null)
+                  Container(
+                    height: 35,
+                    width: 35,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: partnerColor.withOpacity(0.2),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/svg/edit_rounded.svg',
+                      colorFilter:
+                          const ColorFilter.mode(partnerColor, BlendMode.srcIn),
+                    ),
                   ),
-                  child: SvgPicture.asset(
-                    'assets/svg/edit_rounded.svg',
-                    colorFilter:
-                        const ColorFilter.mode(partnerColor, BlendMode.srcIn),
-                  ),
-                ),
               ],
             ),
             const SizedBox(

@@ -215,9 +215,9 @@ class _WarehouseCreateState extends State<WarehouseCreate>
         backgroundColor: white,
         surfaceTintColor: white,
         iconTheme: const IconThemeData(color: partnerColor),
-        title: const Text(
-          'Агуулах нэмэх',
-          style: TextStyle(
+        title: Text(
+          widget.data == null ? 'Агуулах нэмэх' : "Агуулахын мэдээлэл засах",
+          style: const TextStyle(
             color: partnerColor,
             fontSize: 17,
             fontWeight: FontWeight.w600,

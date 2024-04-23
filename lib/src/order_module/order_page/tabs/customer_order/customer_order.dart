@@ -6,6 +6,7 @@ import 'package:dehub/src/order_module/order_page/tabs/customer_order/tabs/back_
 import 'package:dehub/src/order_module/order_page/tabs/customer_order/tabs/received_tab.dart';
 import 'package:dehub/src/order_module/screens/create_back_order/create_back_order.dart';
 import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -81,20 +82,22 @@ class _CustomerOrderState extends State<CustomerOrder>
                   ),
                 )
               : null
-          : FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  NewOrder.routeName,
-                  arguments: NewOrderArguments(data: null, id: null),
-                );
-              },
-              backgroundColor: orderColor,
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.add,
-                color: white,
-              ),
-            ),
+          : Permission().check(user, "ORD_LIST", boolean: 'iscreate')
+              ? FloatingActionButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      NewOrder.routeName,
+                      arguments: NewOrderArguments(data: null, id: null),
+                    );
+                  },
+                  backgroundColor: orderColor,
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.add,
+                    color: white,
+                  ),
+                )
+              : null,
       backgroundColor: backgroundColor,
       body: user.currentBusiness?.type == "SUPPLIER"
           ? NestedScrollView(

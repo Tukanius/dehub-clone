@@ -50,17 +50,17 @@ class _BusinessesState extends State<Businesses> {
         },
         body: TabBarView(
           children: [
-            Permission().partnerCheck(user, "PRT_SUPP")
+            Permission().partnerCheck(user, "PRT_SUPP", boolean: 'isview')
                 ? const Suppliers()
                 : const NotFound(
                     module: "PARTNER",
-                    labelText: 'Хандах эрх хүрэхгүй байна',
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
                   ),
-            Permission().partnerCheck(user, "PRT_BUYER")
+            Permission().partnerCheck(user, "PRT_BUYER", boolean: 'isview')
                 ? const Buyers()
                 : const NotFound(
                     module: "PARTNER",
-                    labelText: 'Хандах эрх хүрэхгүй байна',
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
                   ),
           ],
         ),

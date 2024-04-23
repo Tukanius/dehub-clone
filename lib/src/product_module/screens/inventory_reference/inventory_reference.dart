@@ -58,7 +58,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                 'Лавлах мэдээллийг сонгоно уу',
               ),
             ),
-            if (Permission().check(user, "ERP_REF_BRND"))
+            if (Permission().check(user, "ERP_REF_BRND", boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100000',
                 labelText: 'Брэнд',
@@ -66,7 +66,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(InventoryBrand.routeName);
                 },
               ),
-            if (Permission().check(user, "ERP_REF_ITM_CLS"))
+            if (Permission().check(user, "ERP_REF_ITM_CLS", boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100001',
                 labelText: 'Нэр төрөл',
@@ -117,7 +117,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                 );
               },
             ),
-            if (Permission().check(user, "ERP_REF_DIST"))
+            if (Permission().check(user, "ERP_REF_DIST", boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100006',
                 labelText: 'Дистрибютор',
@@ -126,7 +126,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                       .pushNamed(InventoryDistributor.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_MANUFACT'))
+            if (Permission().check(user, 'ERP_REF_MANUFACT', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100007',
                 labelText: 'Үйлдвэрлэгч',
@@ -135,7 +135,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                       .pushNamed(InventoryManufacturer.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_TAG'))
+            if (Permission().check(user, 'ERP_REF_TAG', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100008',
                 labelText: 'Tag',
@@ -143,7 +143,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(InventoryTag.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_UNIT'))
+            if (Permission().check(user, 'ERP_REF_UNIT', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100009',
                 labelText: 'Хэмжих нэгж',
@@ -151,7 +151,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(InventoryUnit.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_SCTN'))
+            if (Permission().check(user, 'ERP_REF_SCTN', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100010',
                 labelText: 'Барааны динамик мэдээлэл',
@@ -159,7 +159,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(DynamicInformation.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_PCK'))
+            if (Permission().check(user, 'ERP_REF_PCK', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100011',
                 labelText: 'Сав баглаа боодол',
@@ -167,7 +167,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(PackageType.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_DEL_TYPE'))
+            if (Permission().check(user, 'ERP_REF_DEL_TYPE', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100012',
                 labelText: 'Хүргэлтийн нөхцөл',
@@ -176,7 +176,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                       .pushNamed(InventoryDeliveryType.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_OPTION'))
+            if (Permission().check(user, 'ERP_REF_OPTION', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100013',
                 labelText: 'Хувилбарын төрөл',
@@ -184,7 +184,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(Options.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_TIER'))
+            if (Permission().check(user, 'ERP_REF_TIER', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100014',
                 labelText: 'Үнийн бүлэг',
@@ -193,7 +193,8 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                       .pushNamed(InventoryPriceTiers.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_INCT_TYPE'))
+            if (Permission()
+                .check(user, 'ERP_REF_INCT_TYPE', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100015',
                 labelText: 'Идэвхгүй болгох шалтгаан',
@@ -201,7 +202,7 @@ class InventoryReferencePageState extends State<InventoryReferencePage> {
                   Navigator.of(context).pushNamed(InActiveTypes.routeName);
                 },
               ),
-            if (Permission().check(user, 'ERP_REF_ADJ_NOTE'))
+            if (Permission().check(user, 'ERP_REF_ADJ_NOTE', boolean: 'isview'))
               InventoryReferenceCard(
                 refCode: 'REF-100016',
                 labelText: 'Нөөцийн хөдөлгөөн тайлбар',

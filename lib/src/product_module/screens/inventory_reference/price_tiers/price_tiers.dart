@@ -1,6 +1,9 @@
 import 'package:dehub/models/general.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/price_tiers/add_price_tiers.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,9 +19,11 @@ class InventoryPriceTiers extends StatefulWidget {
 
 class InventoryPriceTiersState extends State<InventoryPriceTiers> {
   General general = General();
+  User user = User();
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     general =
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
     return Scaffold(
@@ -60,7 +65,8 @@ class InventoryPriceTiersState extends State<InventoryPriceTiers> {
                               data.name != null
                                   ? Text(
                                       '${data.name}',
-                                      style: const TextStyle(color: productColor),
+                                      style:
+                                          const TextStyle(color: productColor),
                                     )
                                   : const Text(
                                       '.....',
@@ -77,26 +83,28 @@ class InventoryPriceTiersState extends State<InventoryPriceTiers> {
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                useSafeArea: true,
-                                builder: (context) => AddPriceTiers(
-                                  data: data,
+                          if (Permission()
+                              .check(user, "ERP_REF_TIE", boolean: 'isEdit'))
+                            GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  useSafeArea: true,
+                                  builder: (context) => AddPriceTiers(
+                                    data: data,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                color: transparent,
+                                padding: const EdgeInsets.all(5),
+                                child: SvgPicture.asset(
+                                  'assets/svg/edit_rounded.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      productColor, BlendMode.srcIn),
                                 ),
-                              );
-                            },
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.all(5),
-                              child: SvgPicture.asset(
-                                'assets/svg/edit_rounded.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    productColor, BlendMode.srcIn),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),

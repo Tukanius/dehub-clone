@@ -149,7 +149,7 @@ class InboxTabState extends State<InboxTab>
           )
         : const NotFound(
             module: "NETWORK",
-            labelText: 'Хандах эрх хүрэхгүй байна',
+            labelText: 'Хандах эрх хүрэлцэхгүй байна',
           );
   }
 }

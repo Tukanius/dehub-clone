@@ -4,6 +4,7 @@ import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/partner.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -134,32 +135,38 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
                           children: warehouse.rows!
                               .map(
                                 (data) => WarehouseCard(
-                                    editClick: Permission().partnerCheck(
-                                            user, "PRT_WRH", boolean: "isEdit")
-                                        ? () {
-                                            Navigator.of(context).pushNamed(
-                                              WarehouseCreate.routeName,
-                                              arguments:
-                                                  WarehouseCreateArguments(
-                                                data: data,
-                                                listenController:
-                                                    listenController,
-                                              ),
-                                            );
-                                          }
-                                        : null,
-                                    data: data,
-                                    border: warehouse.rows?.last.id != data.id,
-                                    deleteClick: Permission().partnerCheck(
-                                            user, "PRT_WRH",
-                                            boolean: 'isdelete')
-                                        ? () async {
-                                            load.loading(true);
-                                            await PartnerApi()
-                                                .warehouseDelete(data.id);
-                                            load.loading(false);
-                                          }
-                                        : () {}),
+                                  editClick: Permission().partnerCheck(
+                                          user, "PRT_WRH",
+                                          boolean: "isEdit")
+                                      ? () {
+                                          Navigator.of(context).pushNamed(
+                                            WarehouseCreate.routeName,
+                                            arguments: WarehouseCreateArguments(
+                                              data: data,
+                                              listenController:
+                                                  listenController,
+                                            ),
+                                          );
+                                        }
+                                      : null,
+                                  data: data,
+                                  border: warehouse.rows?.last.id != data.id,
+                                  deleteClick: !Permission().partnerCheck(
+                                          user, "PRT_WRH",
+                                          boolean: 'isdelete')
+                                      ? () async {
+                                          load.loading(true);
+                                          await PartnerApi()
+                                              .warehouseDelete(data.id);
+                                          load.loading(false);
+                                        }
+                                      : () {
+                                          showCustomDialog(
+                                              context,
+                                              "Хандах эрх хүрэлцэхгүй байна",
+                                              false);
+                                        },
+                                ),
                               )
                               .toList(),
                         ),
@@ -172,7 +179,7 @@ class _WarehousesTabState extends State<WarehousesTab> with AfterLayoutMixin {
                 )
           : const NotFound(
               module: "PARTNER",
-              labelText: 'Хандах эрх хүрэхгүй байна',
+              labelText: 'Хандах эрх хүрэлцэхгүй байна',
             ),
     );
   }

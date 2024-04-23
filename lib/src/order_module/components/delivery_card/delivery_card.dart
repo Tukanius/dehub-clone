@@ -293,7 +293,8 @@ class _DeliveryCardState extends State<DeliveryCard> {
                         ],
                       ),
                       GestureDetector(
-                        onTap: widget.data.deliveryNoteStatus == "LOADED" ||
+                        onTap: widget.data.deliveryNoteStatus == "LOADED" &&
+                                    user.currentBusiness?.type == "SUPPLIER" ||
                                 widget.data.deliveryNoteStatus == "DELIVERING"
                             ? widget.startClick
                             : () {},

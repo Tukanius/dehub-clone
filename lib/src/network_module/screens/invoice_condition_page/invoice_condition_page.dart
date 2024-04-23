@@ -150,12 +150,14 @@ class _InvoiceConditionPageState extends State<InvoiceConditionPage>
         leadingWidth: 100,
         leading: const CustomBackButton(color: networkColor),
         actions: [
-          if (!Permission().check(user, "NET_REF_AREA") &&
+          if (!Permission().check(user, "NET_REF_AREA", boolean: 'isCreate') &&
                   widget.data.listType == "REGION" ||
-              !Permission().check(user, "NET_REF_AREA") &&
+              !Permission().check(user, "NET_REF_AREA", boolean: 'isCreate') &&
                   widget.data.listType == "DIRECTION" ||
-              !Permission().check(user, "NET_REF_CLS") &&
-                  widget.data.listType == "CLIENT_CATEGORY")
+              !Permission().check(user, "NET_REF_CLS", boolean: 'isCreate') &&
+                  widget.data.listType == "CLIENT_CATEGORY" ||
+              !Permission().check(user, "NET_REF_CLS", boolean: 'isCreate') &&
+                  widget.data.listType == "CLIENT_PRIORITY")
             const SizedBox()
           else
             AddButton(

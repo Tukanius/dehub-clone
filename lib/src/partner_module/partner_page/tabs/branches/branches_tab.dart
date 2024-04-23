@@ -117,7 +117,7 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
             ),
         ],
       ),
-      body: Permission().partnerCheck(user, "PRT_BRNCH")
+      body: Permission().partnerCheck(user, "PRT_BRNCH", boolean: 'isview')
           ? isLoading == true
               ? const Center(
                   child: CircularProgressIndicator(
@@ -174,7 +174,7 @@ class _BranchesTabState extends State<BranchesTab> with AfterLayoutMixin {
                 )
           : const NotFound(
               module: "PARNTER",
-              labelText: 'Хандах эрх хүрэхгүй байна',
+              labelText: 'Хандах эрх хүрэлцэхгүй байна',
             ),
     );
   }

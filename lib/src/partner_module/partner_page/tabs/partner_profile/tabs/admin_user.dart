@@ -6,6 +6,7 @@ import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/partner_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/partner_module/partner_page/tabs/partner_profile/forms/admin_user_form.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -23,6 +24,7 @@ class _AdminUserState extends State<AdminUser> with AfterLayoutMixin {
   GlobalKey<FormBuilderState> fbkey = GlobalKey<FormBuilderState>();
   bool isLoading = true;
   bool edit = false;
+  Partner user = Partner();
 
   onSubmit() async {
     final source = Provider.of<PartnerProvider>(context, listen: false);
@@ -73,56 +75,62 @@ class _AdminUserState extends State<AdminUser> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).partnerUser;
     return Scaffold(
       backgroundColor: backgroundColor,
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (edit == true)
-            FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  edit = false;
-                });
-              },
-              backgroundColor: white,
-              shape: const CircleBorder(
-                side: BorderSide(
-                  color: grey3,
-                ),
-              ),
-              child: SvgPicture.asset(
-                'assets/svg/remove.svg',
-                colorFilter: const ColorFilter.mode(grey3, BlendMode.srcIn),
-              ),
-            ),
-          const SizedBox(
-            width: 15,
-          ),
-          FloatingActionButton(
-            onPressed: () {
-              if (edit == true) {
-                onSubmit();
-              } else {
-                setState(() {
-                  edit = true;
-                });
-              }
-            },
-            backgroundColor: partnerColor,
-            shape: const CircleBorder(),
-            child: edit == false
-                ? SvgPicture.asset(
-                    'assets/svg/edit_rounded.svg',
-                    colorFilter: const ColorFilter.mode(white, BlendMode.srcIn),
-                  )
-                : const Icon(
-                    Icons.check,
-                    color: white,
+      floatingActionButton: Permission()
+              .partnerCheck(user, "PRT_PRO", boolean: 'isedit')
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (edit == true)
+                  FloatingActionButton(
+                    onPressed: () {
+                      setState(() {
+                        edit = false;
+                      });
+                    },
+                    backgroundColor: white,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: grey3,
+                      ),
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/svg/remove.svg',
+                      colorFilter:
+                          const ColorFilter.mode(grey3, BlendMode.srcIn),
+                    ),
                   ),
-          ),
-        ],
-      ),
+                const SizedBox(
+                  width: 15,
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    if (edit == true) {
+                      onSubmit();
+                    } else {
+                      setState(() {
+                        edit = true;
+                      });
+                    }
+                  },
+                  backgroundColor: partnerColor,
+                  shape: const CircleBorder(),
+                  child: edit == false
+                      ? SvgPicture.asset(
+                          'assets/svg/edit_rounded.svg',
+                          colorFilter:
+                              const ColorFilter.mode(white, BlendMode.srcIn),
+                        )
+                      : const Icon(
+                          Icons.check,
+                          color: white,
+                        ),
+                ),
+              ],
+            )
+          : null,
       body: isLoading == true
           ? const SizedBox()
           : SingleChildScrollView(

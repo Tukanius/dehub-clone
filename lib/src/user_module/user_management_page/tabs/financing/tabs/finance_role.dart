@@ -3,10 +3,14 @@ import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/result.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/user_module/screens/finance_role_assign/finance_role_assign.dart';
 import 'package:dehub/src/user_module/components/finance_role_card/finance_role_card.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FinanceRole extends StatefulWidget {
   const FinanceRole({super.key});
@@ -21,6 +25,7 @@ class _FinanceRoleState extends State<FinanceRole> with AfterLayoutMixin {
   Result roles = Result(rows: [], count: 0);
   bool isLoading = true;
   ListenController listenController = ListenController();
+  User user = User();
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -50,23 +55,27 @@ class _FinanceRoleState extends State<FinanceRole> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<UserProvider>(context, listen: true).userModule;
+
     return Scaffold(
       backgroundColor: backgroundColor,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: userColor,
-        onPressed: () {
-          Navigator.of(context).pushNamed(
-            FinanceRoleAssign.routeName,
-            arguments:
-                FinanceRoleAssignArguments(listenController: listenController),
-          );
-        },
-        child: const Icon(
-          Icons.add,
-          color: white,
-        ),
-      ),
+      floatingActionButton: Permission().check(user, "USR_FR_STF")
+          ? FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: userColor,
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  FinanceRoleAssign.routeName,
+                  arguments: FinanceRoleAssignArguments(
+                      listenController: listenController),
+                );
+              },
+              child: const Icon(
+                Icons.add,
+                color: white,
+              ),
+            )
+          : null,
       body: isLoading == true
           ? const Center(
               child: CircularProgressIndicator(

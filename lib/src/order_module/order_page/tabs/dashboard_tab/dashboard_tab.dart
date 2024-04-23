@@ -214,7 +214,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                 const SizedBox(
                   height: 10,
                 ),
-                if (Permission().check(user, "ORD_LIST"))
+                if (Permission().check(user, "ORD_DASH"))
                   isLoading == true
                       ? const SizedBox()
                       : Column(
@@ -284,7 +284,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
           ),
         ];
       },
-      body: Permission().check(user, "ORD_LIST")
+      body: Permission().check(user, "ORD_DASH")
           ? isLoading == true
               ? const Center(
                   child: CircularProgressIndicator(

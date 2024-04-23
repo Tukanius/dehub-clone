@@ -191,13 +191,19 @@ class _GoodsCardState extends State<GoodsCard> {
                     : widget.data.variantStatus == "DRAFT"
                         ? GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed(
-                                NewProduct.routeName,
-                                arguments: NewProductArguments(
-                                  initialIndex: 1,
-                                  data: widget.data,
-                                ),
-                              );
+                              if (Permission()
+                                  .check(user, "ERP_GDS", boolean: 'isEdit')) {
+                                Navigator.of(context).pushNamed(
+                                  NewProduct.routeName,
+                                  arguments: NewProductArguments(
+                                    initialIndex: 1,
+                                    data: widget.data,
+                                  ),
+                                );
+                              } else {
+                                showCustomDialog(context,
+                                    "Хандах эрх хүрэлцэхгүй байна", false);
+                              }
                             },
                             child: Container(
                               margin: const EdgeInsets.only(left: 10),

@@ -67,7 +67,7 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).partnerUser;
-    return Permission().partnerCheck(user, "PRT_PRO")
+    return Permission().partnerCheck(user, "PRT_PRO", boolean: 'isview')
         ? isLoading == true
             ? const SizedBox()
             : DefaultTabController(
@@ -295,7 +295,7 @@ class _PartnerProfileState extends State<PartnerProfile> with AfterLayoutMixin {
               )
         : const NotFound(
             module: "PARTNER",
-            labelText: 'Хандах эрх хүрэхгүй байна',
+            labelText: 'Хандах эрх хүрэлцэхгүй байна',
           );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddBrandSheet extends StatefulWidget {
   final String? brandName;
@@ -53,20 +55,29 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     if (fbKey.currentState!.saveAndValidate()) {
       InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
       data.logo = upload.url;
-      if (widget.brandName == null) {
-        await InventoryApi().brandCreate(data);
-        showCustomDialog(context, 'Амжилттай брэнд нэмлээ', true,
-            onPressed: () {
-          Navigator.of(context).pop();
-        });
-      } else {
-        await InventoryApi().brandUpdate(widget.id!, data);
-        showCustomDialog(context, 'Амжилттай заслаа', true, onPressed: () {
-          Navigator.of(context).pop();
-        });
+      try {
+        if (widget.brandName == null) {
+          loading.loading(true);
+          await InventoryApi().brandCreate(data);
+          loading.loading(false);
+          showCustomDialog(context, 'Амжилттай брэнд нэмлээ', true,
+              onPressed: () {
+            Navigator.of(context).pop();
+          });
+        } else {
+          loading.loading(true);
+          await InventoryApi().brandUpdate(widget.id!, data);
+          loading.loading(false);
+          showCustomDialog(context, 'Амжилттай заслаа', true, onPressed: () {
+            Navigator.of(context).pop();
+          });
+        }
+      } catch (e) {
+        loading.loading(false);
       }
     }
   }
