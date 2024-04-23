@@ -109,7 +109,7 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                           height: 3,
                         ),
                         Text(
-                          '${widget.data?.receiverBrach?.name}',
+                          widget.data?.receiverBrach?.name ?? '-',
                           style: const TextStyle(
                             color: orderColor,
                           ),

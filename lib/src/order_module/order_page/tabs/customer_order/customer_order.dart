@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/order_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
@@ -143,9 +144,14 @@ class _CustomerOrderState extends State<CustomerOrder>
                   ? const SizedBox()
                   : TabBarView(
                       controller: tabController,
-                      children: const [
-                        ReceivedTab(),
-                        BackOrder(),
+                      children: [
+                        const ReceivedTab(),
+                        Permission().check(user, "ORD_DRSHP")
+                            ? const BackOrder()
+                            : const NotFound(
+                                module: 'ORDER',
+                                labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                              ),
                       ],
                     ),
             )

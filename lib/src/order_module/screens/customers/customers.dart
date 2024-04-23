@@ -54,7 +54,7 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
     });
   }
 
-  onChange(String query) async {
+  onChange(String query) {
     if (timer != null) timer!.cancel();
     timer = Timer(const Duration(milliseconds: 500), () async {
       setState(() {
@@ -131,46 +131,47 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
                       onChange(query);
                     },
                   ),
-                  Expanded(
-                    child: Refresher(
-                      refreshController: refreshController,
-                      onLoading:
-                          order.rows!.length == order.count ? null : onLoading,
-                      onRefresh: onRefresh,
-                      color: orderColor,
-                      child: SingleChildScrollView(
-                        child: isSubmit == false
-                            ? order.rows!.isNotEmpty
-                                ? Column(
-                                    children: order.rows!
-                                        .map(
-                                          (data) => OrderCustomerCard(
-                                            index: order.rows!.indexOf(data),
-                                            startAnimation: startAnimation,
-                                            data: data,
-                                            onClick: () {
-                                              Navigator.of(context).pushNamed(
-                                                NewOrder.routeName,
-                                                arguments: NewOrderArguments(
-                                                    id: data.id),
-                                              );
-                                            },
-                                          ),
-                                        )
-                                        .toList(),
-                                  )
-                                : const NotFound(
-                                    module: "ORDER",
-                                    labelText: "Харилцагч олдсонгүй",
-                                  )
-                            : const Center(
-                                child: CircularProgressIndicator(
-                                  color: orderColor,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
+                  isSubmit == true
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: orderColor,
+                          ),
+                        )
+                      : Expanded(
+                          child: Refresher(
+                            refreshController: refreshController,
+                            onLoading: order.rows!.length == order.count
+                                ? null
+                                : onLoading,
+                            onRefresh: onRefresh,
+                            color: orderColor,
+                            child: SingleChildScrollView(
+                              child: order.rows!.isNotEmpty
+                                  ? Column(
+                                      children: order.rows!
+                                          .map(
+                                            (data) => OrderCustomerCard(
+                                              index: order.rows!.indexOf(data),
+                                              startAnimation: startAnimation,
+                                              data: data,
+                                              onClick: () {
+                                                Navigator.of(context).pushNamed(
+                                                  NewOrder.routeName,
+                                                  arguments: NewOrderArguments(
+                                                      id: data.id),
+                                                );
+                                              },
+                                            ),
+                                          )
+                                          .toList(),
+                                    )
+                                  : const NotFound(
+                                      module: "ORDER",
+                                      labelText: "Харилцагч олдсонгүй",
+                                    ),
+                            ),
+                          ),
+                        ),
                 ],
               ),
       ),

@@ -48,33 +48,39 @@ class _ReCalledPageState extends State<ReCalledPage>
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 10, bottom: 10),
-            child: DashboardCard(
-              boxColor: source.currentColor,
-              padding: 10,
-              labelText: 'Буцаан дуудсан',
-              svgColor: white,
-              svg: 'assets/svg/return.svg',
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: const Text(
-              'Буцаан дуудсан',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, bottom: 10),
+                    child: DashboardCard(
+                      boxColor: source.currentColor,
+                      padding: 10,
+                      labelText: 'Буцаан дуудсан',
+                      svgColor: white,
+                      svg: 'assets/svg/return.svg',
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 15),
+                    child: const Text(
+                      'Буцаан дуудсан',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          const Expanded(
-            child: SupplierLed(),
-          ),
-        ],
+          ];
+        },
+        body: const SupplierLed(),
       ),
     );
   }

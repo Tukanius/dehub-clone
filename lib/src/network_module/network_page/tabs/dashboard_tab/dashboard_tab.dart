@@ -1,3 +1,4 @@
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/network_module/screens/reference_information_page/reference_information_page.dart';
@@ -481,7 +482,10 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                       ),
               ],
             )
-          : const SizedBox(),
+          : const NotFound(
+              module: 'NETWORK',
+              labelText: 'Хандах эрх хүрэлцэхгүй байна',
+            ),
     );
   }
 }

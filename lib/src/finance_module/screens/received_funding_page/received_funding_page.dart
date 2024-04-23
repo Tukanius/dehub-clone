@@ -34,107 +34,116 @@ class _ReceivedFundingPageState extends State<ReceivedFundingPage>
         leadingWidth: 100,
         leading: CustomBackButton(color: source.currentColor),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: DashboardCard(
-              boxColor: source.currentColor,
-              padding: 8,
-              labelText: 'Авсан санхүүжилт',
-              svgColor: white,
-              svg: 'assets/svg/camera.svg',
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
-            child: const Text(
-              'Авсан санхүүжилт',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  pageController.animateToPage(0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color:
-                        currentIndex == 0 ? source.currentColor : transparent,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    'Зээл суурьтай',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: currentIndex == 0 ? white : black,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: DashboardCard(
+                      boxColor: source.currentColor,
+                      padding: 8,
+                      labelText: 'Авсан санхүүжилт',
+                      svgColor: white,
+                      svg: 'assets/svg/camera.svg',
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                borderRadius: BorderRadius.circular(10),
-                onTap: () {
-                  pageController.animateToPage(1,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.ease);
-                },
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color:
-                        currentIndex == 1 ? source.currentColor : transparent,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    'Нэхэмжлэх барьцаалсан',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: currentIndex == 1 ? white : black,
+                  Container(
+                    margin:
+                        const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                    child: const Text(
+                      'Авсан санхүүжилт',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          pageController.animateToPage(0,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: currentIndex == 0
+                                ? source.currentColor
+                                : transparent,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            'Зээл суурьтай',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: currentIndex == 0 ? white : black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(
+                        borderRadius: BorderRadius.circular(10),
+                        onTap: () {
+                          pageController.animateToPage(1,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.ease);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: currentIndex == 1
+                                ? source.currentColor
+                                : transparent,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            'Нэхэмжлэх барьцаалсан',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: currentIndex == 1 ? white : black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  currentIndex = value;
-                });
-              },
-              children: const [
-                LoanBased(),
-                SupplyChain(),
-              ],
             ),
-          ),
-        ],
+          ];
+        },
+        body: PageView(
+          controller: pageController,
+          onPageChanged: (value) {
+            setState(() {
+              currentIndex = value;
+            });
+          },
+          children: const [
+            LoanBased(),
+            SupplyChain(),
+          ],
+        ),
       ),
     );
   }

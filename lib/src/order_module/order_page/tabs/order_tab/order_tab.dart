@@ -1,3 +1,4 @@
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/order_page/tabs/order_tab/tabs/sales_tab.dart';
@@ -97,9 +98,14 @@ class _OrderTabState extends State<OrderTab>
         },
         body: TabBarView(
           controller: tabController,
-          children: const [
-            SalesTab(),
-            SplitOrder(),
+          children: [
+            const SalesTab(),
+            Permission().check(user, "ORD_SPLIT")
+                ? const SplitOrder()
+                : const NotFound(
+                    module: "ORDER",
+                    labelText: 'Хандах эрх хүрэлцэхгүй байна',
+                  ),
           ],
         ),
       ),

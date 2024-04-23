@@ -44,8 +44,8 @@ class _BottomState extends State<Bottom> {
     widget.listenController.changeVariable('respond');
     showCustomDialog(
       context,
-      isApprove == true ? "Амжилттай зөвшөөрлөө" : 'Татгалзлаа',
-      isApprove,
+      isApprove == true ? "Амжилттай зөвшөөрлөө" : 'Амжилттай татгалзлаа',
+      true,
       onPressed: () {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
@@ -87,8 +87,8 @@ class _BottomState extends State<Bottom> {
     widget.listenController.changeVariable('review');
     showCustomDialog(
       context,
-      isReview == true ? "Амжилттай" : 'Татгалзлаа',
-      isReview,
+      isReview == true ? "Амжилттай зөвшөөрлөө" : 'Амжилттай татгалзлаа',
+      true,
       onPressed: () {
         Navigator.of(context).pop();
         Navigator.of(context).pop();

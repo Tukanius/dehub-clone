@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dehub/api/business_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/src/network_module/components/client_classification_card/client_classification_card.dart';
@@ -32,6 +34,7 @@ class _ClientClassificationsState extends State<ClientClassifications>
   bool startAnimation = false;
   User user = User();
   ListenController listenController = ListenController();
+  Timer? timer;
 
   list(page, limit, String value) async {
     Offset offset = Offset(page: page, limit: limit);
@@ -86,82 +89,100 @@ class _ClientClassificationsState extends State<ClientClassifications>
     super.initState();
   }
 
+  onChange(String query) async {
+    if (timer != null) timer?.cancel();
+    timer = Timer(const Duration(milliseconds: 500), () async {
+      setState(() {
+        isLoading = true;
+      });
+      await list(page, limit, query);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).businessUser;
 
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: networkColor,
-        surfaceTintColor: networkColor,
-        iconTheme: const IconThemeData(color: white),
-        title: const Text(
-          'Ангилал, зэрэглэл',
-          style: TextStyle(
-            color: white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: networkColor,
+          surfaceTintColor: networkColor,
+          iconTheme: const IconThemeData(color: white),
+          title: const Text(
+            'Ангилал, зэрэглэл',
+            style: TextStyle(
+              color: white,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
-      ),
-      body: isLoading == true
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: networkColor,
-              ),
-            )
-          : Column(
-              children: [
-                const SearchButton(
-                  color: networkColor,
-                ),
-                Expanded(
-                  child: Refresher(
-                    refreshController: refreshController,
-                    onLoading: business.rows!.length == business.count
-                        ? null
-                        : onLoading,
-                    onRefresh: onRefresh,
-                    color: networkColor,
-                    child: SingleChildScrollView(
-                      child: business.rows!.isNotEmpty
-                          ? Column(
-                              children: business.rows!
-                                  .map(
-                                    (data) => ClientClassificationCard(
-                                      onClick: user.currentBusiness?.type ==
-                                              "SUPPLIER"
-                                          ? () {
-                                              Navigator.of(context).pushNamed(
-                                                ClientClassificationDetail
-                                                    .routeName,
-                                                arguments:
-                                                    ClientClassificationDetailArguments(
-                                                  id: data.id,
-                                                  listenController:
-                                                      listenController,
-                                                ),
-                                              );
-                                            }
-                                          : () {},
-                                      data: data,
-                                      index: business.rows!.indexOf(data),
-                                      startAnimation: startAnimation,
-                                    ),
-                                  )
-                                  .toList(),
-                            )
-                          : const NotFound(
-                              module: "NETWORK",
-                              labelText: 'Хоосон байна',
-                            ),
+        body: Column(
+          children: [
+            SearchButton(
+              color: networkColor,
+              onChange: (query) {
+                onChange(query);
+              },
+            ),
+            isLoading == true
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: networkColor,
+                    ),
+                  )
+                : Expanded(
+                    child: Refresher(
+                      refreshController: refreshController,
+                      onLoading: business.rows!.length == business.count
+                          ? null
+                          : onLoading,
+                      onRefresh: onRefresh,
+                      color: networkColor,
+                      child: SingleChildScrollView(
+                        child: business.rows!.isNotEmpty
+                            ? Column(
+                                children: business.rows!
+                                    .map(
+                                      (data) => ClientClassificationCard(
+                                        onClick: user.currentBusiness?.type ==
+                                                "SUPPLIER"
+                                            ? () {
+                                                Navigator.of(context).pushNamed(
+                                                  ClientClassificationDetail
+                                                      .routeName,
+                                                  arguments:
+                                                      ClientClassificationDetailArguments(
+                                                    id: data.id,
+                                                    listenController:
+                                                        listenController,
+                                                  ),
+                                                );
+                                              }
+                                            : () {},
+                                        data: data,
+                                        index: business.rows!.indexOf(data),
+                                        startAnimation: startAnimation,
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : const NotFound(
+                                module: "NETWORK",
+                                labelText: 'Хоосон байна',
+                              ),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+          ],
+        ),
+      ),
     );
   }
 }

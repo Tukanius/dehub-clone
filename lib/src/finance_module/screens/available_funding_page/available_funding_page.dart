@@ -88,80 +88,86 @@ class _AvailableFundingPageState extends State<AvailableFundingPage>
         surfaceTintColor: backgroundColor,
         leading: CustomBackButton(color: source.currentColor),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: DashboardCard(
-              boxColor: source.currentColor,
-              padding: 10,
-              labelText: 'Боломжит нэхэмжлэх',
-              svgColor: white,
-              svg: 'assets/svg/available_invoice.svg',
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: const Text(
-              'Боломжит нэхэмжлэхүүд',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: isLoading == true
-                ? Container(
-                    margin: const EdgeInsets.only(top: 30),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: source.currentColor,
-                      ),
-                    ),
-                  )
-                : Refresher(
-                    refreshController: refreshController,
-                    onLoading: finance.rows!.length == finance.count
-                        ? null
-                        : onLoading,
-                    onRefresh: onRefresh,
-                    color: source.currentColor,
-                    child: SingleChildScrollView(
-                      child: finance.rows!.isNotEmpty
-                          ? Column(
-                              children: [
-                                Column(
-                                  children: finance.rows!
-                                      .map(
-                                        (data) => AvaibleFundingCard(
-                                          data: data,
-                                          onClick: () {
-                                            Navigator.of(context).pushNamed(
-                                              AvaibleFundingDetailPage
-                                                  .routeName,
-                                              arguments:
-                                                  AvaibleFundingDetailPageArguments(
-                                                programId: widget.id,
-                                                id: data.id,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                              ],
-                            )
-                          : const NotFound(
-                              module: "FINANCE",
-                              labelText: 'Хоосон байна',
-                            ),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: DashboardCard(
+                      boxColor: source.currentColor,
+                      padding: 10,
+                      labelText: 'Боломжит нэхэмжлэх',
+                      svgColor: white,
+                      svg: 'assets/svg/available_invoice.svg',
                     ),
                   ),
-          ),
-        ],
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: const Text(
+                      'Боломжит нэхэмжлэхүүд',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ];
+        },
+        body: isLoading == true
+            ? Container(
+                margin: const EdgeInsets.only(top: 30),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: source.currentColor,
+                  ),
+                ),
+              )
+            : Refresher(
+                refreshController: refreshController,
+                onLoading:
+                    finance.rows!.length == finance.count ? null : onLoading,
+                onRefresh: onRefresh,
+                color: source.currentColor,
+                child: SingleChildScrollView(
+                  child: finance.rows!.isNotEmpty
+                      ? Column(
+                          children: [
+                            Column(
+                              children: finance.rows!
+                                  .map(
+                                    (data) => AvaibleFundingCard(
+                                      data: data,
+                                      onClick: () {
+                                        Navigator.of(context).pushNamed(
+                                          AvaibleFundingDetailPage.routeName,
+                                          arguments:
+                                              AvaibleFundingDetailPageArguments(
+                                            programId: widget.id,
+                                            id: data.id,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                          ],
+                        )
+                      : const NotFound(
+                          module: "FINANCE",
+                          labelText: 'Хоосон байна',
+                        ),
+                ),
+              ),
       ),
     );
   }

@@ -10,25 +10,25 @@ class Permission {
     if (index == -1) {
       return false;
     } else if (boolean?.toLowerCase() == 'iscreate') {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isCreate == true);
-      return user.permissions![index!].isCreate ?? false;
+      return i != -1 ? user.permissions![i].isCreate : false;
     } else if (boolean?.toLowerCase() == "isview") {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isView == true);
-      return user.permissions![index!].isView ?? false;
+      return i != -1 ? user.permissions![i].isView : false;
     } else if (boolean?.toLowerCase() == "isedit") {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isEdit == true);
-      return user.permissions![index!].isEdit ?? false;
+      return i != -1 ? user.permissions![i].isEdit : false;
     } else if (boolean?.toLowerCase() == "isreview") {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isReview == true);
-      return user.permissions![index!].isReview ?? false;
+      return i != -1 ? user.permissions![i].isReview : false;
     } else if (boolean?.toLowerCase() == 'isdelete') {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isDelete == true);
-      return user.permissions![index!].isDelete ?? false;
+      return i != -1 ? user.permissions![i].isDelete : false;
     } else {
       return true;
     }
@@ -40,25 +40,25 @@ class Permission {
     if (index == -1) {
       return false;
     } else if (boolean?.toLowerCase() == 'iscreate') {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isCreate == true);
-      return user.permissions![index!].isCreate ?? false;
+      return i != -1 ? user.permissions![i].isView : false;
     } else if (boolean?.toLowerCase() == "isview") {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isView == true);
-      return user.permissions![index!].isView ?? false;
+      return i != -1 ? user.permissions![i].isView : false;
     } else if (boolean?.toLowerCase() == "isedit") {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isEdit == true);
-      return user.permissions![index!].isEdit ?? false;
+      return i != -1 ? user.permissions![i].isEdit : false;
     } else if (boolean?.toLowerCase() == "isreview") {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isReview == true);
-      return user.permissions![index!].isReview ?? false;
+      return i != -1 ? user.permissions![i].isReview : false;
     } else if (boolean?.toLowerCase() == 'isdelete') {
-      index = user.permissions!.indexWhere(
+      int i = user.permissions!.indexWhere(
           (element) => element.code == permission && element.isDelete == true);
-      return user.permissions![index!].isDelete ?? false;
+      return i != -1 ? user.permissions![i].isDelete : false;
     } else {
       return true;
     }
