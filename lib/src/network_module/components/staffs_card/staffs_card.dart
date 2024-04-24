@@ -3,10 +3,10 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 
 class StaffsCard extends StatefulWidget {
-  final BusinessNetwork? data;
+  final BusinessNetwork data;
   const StaffsCard({
     super.key,
-    this.data,
+    required this.data,
   });
 
   @override
@@ -23,9 +23,12 @@ class _StaffsCardState extends State<StaffsCard> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             backgroundColor: grey,
             radius: 20,
+            backgroundImage: widget.data.avatar != null
+                ? NetworkImage("${widget.data.avatar}")
+                : null,
           ),
           const SizedBox(
             width: 10,
@@ -33,9 +36,11 @@ class _StaffsCardState extends State<StaffsCard> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Ажилтны нэр',
-                style: TextStyle(
+              Text(
+                widget.data.lastName != null
+                    ? '${widget.data.lastName?[0]}. ${widget.data.firstName}'
+                    : "${widget.data.firstName}",
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: dark,
@@ -43,16 +48,16 @@ class _StaffsCardState extends State<StaffsCard> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5),
-                child: const Text(
-                  'Ажилтны мэйл',
-                  style: TextStyle(
+                child: Text(
+                  '${widget.data.email}',
+                  style: const TextStyle(
                     color: dark,
                   ),
                 ),
               ),
-              const Text(
-                'Ажилтны утас',
-                style: TextStyle(
+              Text(
+                '${widget.data.phone}',
+                style: const TextStyle(
                   color: dark,
                 ),
               ),

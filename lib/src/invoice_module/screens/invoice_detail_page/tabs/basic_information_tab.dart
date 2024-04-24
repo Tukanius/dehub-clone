@@ -13,6 +13,7 @@ import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_payment/payment_page.dart';
 import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
+import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,6 +35,7 @@ class BasicInformationTab extends StatefulWidget {
 class _BasicInformationTabState extends State<BasicInformationTab> {
   General general = General();
   User user = User();
+  TextEditingController controller = TextEditingController();
 
   approve(bool confirm) async {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
@@ -42,13 +44,13 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
       loading.loading(true);
       approval = Invoice(
         confirm: confirm,
-        respondText: '',
+        respondText: controller.text,
       );
       await InvoiceApi().respond(widget.id, approval);
       loading.loading(false);
       showCustomDialog(
         context,
-        "Амжилттай баталлаа",
+        confirm ? "Амжилттай баталлаа" : 'Амжилттай цуцаллаа',
         true,
         onPressed: () {
           Navigator.of(context).pop();
@@ -624,7 +626,7 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
                               ),
                         GestureDetector(
                           onTap: () {
-                            approve(false);
+                            cancel();
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -724,5 +726,48 @@ class _BasicInformationTabState extends State<BasicInformationTab> {
     final res = general.invoiceStatus!
         .firstWhere((element) => element.code == widget.data.invoiceStatus);
     return res;
+  }
+
+  cancel() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(top: 20, bottom: 50),
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    hintText: 'Тайлбар оруулна уу',
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(
+                        color: grey2,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              CustomButton(
+                onClick: () {
+                  Navigator.of(ctx).pop();
+                  approve(false);
+                },
+                labelText: 'Цуцлах',
+                labelColor: invoiceColor,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

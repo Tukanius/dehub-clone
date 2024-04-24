@@ -16,11 +16,13 @@ class InvoiceCard extends StatefulWidget {
   final Invoice data;
   final int index;
   final bool startAnimation;
+  final Function()? pdfClick;
   const InvoiceCard({
     super.key,
     required this.startAnimation,
     required this.index,
     this.onClick,
+    this.pdfClick,
     required this.data,
   });
 
@@ -317,6 +319,25 @@ class _InvoiceCardState extends State<InvoiceCard> {
                           ),
                         ],
                       ),
+                      if (widget.pdfClick != null)
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: widget.pdfClick,
+                            child: Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: blue.withOpacity(0.2),
+                              ),
+                              child: const Icon(
+                                Icons.picture_as_pdf_outlined,
+                                color: blue,
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

@@ -150,4 +150,9 @@ class InvoiceApi extends HttpRequest {
         true);
     return Invoice.fromJson(res as Map<String, dynamic>);
   }
+
+  pdf(String id) async {
+    var res = await get('/invoice/$id/pdf', type, true);
+    return res as String;
+  }
 }

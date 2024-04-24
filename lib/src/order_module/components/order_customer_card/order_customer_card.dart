@@ -1,7 +1,6 @@
 import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderCustomerCard extends StatefulWidget {
   final Function()? onClick;
@@ -120,49 +119,49 @@ class _OrderCustomerCardState extends State<OrderCustomerCard> {
                 ],
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  color: orderColor,
-                  size: 14,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                    border: Border.all(color: orderColor),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/svg/shopping-cart.svg',
-                        height: 15,
-                        width: 15,
-                      ),
-                      const SizedBox(
-                        width: 3,
-                      ),
-                      const Text(
-                        'Шинэ',
-                        style: TextStyle(
-                          color: buttonColor,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
+            // const Column(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   crossAxisAlignment: CrossAxisAlignment.end,
+            //   children: [
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: orderColor,
+              size: 14,
             ),
+            // const SizedBox(
+            //   height: 15,
+            // ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(45),
+            //     border: Border.all(color: orderColor),
+            //   ),
+            //   padding:
+            //       const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            //   child: Row(
+            //     children: [
+            //       SvgPicture.asset(
+            //         'assets/svg/shopping-cart.svg',
+            //         height: 15,
+            //         width: 15,
+            //       ),
+            //       const SizedBox(
+            //         width: 3,
+            //       ),
+            //       const Text(
+            //         'Шинэ',
+            //         style: TextStyle(
+            //           color: buttonColor,
+            //           fontSize: 12,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
           ],
         ),
+        // ],
+        // ),
       ),
     );
   }

@@ -20,7 +20,7 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
   User user = User();
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<UserProvider>(context, listen: true).userModule;
+    user = Provider.of<UserProvider>(context, listen: true).businessUser;
     return DefaultTabController(
       length: 2,
       child: Scaffold(

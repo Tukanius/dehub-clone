@@ -97,8 +97,6 @@ import 'package:dehub/src/network_module/screens/new_invitation_page/new_invitat
 import 'package:dehub/src/network_module/screens/invitation_detail_page/invitation_detail_page.dart';
 import 'package:dehub/src/invoice_module/main_page/invoice_page.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose.dart';
-import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet.dart';
-import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/customer_choose_tabs/gereet_bish.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/customer_choose/salbar_songoh.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/harah/harah.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/new_invoice.dart';
@@ -661,11 +659,6 @@ class MyApp extends StatelessWidget {
                         );
                       },
                     );
-
-                  case Gereet.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const Gereet();
-                    });
                   case ProgramPage.routeName:
                     return MaterialPageRoute(builder: (context) {
                       return const ProgramPage();
@@ -704,10 +697,7 @@ class MyApp extends StatelessWidget {
                         programId: arguments.programId,
                       );
                     });
-                  case GereetBish.routeName:
-                    return MaterialPageRoute(builder: (context) {
-                      return const GereetBish();
-                    });
+
                   case FinanceRoleAssign.routeName:
                     FinanceRoleAssignArguments arguments =
                         settings.arguments as FinanceRoleAssignArguments;

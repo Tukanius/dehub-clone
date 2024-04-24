@@ -168,7 +168,7 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                           svg: 'assets/svg/push.svg',
                         ),
                       if (user.currentBusiness?.type == "SUPPLIER" &&
-                          Permission().check(user, "ORD_PS_LIST"))
+                          Permission().check(user, "ORD_PS_MNG"))
                         DashboardCard(
                           onClick: () {
                             Navigator.of(context)

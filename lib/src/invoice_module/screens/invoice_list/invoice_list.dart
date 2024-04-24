@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dehub/api/invoice_api.dart';
 import 'package:dehub/components/add_button/add_button.dart';
 import 'package:dehub/components/controller/listen.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/invoice_module/components/invoice_card/invoice_card.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
@@ -21,6 +22,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceListPage extends StatefulWidget {
   static const routeName = 'InvoiceListPage';
@@ -104,6 +106,18 @@ class _GivePageState extends State<InvoiceListPage>
     });
   }
 
+  pdf(String id) async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      String url = await InvoiceApi().pdf(id);
+      loading.loading(false);
+      launchUrl(Uri.parse(url));
+    } catch (e) {
+      loading.loading(false);
+    }
+  }
+
   groupMaker() {
     List<Invoice> group = [];
     for (var data in invoice.rows!) {
@@ -152,198 +166,210 @@ class _GivePageState extends State<InvoiceListPage>
     user = Provider.of<UserProvider>(context, listen: false).invoiceMe;
     general =
         Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        title: const Text(
-          'Нээлттэй нэхэмжлэх',
-          style: TextStyle(
-            fontSize: 17,
-            color: invoiceColor,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: white,
-        surfaceTintColor: white,
-        iconTheme: const IconThemeData(color: invoiceColor),
-        actions: [
-          if (user.currentBusiness?.type == "SUPPLIER")
-            AddButton(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        appBar: AppBar(
+          title: const Text(
+            'Нээлттэй нэхэмжлэх',
+            style: TextStyle(
+              fontSize: 17,
               color: invoiceColor,
-              onClick: () {
-                Navigator.of(context).pushNamed(
-                  NewInvoice.routeName,
-                  arguments: NewInvoiceArguments(data: null),
-                );
-              },
+              fontWeight: FontWeight.w400,
             ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(
-              vertical: 10,
-            ),
-            color: white,
-            height: 50,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-              itemCount: general.invoiceStatus?.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: selectedStatus != general.invoiceStatus?[index].code
-                      ? () {
-                          setState(() {
-                            selectedStatus = general.invoiceStatus?[index].code;
-                            isLoading = true;
-                            startAnimation = false;
-                            page = 1;
-                            groupItems = {};
-                          });
-                          list(page, limit, search, selectedStatus!);
-                        }
-                      : () {},
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 5, left: 5),
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      color:
-                          selectedStatus == general.invoiceStatus?[index].code
-                              ? invoiceColor
-                              : Colors.grey.shade100,
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: white,
+          surfaceTintColor: white,
+          iconTheme: const IconThemeData(color: invoiceColor),
+          actions: [
+            if (user.currentBusiness?.type == "SUPPLIER")
+              AddButton(
+                color: invoiceColor,
+                onClick: () {
+                  Navigator.of(context).pushNamed(
+                    NewInvoice.routeName,
+                    arguments: NewInvoiceArguments(data: null),
+                  );
+                },
+              ),
+          ],
+        ),
+        body: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
+              color: white,
+              height: 50,
+              child: ListView.builder(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                itemCount: general.invoiceStatus?.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: selectedStatus != general.invoiceStatus?[index].code
+                        ? () {
+                            setState(() {
+                              selectedStatus =
+                                  general.invoiceStatus?[index].code;
+                              isLoading = true;
+                              startAnimation = false;
+                              page = 1;
+                              groupItems = {};
+                            });
+                            list(page, limit, search, selectedStatus!);
+                          }
+                        : () {},
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5, left: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        color:
+                            selectedStatus == general.invoiceStatus?[index].code
+                                ? invoiceColor
+                                : Colors.grey.shade100,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${general.invoiceStatus?[index].name}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: selectedStatus ==
+                                    general.invoiceStatus?[index].code
+                                ? white
+                                : grey2,
+                          ),
+                        ),
+                      ),
                     ),
-                    child: Center(
-                      child: Text(
-                        '${general.invoiceStatus?[index].name}',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: selectedStatus ==
-                                  general.invoiceStatus?[index].code
-                              ? white
-                              : grey2,
+                  );
+                },
+              ),
+            ),
+            isLoading == true
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: invoiceColor,
+                    ),
+                  )
+                : Expanded(
+                    child: Refresher(
+                      refreshController: _refreshController,
+                      onLoading: invoice.rows!.length == invoice.count
+                          ? null
+                          : onLoading,
+                      onRefresh: onRefresh,
+                      color: invoiceColor,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SearchButton(
+                              initialValue: search,
+                              onChange: (query) {
+                                setState(() {
+                                  search = query;
+                                });
+                                onChange(query);
+                              },
+                              color: invoiceColor,
+                            ),
+                            groupedList.isEmpty
+                                ? const NotFound(
+                                    module: "INVOICE",
+                                    labelText: "Нэхэмжлэл олдсонгүй",
+                                  )
+                                : Column(
+                                    children: groupedList
+                                        .map(
+                                          (item) => Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              AnimatedContainer(
+                                                duration: Duration(
+                                                  milliseconds: 300 +
+                                                      (groupedList
+                                                              .indexOf(item) *
+                                                          400),
+                                                ),
+                                                transform:
+                                                    Matrix4.translationValues(
+                                                        startAnimation
+                                                            ? 0
+                                                            : -MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width,
+                                                        0,
+                                                        0),
+                                                margin: const EdgeInsets.only(
+                                                    left: 15,
+                                                    top: 10,
+                                                    bottom: 10),
+                                                child: Text(
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(item.header!),
+                                                  style: const TextStyle(
+                                                    color: grey3,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              Column(
+                                                children: item.values!
+                                                    .map(
+                                                      (data) => Column(
+                                                        children: [
+                                                          InvoiceCard(
+                                                            pdfClick: () {
+                                                              pdf(data.id!);
+                                                            },
+                                                            startAnimation:
+                                                                startAnimation,
+                                                            index: invoice.rows!
+                                                                .indexOf(data),
+                                                            data: data,
+                                                            onClick: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pushNamed(
+                                                                InvoiceDetailPage
+                                                                    .routeName,
+                                                                arguments:
+                                                                    InvoiceDetailPageArguments(
+                                                                  id: data.id!,
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-          isLoading == true
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: invoiceColor,
-                  ),
-                )
-              : Expanded(
-                  child: Refresher(
-                    refreshController: _refreshController,
-                    onLoading: invoice.rows!.length == invoice.count
-                        ? null
-                        : onLoading,
-                    onRefresh: onRefresh,
-                    color: invoiceColor,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          SearchButton(
-                            onChange: (query) {
-                              setState(() {
-                                search = query;
-                              });
-                              onChange(query);
-                            },
-                            color: invoiceColor,
-                          ),
-                          groupedList.isEmpty
-                              ? const NotFound(
-                                  module: "INVOICE",
-                                  labelText: "Нэхэмжлэл олдсонгүй",
-                                )
-                              : Column(
-                                  children: groupedList
-                                      .map(
-                                        (item) => Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            AnimatedContainer(
-                                              duration: Duration(
-                                                milliseconds: 300 +
-                                                    (groupedList.indexOf(item) *
-                                                        400),
-                                              ),
-                                              transform:
-                                                  Matrix4.translationValues(
-                                                      startAnimation
-                                                          ? 0
-                                                          : -MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
-                                                      0,
-                                                      0),
-                                              margin: const EdgeInsets.only(
-                                                  left: 15,
-                                                  top: 10,
-                                                  bottom: 10),
-                                              child: Text(
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(item.header!),
-                                                style: const TextStyle(
-                                                  color: grey3,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ),
-                                            Column(
-                                              children: item.values!
-                                                  .map(
-                                                    (data) => Column(
-                                                      children: [
-                                                        InvoiceCard(
-                                                          startAnimation:
-                                                              startAnimation,
-                                                          index: invoice.rows!
-                                                              .indexOf(data),
-                                                          data: data,
-                                                          onClick: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pushNamed(
-                                                              InvoiceDetailPage
-                                                                  .routeName,
-                                                              arguments:
-                                                                  InvoiceDetailPageArguments(
-                                                                id: data.id!,
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                  .toList(),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-        ],
+          ],
+        ),
       ),
     );
   }

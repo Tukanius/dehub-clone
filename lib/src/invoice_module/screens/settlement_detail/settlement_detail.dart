@@ -9,6 +9,7 @@ import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/components/settlement_invoice_card/settlement_invoice_card.dart';
+import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -292,35 +293,34 @@ class _SettlementDetailState extends State<SettlementDetail>
                               '${Utils().formatCurrency("${settlement.lastAmount}")}₮',
                           secondTextColor: invoiceColor,
                         ),
-                        if (settlement.settlementStatus != null)
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: onSubmit,
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: invoiceColor,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 5),
-                                child: Text(
-                                  Permission().check(user, "INV_SETT_SEND")
-                                      ? 'Тооцоо илгээх'
-                                      : user.currentBusiness?.type == "BUYER" &&
-                                              Permission()
-                                                  .check(user, "INV_SETT_RES")!
-                                          ? 'Зөвшөөрөх'
-                                          : '',
-                                  style: const TextStyle(
-                                      color: white,
-                                      fontWeight: FontWeight.w500),
-                                ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: onSubmit,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: invoiceColor,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 5),
+                              child: Text(
+                                Permission().check(user, "INV_SETT_SEND") &&
+                                        user.currentBusiness?.type == "SUPPLIER"
+                                    ? 'Тооцоо илгээх'
+                                    : user.currentBusiness?.type == "BUYER" &&
+                                            Permission()
+                                                .check(user, "INV_SETT_RES")
+                                        ? 'Зөвшөөрөх'
+                                        : '',
+                                style: const TextStyle(
+                                    color: white, fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
+                        ),
                       ],
                     ),
                   )
@@ -339,6 +339,21 @@ class _SettlementDetailState extends State<SettlementDetail>
                             .map(
                               (data) => SettlementInvoiceCard(
                                 data: data,
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(
+                                    InvoiceTransaction.routeName,
+                                    arguments: InvoiceTransactionArguments(
+                                      data: data,
+                                    ),
+                                  );
+                                  // Navigator.of(context).pushNamed(
+                                  //   SettlementPaymentHistory.routeName,
+                                  //   arguments:
+                                  //       SettlementPaymentHistoryArguments(
+                                  //     id: data.invoiceId,
+                                  //   ),
+                                  // );
+                                },
                               ),
                             )
                             .toList(),

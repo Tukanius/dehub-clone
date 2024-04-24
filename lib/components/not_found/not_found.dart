@@ -21,25 +21,29 @@ class _NotFoundState extends State<NotFound> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        widget.module == "INVOICE"
-            ? Lottie.asset('assets/lottie/invoice-not-found.json')
-            : widget.module == "ORDER"
-                ? Lottie.asset(
-                    'assets/lottie/order-not-found.json',
-                  )
-                : widget.module == "NETWORK" || widget.module == "PAYMENT"
+        widget.labelText == "Хандах эрх хүрэлцэхгүй байна"
+            ? Lottie.asset('assets/lottie/access.json')
+            : widget.module == "INVOICE"
+                ? Lottie.asset('assets/lottie/invoice-not-found.json')
+                : widget.module == "ORDER"
                     ? Lottie.asset(
-                        'assets/lottie/network-not-found.json',
+                        'assets/lottie/order-not-found.json',
                       )
-                    : widget.module == "INVENTORY"
-                        ? Lottie.asset('assets/lottie/product-not-found.json')
-                        : widget.module == "DEBT"
-                            ? Lottie.asset('/assets/lottie/debt-not-found.json')
-                            : widget.module == "FINANCE"
+                    : widget.module == "NETWORK" || widget.module == "PAYMENT"
+                        ? Lottie.asset(
+                            'assets/lottie/network-not-found.json',
+                          )
+                        : widget.module == "INVENTORY"
+                            ? Lottie.asset(
+                                'assets/lottie/product-not-found.json')
+                            : widget.module == "DEBT"
                                 ? Lottie.asset(
-                                    'assets/lottie/invoice-not-found.json')
-                                : Lottie.asset(
-                                    'assets/lottie/invoice-not-found.json'),
+                                    '/assets/lottie/debt-not-found.json')
+                                : widget.module == "FINANCE"
+                                    ? Lottie.asset(
+                                        'assets/lottie/invoice-not-found.json')
+                                    : Lottie.asset(
+                                        'assets/lottie/invoice-not-found.json'),
         const SizedBox(
           height: 20,
         ),

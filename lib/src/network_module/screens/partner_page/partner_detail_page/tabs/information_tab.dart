@@ -52,7 +52,7 @@ class _InformationTabState extends State<InformationTab> {
             paddingVertical: 15,
             color: white,
             labelText: 'Бизнесийн нэр',
-            secondText: '${widget.data?.partner?.businessName}',
+            secondText: '${widget.data?.profileName}',
             secondTextColor: networkColor,
           ),
           FieldCard(

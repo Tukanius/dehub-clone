@@ -1,8 +1,11 @@
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/invoice.dart';
+import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SettlementCard extends StatefulWidget {
@@ -20,6 +23,7 @@ class SettlementCard extends StatefulWidget {
 
 class _SettlementCardState extends State<SettlementCard> {
   General general = General();
+  User user = User();
 
   settlementStatus() {
     final res = general.settlementStatus!
@@ -31,7 +35,7 @@ class _SettlementCardState extends State<SettlementCard> {
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
-
+    user = Provider.of<UserProvider>(context, listen: true).invoiceMe;
     return GestureDetector(
       onTap: widget.onClick,
       child: Container(
@@ -46,7 +50,9 @@ class _SettlementCardState extends State<SettlementCard> {
                 Expanded(
                   flex: 4,
                   child: Text(
-                    '${widget.data.receiverBusiness?.profileName}',
+                    user.currentBusiness?.type == "SUPPLIER"
+                        ? '${widget.data.receiverBusiness?.profileName}'
+                        : '${widget.data.senderBusiness?.profileName}',
                   ),
                 ),
                 Expanded(
@@ -69,7 +75,9 @@ class _SettlementCardState extends State<SettlementCard> {
               children: [
                 Expanded(
                   child: Text(
-                    'Илгээсэн: ${widget.data.sentDate ?? '-'}',
+                    widget.data.sentDate != null
+                        ? 'Илгээсэн: ${DateFormat('yyyy-MM-dd').format(widget.data.sentDate!)}'
+                        : 'Илгээсэн: -',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -78,7 +86,9 @@ class _SettlementCardState extends State<SettlementCard> {
                 ),
                 Expanded(
                   child: Text(
-                    'Нийлсэн: ${widget.data.confirmedDate ?? '-'}',
+                    widget.data.confirmedDate != null
+                        ? 'Нийлсэн: ${DateFormat('yyyy-MM-dd').format(widget.data.confirmedDate!)}'
+                        : 'Нийлсэн: -',
                     style: const TextStyle(
                       color: grey2,
                       fontSize: 12,
@@ -160,7 +170,9 @@ class _SettlementCardState extends State<SettlementCard> {
                                 borderRadius: BorderRadius.circular(5),
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                    '${widget.data.myFinanceStaff?.avatar}',
+                                    user.currentBusiness?.type == "SUPPLIER"
+                                        ? '${widget.data.myFinanceStaff?.avatar}'
+                                        : '${widget.data.financeStaff?.avatar}',
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -170,7 +182,9 @@ class _SettlementCardState extends State<SettlementCard> {
                               width: 5,
                             ),
                             Text(
-                              '${widget.data.myFinanceStaff?.lastName?[0]}. ${widget.data.myFinanceStaff?.firstName}',
+                              user.currentBusiness?.type == "SUPPLIER"
+                                  ? '${widget.data.myFinanceStaff?.lastName?[0]}. ${widget.data.myFinanceStaff?.firstName}'
+                                  : '${widget.data.financeStaff?.lastName?[0]}. ${widget.data.financeStaff?.firstName}',
                             ),
                           ],
                         ),
@@ -180,7 +194,9 @@ class _SettlementCardState extends State<SettlementCard> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              '${widget.data.financeStaff?.lastName?[0]}. ${widget.data.financeStaff?.firstName}',
+                              user.currentBusiness?.type == "SUPPLIER"
+                                  ? '${widget.data.financeStaff?.lastName?[0]}. ${widget.data.financeStaff?.firstName}'
+                                  : '${widget.data.myFinanceStaff?.lastName?[0]}. ${widget.data.myFinanceStaff?.firstName}',
                             ),
                             const SizedBox(
                               width: 5,
@@ -192,7 +208,9 @@ class _SettlementCardState extends State<SettlementCard> {
                                 borderRadius: BorderRadius.circular(5),
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                    '${widget.data.financeStaff?.avatar}',
+                                    user.currentBusiness?.type == "SUPPLIER"
+                                        ? '${widget.data.financeStaff?.avatar}'
+                                        : '${widget.data.myFinanceStaff?.avatar}',
                                   ),
                                   fit: BoxFit.cover,
                                 ),

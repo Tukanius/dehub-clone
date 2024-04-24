@@ -321,6 +321,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: general.paymentTermConditions!
+                      .where((element) => element.code != "AR_NET30")
                       .map(
                         (e) => GestureDetector(
                           onTap: () async {
@@ -460,6 +461,7 @@ class _SetPaymentTermState extends State<SetPaymentTerm> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: paymentTerms.rows!
+                      .where((element) => element.code != "AR_NET30")
                       .map(
                         (e) => GestureDetector(
                           onTap: () {

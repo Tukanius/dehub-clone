@@ -21,6 +21,16 @@ class PieChart extends StatefulWidget {
 }
 
 class PieChartState extends State<PieChart> {
+  List legend = [];
+
+  @override
+  void initState() {
+    for (var i = 0; i < 5; i++) {
+      legend.add(widget.legend[i]);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +70,7 @@ class PieChartState extends State<PieChart> {
             height: 37,
           ),
           Column(
-            children: widget.legend
+            children: legend
                 .map(
                   (data) => Container(
                     margin: const EdgeInsets.only(bottom: 15),
@@ -72,7 +82,7 @@ class PieChartState extends State<PieChart> {
                           width: 16,
                           decoration: BoxDecoration(
                             color: widget.colorList
-                                .elementAt(widget.legend.indexOf(data)),
+                                .elementAt(legend.indexOf(data)),
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
@@ -111,7 +121,7 @@ class PieChartState extends State<PieChart> {
                                         ? '${data.ordersCount.toInt()}'
                                         : widget.module == "PAYMENT"
                                             ? "${data.percent.toInt()}%"
-                                            : '${(100 * data.count / widget.legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
+                                            : '${(100 * data.count / legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,
                               fontSize: 12,

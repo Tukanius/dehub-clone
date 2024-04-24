@@ -47,7 +47,10 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
 
   list(page, limit) async {
     Offset offset = Offset(page: page, limit: limit);
-    Filter filter = Filter(invoiceId: widget.data.id);
+    Filter filter = Filter(
+        invoiceId: widget.data.senderBusiness != null
+            ? widget.data.id
+            : widget.data.invoiceId);
     invoice = await InvoiceApi()
         .settlementHistory(ResultArguments(filter: filter, offset: offset));
     setState(() {
@@ -56,14 +59,17 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    supplierBusiness = widget.data.type == 'SALES'
-        ? widget.data.senderBusiness!
-        : widget.data.receiverBusiness!;
-    buyerBusiness = widget.data.type == 'PURCHASE'
-        ? widget.data.senderBusiness!
-        : widget.data.receiverBusiness!;
-    list(page, limit);
+  afterFirstLayout(BuildContext context) async {
+    if (widget.data.receiverBusiness != null &&
+        widget.data.senderBusiness != null) {
+      supplierBusiness = widget.data.type == 'SALES'
+          ? widget.data.senderBusiness!
+          : widget.data.receiverBusiness!;
+      buyerBusiness = widget.data.type == 'PURCHASE'
+          ? widget.data.senderBusiness!
+          : widget.data.receiverBusiness!;
+    }
+    await list(page, limit);
   }
 
   @override
@@ -83,106 +89,114 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: const Text(
-                'Нэхэмжлэх',
-                style: TextStyle(
-                  color: grey3,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              color: white,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
+            if (widget.data.senderBusiness != null)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SvgPicture.asset(
-                    'assets/svg/inv.svg',
-                    colorFilter:
-                        const ColorFilter.mode(invoiceColor, BlendMode.srcIn),
-                    height: 24,
-                    width: 24,
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                    child: Text(
-                      '${widget.data.refCode}',
-                      style: const TextStyle(color: invoiceColor),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: const Text(
+                      'Нэхэмжлэх',
+                      style: TextStyle(
+                        color: grey3,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    color: grey3,
-                    size: 18,
-                  )
+                  Container(
+                    color: white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/svg/inv.svg',
+                          colorFilter: const ColorFilter.mode(
+                              invoiceColor, BlendMode.srcIn),
+                          height: 24,
+                          width: 24,
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${widget.data.refCode}',
+                            style: const TextStyle(color: invoiceColor),
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          color: grey3,
+                          size: 18,
+                        )
+                      ],
+                    ),
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: "Харилцагчийн код",
+                    secondText: user.currentBusiness?.type == "SUPPLIER"
+                        ? buyerBusiness.refCode
+                        : supplierBusiness.refCode,
+                    secondTextColor: invoiceColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: user.currentBusiness?.type == "SUPPLIER"
+                        ? "Худалдан авагч"
+                        : "Нийлүүлэгч",
+                    secondText: user.currentBusiness?.type == "SUPPLIER"
+                        ? buyerBusiness.profileName
+                        : supplierBusiness.profileName,
+                    secondTextColor: invoiceColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: "Партнер нэр",
+                    secondText: user.currentBusiness?.type == "SUPPLIER"
+                        ? "${buyerBusiness.partner?.refCode}, ${buyerBusiness.partner?.businessName}"
+                        : "${supplierBusiness.partner?.refCode}, ${supplierBusiness.partner?.businessName}",
+                    secondTextColor: invoiceColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: "Баталсан",
+                    secondText: widget.data.confirmedDate != null
+                        ? DateFormat("yyyy-MM-dd HH:mm")
+                            .format(widget.data.confirmedDate!)
+                        : '-',
+                    secondTextColor: invoiceColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: "Баталсан дүн",
+                    secondText:
+                        '${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
+                    secondTextColor: invoiceColor,
+                    color: white,
+                  ),
+                  FieldCard(
+                    paddingHorizontal: 15,
+                    paddingVertical: 10,
+                    labelText: "Үлдэгдэл дүн",
+                    secondText:
+                        '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
+                    secondTextColor: invoiceColor,
+                    color: white,
+                  ),
                 ],
               ),
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "Харилцагчийн код",
-              secondText: user.currentBusiness?.type == "SUPPLIER"
-                  ? buyerBusiness.refCode
-                  : supplierBusiness.refCode,
-              secondTextColor: invoiceColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: user.currentBusiness?.type == "SUPPLIER"
-                  ? "Худалдан авагч"
-                  : "Нийлүүлэгч",
-              secondText: user.currentBusiness?.type == "SUPPLIER"
-                  ? buyerBusiness.profileName
-                  : supplierBusiness.profileName,
-              secondTextColor: invoiceColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "Партнер нэр",
-              secondText: user.currentBusiness?.type == "SUPPLIER"
-                  ? "${buyerBusiness.partner?.refCode}, ${buyerBusiness.partner?.businessName}"
-                  : "${supplierBusiness.partner?.refCode}, ${supplierBusiness.partner?.businessName}",
-              secondTextColor: invoiceColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "Баталсан",
-              secondText: widget.data.confirmedDate != null
-                  ? DateFormat("yyyy-MM-dd HH:mm")
-                      .format(widget.data.confirmedDate!)
-                  : '-',
-              secondTextColor: invoiceColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "Баталсан дүн",
-              secondText:
-                  '${Utils().formatCurrency(widget.data.confirmedAmount.toString())}₮',
-              secondTextColor: invoiceColor,
-              color: white,
-            ),
-            FieldCard(
-              paddingHorizontal: 15,
-              paddingVertical: 10,
-              labelText: "Үлдэгдэл дүн",
-              secondText:
-                  '${Utils().formatCurrency(widget.data.amountToPay.toString())}₮',
-              secondTextColor: invoiceColor,
-              color: white,
-            ),
             isLoading == true
                 ? const Center(
                     child: CircularProgressIndicator(

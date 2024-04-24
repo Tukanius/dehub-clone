@@ -8,8 +8,10 @@ class SearchButton extends StatefulWidget {
   final Function(String query)? onChange;
   final Color? textColor;
   final Color? borderColor;
+  final String? initialValue;
   const SearchButton({
     super.key,
+    this.initialValue,
     this.borderColor,
     this.textColor,
     required this.color,
@@ -21,8 +23,6 @@ class SearchButton extends StatefulWidget {
 }
 
 class _SearchButtonState extends State<SearchButton> {
-  TextEditingController textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,8 +35,8 @@ class _SearchButtonState extends State<SearchButton> {
               margin: const EdgeInsets.only(left: 15, right: 5),
               height: 30,
               child: FormTextField(
+                initialValue: widget.initialValue,
                 textColor: widget.textColor ?? black,
-                controller: textController,
                 name: 'query',
                 onChanged: (value) {
                   if (widget.onChange != null) {
