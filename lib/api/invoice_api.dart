@@ -153,6 +153,6 @@ class InvoiceApi extends HttpRequest {
 
   pdf(String id) async {
     var res = await get('/invoice/$id/pdf', type, true);
-    return res as String;
+    return res;
   }
 }

@@ -16,6 +16,7 @@ import 'package:dehub/providers/general_provider.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/screens/new_invoice/new_invoice.dart';
 import 'package:dehub/src/invoice_module/screens/invoice_detail_page/invoice_detail_page.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -110,9 +111,9 @@ class _GivePageState extends State<InvoiceListPage>
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
       loading.loading(true);
-      String url = await InvoiceApi().pdf(id);
+      var url = await InvoiceApi().pdf(id);
       loading.loading(false);
-      launchUrl(Uri.parse(url));
+      launchUrl(Uri.parse(url.toString()));
     } catch (e) {
       loading.loading(false);
     }
@@ -187,7 +188,8 @@ class _GivePageState extends State<InvoiceListPage>
           surfaceTintColor: white,
           iconTheme: const IconThemeData(color: invoiceColor),
           actions: [
-            if (user.currentBusiness?.type == "SUPPLIER")
+            if (user.currentBusiness?.type == "SUPPLIER" &&
+                Permission().check(user, "INV_LIST", boolean: 'isCreate'))
               AddButton(
                 color: invoiceColor,
                 onClick: () {

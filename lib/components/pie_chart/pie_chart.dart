@@ -25,8 +25,10 @@ class PieChartState extends State<PieChart> {
 
   @override
   void initState() {
-    for (var i = 0; i < 5; i++) {
-      legend.add(widget.legend[i]);
+    if (widget.legend.length > 5) {
+      for (var i = 0; i < 5; i++) {
+        legend.add(widget.legend[i]);
+      }
     }
     super.initState();
   }

@@ -91,7 +91,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               scrollDirection: Axis.horizontal,
               children: [
-                if (Permission().check(user, "INV_LIST"))
+                if (Permission().check(user, "INV_LIST", boolean: 'isview'))
                   DashboardCard(
                     onClick: () {
                       Navigator.of(context)

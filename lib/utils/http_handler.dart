@@ -40,6 +40,8 @@ class HttpHandler {
 
     if (response?.data?.runtimeType.toString() != "".runtimeType.toString()) {
       data = response.data;
+    } else {
+      data = response;
     }
 
     switch (statusCode) {
