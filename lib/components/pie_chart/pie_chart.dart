@@ -29,6 +29,10 @@ class PieChartState extends State<PieChart> {
       for (var i = 0; i < 5; i++) {
         legend.add(widget.legend[i]);
       }
+    } else {
+      for (var i = 0; i < widget.legend.length; i++) {
+        legend.add(widget.legend[i]);
+      }
     }
     super.initState();
   }

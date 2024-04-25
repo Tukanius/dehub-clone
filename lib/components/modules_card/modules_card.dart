@@ -1,6 +1,7 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/entry_point/finance_entry/finance_entry.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:dehub/src/debt_page/debt_page.dart';
@@ -25,11 +26,16 @@ class ModulesCard extends StatefulWidget {
 
 class _ModulesCardState extends State<ModulesCard> {
   User user = User();
+  bool network = true;
 
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
     bool isPartner = user.loginType == "PARTNER";
+    network = Permission().check(user, "NET_DASH") ||
+        Permission().check(user, "NET_INV_REC") ||
+        Permission().check(user, 'NET_INV_SENT') ||
+        Permission().check(user, 'NET_LIST');
     return Container(
       margin: const EdgeInsets.only(top: 150, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(
@@ -231,7 +237,7 @@ class _ModulesCardState extends State<ModulesCard> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (!isPartner) {
+                  if (!isPartner && network) {
                     Navigator.of(context).pushNamed(NetworkPage.routeName);
                   }
                 },
@@ -247,16 +253,16 @@ class _ModulesCardState extends State<ModulesCard> {
                             horizontal: 6, vertical: 6),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: isPartner
-                              ? networkColor.withOpacity(0.1)
-                              : networkColor.withOpacity(0.2),
+                          color: !isPartner && network
+                              ? networkColor.withOpacity(0.2)
+                              : networkColor.withOpacity(0.1),
                         ),
                         child: SvgPicture.asset(
                           'assets/svg/network.svg',
                           colorFilter: ColorFilter.mode(
-                              isPartner
-                                  ? buttonColor.withOpacity(0.3)
-                                  : buttonColor,
+                              !isPartner && network
+                                  ? buttonColor
+                                  : buttonColor.withOpacity(0.3),
                               BlendMode.srcIn),
                         ),
                       ),
@@ -267,7 +273,9 @@ class _ModulesCardState extends State<ModulesCard> {
                         'Бизнес нетворк',
                         style: TextStyle(
                           fontSize: 12,
-                          color: !isPartner ? black : black.withOpacity(0.5),
+                          color: !isPartner && network
+                              ? black
+                              : black.withOpacity(0.5),
                         ),
                       ),
                     ],

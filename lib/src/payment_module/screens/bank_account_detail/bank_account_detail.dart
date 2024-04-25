@@ -134,7 +134,7 @@ class BankAccountDetailState extends State<BankAccountDetail>
                   GestureDetector(
                     onTap: () {
                       if (Permission()
-                          .check(user, "PAC_ACC", boolean: 'isEdit')) {
+                          .check(user, "PAY_ACC", boolean: 'isEdit')) {
                         showModalBottomSheet(
                           context: context,
                           useSafeArea: true,
@@ -164,10 +164,14 @@ class BankAccountDetailState extends State<BankAccountDetail>
                                 '${get.shortName}',
                                 style: const TextStyle(color: paymentColor),
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              SvgPicture.asset('assets/svg/edit.svg'),
+                              if (Permission()
+                                  .check(user, "PAY_ACC", boolean: 'isEdit'))
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                              if (Permission()
+                                  .check(user, "PAY_ACC", boolean: 'isEdit'))
+                                SvgPicture.asset('assets/svg/edit.svg'),
                             ],
                           ),
                         ],
