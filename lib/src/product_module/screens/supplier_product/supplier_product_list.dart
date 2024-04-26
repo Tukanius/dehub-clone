@@ -115,7 +115,9 @@ class _SupplierProductListState extends State<SupplierProductList>
           description: '',
         ),
       );
-      showCustomDialog(context, 'Амжилттай', true);
+      showCustomDialog(context, 'Амжилттай', true, onPressed: () {
+        Navigator.of(context).pop();
+      });
     } catch (e) {
       debugPrint(e.toString());
     }

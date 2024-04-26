@@ -74,6 +74,7 @@ class _ReceivedTabState extends State<ReceivedTab> with AfterLayoutMixin {
 
   void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
+    Provider.of<OrderProvider>(context, listen: false).clearData();
     setState(() {
       isLoading = true;
       page = 1;

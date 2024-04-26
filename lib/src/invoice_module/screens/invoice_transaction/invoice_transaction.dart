@@ -224,13 +224,16 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
                                   (data) => HistoryCard(
                                     data: data,
                                     onClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        InvoiceTransactionDetail.routeName,
-                                        arguments:
-                                            InvoiceTransactionDetailArguments(
-                                          id: '',
-                                        ),
-                                      );
+                                      if (widget.data.receiverBusiness !=
+                                          null) {
+                                        Navigator.of(context).pushNamed(
+                                          InvoiceTransactionDetail.routeName,
+                                          arguments:
+                                              InvoiceTransactionDetailArguments(
+                                            id: '',
+                                          ),
+                                        );
+                                      }
                                     },
                                   ),
                                 )

@@ -380,7 +380,9 @@ class _BottomState extends State<Bottom> {
                                 ),
                               ),
                             )
-                          : widget.order.orderStatus == "DRAFT"
+                          : widget.order.orderStatus == "DRAFT" &&
+                                  Permission().check(user, "ORD_LIST",
+                                      boolean: 'isedit')
                               ? GestureDetector(
                                   onTap: () {
                                     Navigator.of(context).pushNamed(

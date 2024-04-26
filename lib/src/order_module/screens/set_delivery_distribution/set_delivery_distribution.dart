@@ -54,23 +54,28 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
   onSubmit() async {
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      loading.loading(true);
-      Order data = Order();
-      data.startDate = startDate.toString();
-      data.deliveryDate = shipmentDate.toString();
-      data.loadingDate = endDate.toString();
-      data.staffId = staffId;
-      await OrderApi().deliveryManagementAssign(data, widget.data.id!);
-      widget.listenController.changeVariable('asdf');
-      showCustomDialog(
-        context,
-        "Амжилттай хуваариллаа",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
-      loading.loading(false);
+      if (staffId != null) {
+        loading.loading(true);
+        Order data = Order();
+        data.startDate = startDate.toString();
+        data.deliveryDate = shipmentDate.toString();
+        data.loadingDate = endDate.toString();
+        data.staffId = staffId;
+        await OrderApi().deliveryManagementAssign(data, widget.data.id!);
+        loading.loading(false);
+        widget.listenController.changeVariable('asdf');
+        showCustomDialog(
+          context,
+          "Амжилттай хуваариллаа",
+          true,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        );
+      } else {
+        showCustomDialog(
+            context, 'Хүргэлт хариуцсан ажилтан сонгоно уу', false);
+      }
     } catch (e) {
       loading.loading(false);
     }

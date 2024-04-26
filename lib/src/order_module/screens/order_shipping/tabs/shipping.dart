@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/utils/permission.dart';
 import 'package:intl/intl.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
@@ -170,17 +169,14 @@ class _DeliveryState extends State<Shipping> with AfterLayoutMixin {
                                                     .indexOf(item),
                                                 data: item,
                                                 onClick: () {
-                                                  if (Permission().check(
-                                                      user, "ORD_PS_MNG")) {
-                                                    Navigator.of(context)
-                                                        .pushNamed(
-                                                      OrderShipment.routeName,
-                                                      arguments:
-                                                          OrderShipmentArguments(
-                                                        data: item,
-                                                      ),
-                                                    );
-                                                  }
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                    OrderShipment.routeName,
+                                                    arguments:
+                                                        OrderShipmentArguments(
+                                                      data: item,
+                                                    ),
+                                                  );
                                                 },
                                               ),
                                             )

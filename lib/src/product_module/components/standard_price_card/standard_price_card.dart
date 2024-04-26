@@ -215,10 +215,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '2',
                                   initialValue:
-                                      '${widget.data.tier1Price != null ? widget.data.tier1Price?.toInt() : ''}',
+                                      '${widget.data.tier0Price != null ? widget.data.tier0Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier1Price =
+                                      widget.data.tier0Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -266,10 +266,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '3',
                                   initialValue:
-                                      '${widget.data.tier2Price != null ? widget.data.tier2Price?.toInt() : ''}',
+                                      '${widget.data.tier1Price != null ? widget.data.tier1Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier2Price =
+                                      widget.data.tier1Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -317,10 +317,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '4',
                                   initialValue:
-                                      '${widget.data.tier3Price?.toInt()}',
+                                      '${widget.data.tier2Price != null ? widget.data.tier2Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier3Price =
+                                      widget.data.tier2Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -368,10 +368,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '5',
                                   initialValue:
-                                      '${widget.data.tier4Price?.toInt()}',
+                                      '${widget.data.tier3Price != null ? widget.data.tier3Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier4Price =
+                                      widget.data.tier3Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -419,10 +419,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '6',
                                   initialValue:
-                                      '${widget.data.tier5Price?.toInt()}',
+                                      '${widget.data.tier4Price != null ? widget.data.tier4Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier5Price =
+                                      widget.data.tier4Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -470,10 +470,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '7',
                                   initialValue:
-                                      '${widget.data.tier6Price?.toInt()}',
+                                      '${widget.data.tier5Price != null ? widget.data.tier5Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier6Price =
+                                      widget.data.tier5Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -521,10 +521,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '8',
                                   initialValue:
-                                      '${widget.data.tier7Price?.toInt()}',
+                                      '${widget.data.tier6Price != null ? widget.data.tier6Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier7Price =
+                                      widget.data.tier6Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -572,10 +572,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '9',
                                   initialValue:
-                                      '${widget.data.tier8Price?.toInt()}',
+                                      '${widget.data.tier7Price != null ? widget.data.tier7Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier8Price =
+                                      widget.data.tier7Price =
                                           double.tryParse(value);
                                     });
                                   },
@@ -623,10 +623,10 @@ class _StandardPriceCardState extends State<StandardPriceCard> {
                                   fontSize: 12,
                                   name: '0',
                                   initialValue:
-                                      '${widget.data.tier9Price?.toInt()}',
+                                      '${widget.data.tier8Price != null ? widget.data.tier8Price?.toInt() : ''}',
                                   onChanged: (value) {
                                     setState(() {
-                                      widget.data.tier9Price =
+                                      widget.data.tier8Price =
                                           double.tryParse(value);
                                     });
                                   },

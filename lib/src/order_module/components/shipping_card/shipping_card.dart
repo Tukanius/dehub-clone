@@ -78,7 +78,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                   children: [
                     SvgPicture.asset(
                       'assets/svg/inv.svg',
-                      colorFilter: const ColorFilter.mode(darkGreen, BlendMode.srcIn),
+                      colorFilter:
+                          const ColorFilter.mode(darkGreen, BlendMode.srcIn),
                     ),
                     const SizedBox(
                       width: 5,
@@ -120,7 +121,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                     ),
                     widget.data?.loadingDate != null
                         ? Text(
-                            DateFormat('yyyy-MM-dd').format(DateTime.parse(widget.data!.loadingDate!)),
+                            DateFormat('yyyy-MM-dd').format(
+                                DateTime.parse(widget.data!.loadingDate!)),
                             style: const TextStyle(
                               color: buttonColor,
                               fontSize: 12,
@@ -138,7 +140,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                   ],
                 ),
                 Text(
-                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data!.createdAt!),
+                  DateFormat("yyyy-MM-dd HH:mm")
+                      .format(widget.data!.createdAt!),
                   style: const TextStyle(
                     color: buttonColor,
                     fontSize: 12,
@@ -171,7 +174,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                             ),
                           )
                         : Text(
-                            DateFormat('yyyy-MM-dd').format(widget.data!.startedDate!),
+                            DateFormat('yyyy-MM-dd HH:mm')
+                                .format(widget.data!.startedDate!),
                             style: const TextStyle(
                               color: buttonColor,
                               fontSize: 12,
@@ -229,7 +233,8 @@ class _DeliveryCardState extends State<ShippingCard> {
                             ),
                           )
                         : Text(
-                            DateFormat('yyyy-MM-dd').format(widget.data!.endedDate!),
+                            DateFormat('yyyy-MM-dd HH:mm')
+                                .format(widget.data!.endedDate!),
                             style: const TextStyle(
                               color: buttonColor,
                               fontSize: 12,

@@ -85,6 +85,7 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
             InventoryGoods(
               variantId: selectedVariants[i].id,
               standardPrice: selectedVariants[i].standardPrice,
+              tier0Price: selectedVariants[i].tier0Price,
               tier1Price: selectedVariants[i].tier1Price,
               tier2Price: selectedVariants[i].tier2Price,
               tier3Price: selectedVariants[i].tier3Price,
@@ -93,7 +94,6 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
               tier6Price: selectedVariants[i].tier6Price,
               tier7Price: selectedVariants[i].tier7Price,
               tier8Price: selectedVariants[i].tier8Price,
-              tier9Price: selectedVariants[i].tier9Price,
             ),
           );
         }
@@ -120,7 +120,6 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: true).inventoryGeneral;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -389,6 +388,7 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
                             width: 25,
                           ),
                           Expanded(
+                            flex: 4,
                             child: CustomButton(
                               onClick: () {
                                 onSubmit(false);
@@ -403,12 +403,13 @@ class _ChangeStandardPriceState extends State<ChangeStandardPrice>
                             width: 10,
                           ),
                           Expanded(
+                            flex: 6,
                             child: CustomButton(
                               onClick: () {
                                 onSubmit(true);
                               },
                               labelColor: productColor,
-                              labelText: 'Хадгалах',
+                              labelText: 'Нэмэх',
                             ),
                           ),
                           const SizedBox(

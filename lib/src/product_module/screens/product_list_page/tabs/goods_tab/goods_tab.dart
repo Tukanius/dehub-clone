@@ -1,8 +1,13 @@
 import 'dart:async';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/refresher/refresher.dart';
+import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
+import 'package:dehub/models/inventory_goods.dart';
+import 'package:dehub/providers/loading_provider.dart';
+import 'package:dehub/src/auth/pin_check/pin_check.dart';
 import 'package:dehub/src/product_module/screens/set_price/set_price.dart';
 import 'package:dehub/src/product_module/screens/set_warehouse/set_warehouse.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/src/product_module/components/goods_card/goods_card.dart';
@@ -33,6 +38,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
   bool startAnimation = false;
+  Result inactiveTypes = Result(rows: []);
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -79,6 +85,25 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
     });
   }
 
+  inactive(String id, String status, String inactiveTypeId) async {
+    await InventoryApi().statusChange(
+      InventoryGoods(
+        status: status,
+        inactiveTypeId: inactiveTypeId,
+      ),
+      id,
+    );
+    listenController.changeVariable('inactive');
+    showCustomDialog(
+      context,
+      'Амжилттай',
+      true,
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   @override
   void initState() {
     listenController.addListener(() {
@@ -89,6 +114,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
 
   @override
   Widget build(BuildContext context) {
+    final loading = Provider.of<LoadingProvider>(context, listen: true);
     return Column(
       children: [
         SearchButton(
@@ -121,6 +147,7 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                                 children: inventory.rows!
                                     .map(
                                       (item) => GoodsCard(
+                                        listenController: listenController,
                                         index: inventory.rows!.indexOf(item),
                                         startAnimation: startAnimation,
                                         data: item,
@@ -159,6 +186,16 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                                             ),
                                           );
                                         },
+                                        inActiveClick: () async {
+                                          if (inactiveTypes.rows!.isEmpty) {
+                                            loading.loading(true);
+                                            inactiveTypes = await InventoryApi()
+                                                .inactiveTypeSelect();
+                                            loading.loading(false);
+                                          }
+                                          await inactiveTypeSelect(
+                                              item.variantId, "INACTIVE");
+                                        },
                                       ),
                                     )
                                     .toList(),
@@ -176,6 +213,45 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
                 ),
         ),
       ],
+    );
+  }
+
+  inactiveTypeSelect(String id, String status) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.only(top: 20, bottom: 30),
+          child: Column(
+            children: inactiveTypes.rows!
+                .map(
+                  (data) => GestureDetector(
+                    onTap: () {
+                      Navigator.of(ctx).pop();
+                      Navigator.of(context).pushNamed(
+                        PinCheckScreen.routeName,
+                        arguments: PinCheckScreenArguments(
+                          onSubmit: () {
+                            inactive(id, "INACTIVE", data.id);
+                          },
+                          color: productColor,
+                          labelText: "Бараа идэвхигүй болгох",
+                        ),
+                      );
+                    },
+                    child: Container(
+                      color: transparent,
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Text("${data.text}"),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ),
     );
   }
 }

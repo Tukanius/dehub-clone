@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
@@ -18,10 +19,14 @@ class GoodsCard extends StatefulWidget {
   final InventoryGoods data;
   final bool startAnimation;
   final int index;
+  final Function()? inActiveClick;
+  final ListenController listenController;
   const GoodsCard({
     super.key,
+    required this.listenController,
     this.warehouseClick,
     this.priceClick,
+    this.inActiveClick,
     required this.index,
     required this.startAnimation,
     required this.data,
@@ -39,10 +44,11 @@ class _GoodsCardState extends State<GoodsCard> {
     await InventoryApi().statusChange(
       InventoryGoods(
         status: status,
-        inactiveTypeId: widget.data.inactiveTypeId ?? 'null',
+        inactiveTypeId: '',
       ),
       id,
     );
+    widget.listenController.changeVariable('active');
     showCustomDialog(
       context,
       'Амжилттай',
@@ -157,19 +163,7 @@ class _GoodsCardState extends State<GoodsCard> {
                 widget.data.variantStatus == "ACTIVE"
                     ? Permission().check(user, "ERP_GDS_PRICE_SET")
                         ? GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                PinCheckScreen.routeName,
-                                arguments: PinCheckScreenArguments(
-                                  onSubmit: () {
-                                    onSubmit(
-                                        widget.data.variantId!, "INACTIVE");
-                                  },
-                                  color: productColor,
-                                  labelText: "Бараа идэвхигүй болгох",
-                                ),
-                              );
-                            },
+                            onTap: widget.inActiveClick,
                             child: Container(
                               margin: const EdgeInsets.only(left: 10),
                               height: 36,

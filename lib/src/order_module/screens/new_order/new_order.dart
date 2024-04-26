@@ -1438,36 +1438,7 @@ class _NewOrderState extends State<NewOrder> with AfterLayoutMixin {
                                         ),
                                       ),
                                     )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        validateCheck(false, false);
-                                      },
-                                      child: SizedBox(
-                                        height: 34,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SvgPicture.asset(
-                                              'assets/svg/edit.svg',
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                orderColor,
-                                                BlendMode.srcIn,
-                                              ),
-                                              height: 20,
-                                            ),
-                                            const Text(
-                                              'Засах',
-                                              style: TextStyle(
-                                                color: orderColor,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                  : const SizedBox(),
                               const SizedBox(
                                 width: 10,
                               ),

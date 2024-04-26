@@ -123,6 +123,9 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).orderMe;
     general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
+    bool isReceived =
+        user.currentBusiness?.type == "SUPPLIER" && order.type == "SALES" ||
+            user.currentBusiness?.type == "BUYER" && order.type == "PURCHASE";
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -298,12 +301,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Text(
-                                        user.currentBusiness?.type ==
-                                                        "SUPPLIER" &&
-                                                    order.type == "SALES" ||
-                                                user.currentBusiness?.type ==
-                                                        "BUYER" &&
-                                                    order.type == "PURCHASE"
+                                        isReceived
                                             ? '${orderStatus().sentName}'
                                             : '${orderStatus().receivedName}',
                                         style: TextStyle(
@@ -360,7 +358,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    user.currentBusiness?.type == "SUPPLIER"
+                                    isReceived
                                         ? Text(
                                             '${order.receiverBusiness?.profileName}',
                                             style: const TextStyle(
@@ -387,7 +385,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             paddingVertical: 10,
                             labelText: 'Бизнес код',
                             secondTextColor: orderColor,
-                            secondText: user.currentBusiness?.type == "SUPPLIER"
+                            secondText: isReceived
                                 ? '${order.receiverBusiness?.refCode}'
                                 : '${order.senderBusiness?.refCode}',
                             color: white,
@@ -407,7 +405,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                                     style: TextStyle(color: buttonColor),
                                   ),
                                 ),
-                                user.currentBusiness?.type == "SUPPLIER"
+                                isReceived
                                     ? Expanded(
                                         child: RichText(
                                           textAlign: TextAlign.end,
@@ -472,7 +470,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                             paddingVertical: 10,
                             labelText: 'ТТД',
                             secondTextColor: buttonColor,
-                            secondText: user.currentBusiness?.type == "SUPPLIER"
+                            secondText: isReceived
                                 ? '${order.receiverBusiness?.regNumber}'
                                 : '${order.senderBusiness?.regNumber}',
                             color: white,

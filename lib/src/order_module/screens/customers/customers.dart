@@ -8,6 +8,7 @@ import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/search_button/search_button.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
@@ -154,13 +155,19 @@ class OrderCustomersState extends State<OrderCustomers> with AfterLayoutMixin {
                                               index: order.rows!.indexOf(data),
                                               startAnimation: startAnimation,
                                               data: data,
-                                              onClick: () {
-                                                Navigator.of(context).pushNamed(
-                                                  NewOrder.routeName,
-                                                  arguments: NewOrderArguments(
-                                                      id: data.id),
-                                                );
-                                              },
+                                              onClick: Permission().check(
+                                                      user, "ORD_LIST",
+                                                      boolean: 'iscreate')
+                                                  ? () {
+                                                      Navigator.of(context)
+                                                          .pushNamed(
+                                                        NewOrder.routeName,
+                                                        arguments:
+                                                            NewOrderArguments(
+                                                                id: data.id),
+                                                      );
+                                                    }
+                                                  : null,
                                             ),
                                           )
                                           .toList(),

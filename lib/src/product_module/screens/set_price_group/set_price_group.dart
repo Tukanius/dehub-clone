@@ -103,7 +103,7 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
       InventoryGoods data = InventoryGoods(
         priceGroupType: groupTypeId,
         priceGroupId: priceGroupId,
-        priceTierNo: tierNo,
+        priceTierNo: groupTypeId != "SPECIAL" ? tierNo : 0,
         priceStartDate: startDate.toString(),
         priceEndDate: endDate.toString(),
         confirm: confirm,
@@ -200,21 +200,20 @@ class _SetPriceGroupState extends State<SetPriceGroup> with AfterLayoutMixin {
                           }
                         : () {},
                   ),
-                  FieldCard(
-                    validate: tierValidate,
-                    paddingHorizontal: 15,
-                    paddingVertical: 10,
-                    color: white,
-                    labelText: 'Tier сонгох',
-                    secondText: tier ?? 'Сонгох',
-                    arrowColor: productColor,
-                    secondTextColor: productColor,
-                    onClick: groupTypeId == "GROUP"
-                        ? () {
-                            selectTier();
-                          }
-                        : () {},
-                  ),
+                  if (groupTypeId != "SPECIAL")
+                    FieldCard(
+                      validate: tierValidate,
+                      paddingHorizontal: 15,
+                      paddingVertical: 10,
+                      color: white,
+                      labelText: 'Tier сонгох',
+                      secondText: tier ?? 'Сонгох',
+                      arrowColor: productColor,
+                      secondTextColor: productColor,
+                      onClick: () {
+                        selectTier();
+                      },
+                    ),
                   FieldCard(
                     paddingHorizontal: 15,
                     paddingVertical: 10,

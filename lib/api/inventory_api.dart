@@ -472,6 +472,11 @@ class InventoryApi extends HttpRequest {
     return InventoryGoods.fromJson(res as Map<String, dynamic>);
   }
 
+  Future<Result> inactiveTypeSelect() async {
+    var res = await get('/inactive_type/select', "INVENTORY", true);
+    return Result.fromJson(res, InventoryGoods.fromJson);
+  }
+
   Future<Result> adjustmentNoteList(ResultArguments resultArguments) async {
     var res = await get('/adjustment_note', "INVENTORY", true,
         data: resultArguments.toJson());

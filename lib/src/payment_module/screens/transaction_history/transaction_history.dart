@@ -37,7 +37,7 @@ class TransactionHistoryState extends State<TransactionHistory>
   List<Payment> groupedList = [];
   Map<DateTime, List<Payment>> groupItems = {};
   DateTimeRange dateTimeRange = DateTimeRange(
-    start: DateTime.now().subtract(const Duration(days: 1)),
+    start: DateTime.now().subtract(const Duration(days: 14)),
     end: DateTime.now(),
   );
   final RefreshController _refreshController =

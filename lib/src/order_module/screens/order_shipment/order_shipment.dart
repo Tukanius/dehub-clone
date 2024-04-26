@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/order_module/components/goods_info_card/order_goods_info_card.dart';
 import 'package:dehub/src/order_module/components/shipment_product_card/shipment_product_card.dart';
 import 'package:dehub/src/order_module/components/shipping_card/shipping_card.dart';
 import 'package:dehub/models/order.dart';
 import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/order_module/screens/pull_sheet_expenses/pull_sheet_expenses.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,6 +46,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   Duration difference1 = const Duration();
   Duration difference = const Duration();
   String? lineId;
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -180,6 +184,7 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     final loading = Provider.of<LoadingProvider>(context, listen: true);
+    user = Provider.of<UserProvider>(context, listen: true).orderMe;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -206,164 +211,165 @@ class _OrderShipmentState extends State<OrderShipment> with AfterLayoutMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: white,
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (startShipment == false &&
-                                widget.data.endedDate == null) {
-                              startTimer(true);
-                            }
-                          },
-                          child: Container(
+                  if (Permission().check(user, "ORD_PS_MNG"))
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      color: white,
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              if (startShipment == false &&
+                                  widget.data.endedDate == null) {
+                                startTimer(true);
+                              }
+                            },
+                            child: Container(
+                              height: 60,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: isStart == true ? orderColor : lightGrey,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/svg/bx_timer.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        isStart == true ? white : buttonColor,
+                                        BlendMode.srcIn),
+                                  ),
+                                  shipment.startedDate == null
+                                      ? Text(
+                                          'Эхлэх',
+                                          style: TextStyle(
+                                            color: isStart == true
+                                                ? white
+                                                : buttonColor,
+                                          ),
+                                        )
+                                      : Text(
+                                          'Үргэлжлүүлэх',
+                                          style: TextStyle(
+                                            fontSize: 9,
+                                            color: isStart == true
+                                                ? white
+                                                : buttonColor,
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
                             height: 60,
                             width: 70,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: isStart == true ? orderColor : lightGrey,
+                              color: lightGrey,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  'assets/svg/bx_timer.svg',
-                                  colorFilter: ColorFilter.mode(
-                                      isStart == true ? white : buttonColor,
-                                      BlendMode.srcIn),
+                                  'assets/svg/timer.svg',
+                                  colorFilter: const ColorFilter.mode(
+                                      buttonColor, BlendMode.srcIn),
                                 ),
-                                shipment.startedDate == null
-                                    ? Text(
-                                        'Эхлэх',
-                                        style: TextStyle(
-                                          color: isStart == true
-                                              ? white
-                                              : buttonColor,
-                                        ),
-                                      )
-                                    : Text(
-                                        'Үргэлжлүүлэх',
-                                        style: TextStyle(
-                                          fontSize: 9,
-                                          color: isStart == true
-                                              ? white
-                                              : buttonColor,
-                                        ),
-                                      ),
+                                buildTime()
                               ],
                             ),
                           ),
-                        ),
-                        Container(
-                          height: 60,
-                          width: 70,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: lightGrey,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/svg/timer.svg',
-                                colorFilter: const ColorFilter.mode(
-                                    buttonColor, BlendMode.srcIn),
+                          GestureDetector(
+                            onTap: () {
+                              if (shipment.isPaused == false &&
+                                  widget.data.endedDate == null) {
+                                stopTimer(resets: false);
+                              }
+                            },
+                            child: Container(
+                              height: 60,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: shipment.isPaused == true
+                                    ? orderColor
+                                    : lightGrey,
                               ),
-                              buildTime()
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            if (shipment.isPaused == false &&
-                                widget.data.endedDate == null) {
-                              stopTimer(resets: false);
-                            }
-                          },
-                          child: Container(
-                            height: 60,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: shipment.isPaused == true
-                                  ? orderColor
-                                  : lightGrey,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.pause_circle,
-                                  color: shipment.isPaused == true
-                                      ? white
-                                      : buttonColor,
-                                ),
-                                Text(
-                                  'Зогсоох',
-                                  style: TextStyle(
-                                    fontSize: 13,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.pause_circle,
                                     color: shipment.isPaused == true
                                         ? white
                                         : buttonColor,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            end();
-                          },
-                          child: Container(
-                            height: 60,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: widget.data.endedDate == null
-                                  ? lightGrey
-                                  : orderColor,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/svg/check_underline.svg',
-                                  colorFilter: ColorFilter.mode(
-                                      widget.data.endedDate != null
+                                  Text(
+                                    'Зогсоох',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: shipment.isPaused == true
                                           ? white
                                           : buttonColor,
-                                      BlendMode.srcIn),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                widget.data.endedDate == null
-                                    ? const Text(
-                                        'Дуусгах',
-                                        style: TextStyle(
-                                          color: buttonColor,
-                                          fontSize: 13,
-                                        ),
-                                      )
-                                    : const Text(
-                                        'Дууссан',
-                                        style: TextStyle(
-                                          color: white,
-                                          fontSize: 13,
-                                        ),
-                                      ),
-                              ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          GestureDetector(
+                            onTap: () {
+                              end();
+                            },
+                            child: Container(
+                              height: 60,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: widget.data.endedDate == null
+                                    ? lightGrey
+                                    : orderColor,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/svg/check_underline.svg',
+                                    colorFilter: ColorFilter.mode(
+                                        widget.data.endedDate != null
+                                            ? white
+                                            : buttonColor,
+                                        BlendMode.srcIn),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  widget.data.endedDate == null
+                                      ? const Text(
+                                          'Дуусгах',
+                                          style: TextStyle(
+                                            color: buttonColor,
+                                            fontSize: 13,
+                                          ),
+                                        )
+                                      : const Text(
+                                          'Дууссан',
+                                          style: TextStyle(
+                                            color: white,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   isStart == false
                       ? Column(
                           children: [

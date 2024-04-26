@@ -6,7 +6,6 @@ import 'package:dehub/api/payment_api.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/src/payment_module/components/transaction_information_card/transaction_information_card.dart';
 import 'package:dehub/models/result.dart';
-import 'package:dehub/src/payment_module/screens/transaction_detail_page/transaction_detail_page.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -33,7 +32,7 @@ class AccountStatement extends StatefulWidget {
 class AccountStatementState extends State<AccountStatement>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   DateTimeRange dateTimeRange = DateTimeRange(
-    start: DateTime.now().subtract(const Duration(days: 1)),
+    start: DateTime.now().subtract(const Duration(days: 14)),
     end: DateTime.now(),
   );
   int currentIndex = 0;
@@ -41,8 +40,8 @@ class AccountStatementState extends State<AccountStatement>
   Payment payment = Payment(rows: [], count: 0);
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(dateTimeRange.start.toString(), dateTimeRange.end.toString());
+  afterFirstLayout(BuildContext context) async {
+    await list(dateTimeRange.start.toString(), dateTimeRange.end.toString());
   }
 
   list(String startDate, String endDate) async {
@@ -187,14 +186,6 @@ class AccountStatementState extends State<AccountStatement>
                                 TransactionInformationCard(
                                   startAnimation: true,
                                   index: 0,
-                                  onClick: () {
-                                    Navigator.of(context).pushNamed(
-                                      TransactionDetailPage.routeName,
-                                      arguments: TransactionDetailPageArguments(
-                                        data: data,
-                                      ),
-                                    );
-                                  },
                                   data: data,
                                 ),
                               ],

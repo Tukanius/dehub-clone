@@ -91,11 +91,12 @@ class TransactionInformationCardState
                 const SizedBox(
                   width: 20,
                 ),
-                const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 14,
-                  color: Color(0xff545454),
-                ),
+                if (widget.onClick != null)
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 14,
+                    color: Color(0xff545454),
+                  ),
               ],
             ),
             const SizedBox(
@@ -119,7 +120,9 @@ class TransactionInformationCardState
                   '${Utils().formatCurrency("${widget.data?.amount ?? widget.data?.tranAmount}")} ${getCurrency()}',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: inOutType() > -1 || widget.data?.drOrCr == "Debit"
+                    color: inOutType() > -1 ||
+                            widget.data?.inOutType?.toUpperCase() == "DEBIT" ||
+                            widget.data?.drOrCr?.toUpperCase() == "CREDIT"
                         ? neonGreen
                         : red,
                   ),

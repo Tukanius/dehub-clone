@@ -346,13 +346,6 @@ class _SettlementDetailState extends State<SettlementDetail>
                                       data: data,
                                     ),
                                   );
-                                  // Navigator.of(context).pushNamed(
-                                  //   SettlementPaymentHistory.routeName,
-                                  //   arguments:
-                                  //       SettlementPaymentHistoryArguments(
-                                  //     id: data.invoiceId,
-                                  //   ),
-                                  // );
                                 },
                               ),
                             )

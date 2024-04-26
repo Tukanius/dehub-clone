@@ -96,7 +96,10 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                       Expanded(
                         child: Text(
                           widget.data.type == "SALES" &&
-                                  user.currentBusiness?.type == "SUPPLIER"
+                                      user.currentBusiness?.type ==
+                                          "SUPPLIER" ||
+                                  widget.data.type == "PURCHASE" &&
+                                      user.currentBusiness?.type == "BUYER"
                               ? '${widget.data.receiverBusiness?.profileName}'
                               : '${widget.data.senderBusiness?.profileName}',
                           style: const TextStyle(
