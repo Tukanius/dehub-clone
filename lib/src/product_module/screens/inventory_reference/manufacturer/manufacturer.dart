@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -31,6 +32,7 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
   User user = User();
   bool isLoading = true;
   List<InventoryGoods> groupList = [];
+  ListenController listenController = ListenController();
   Result distributor = Result(rows: [], count: 0);
   Map<String, List<InventoryGoods>> groupItems = {};
   final RefreshController refreshController =
@@ -96,8 +98,8 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list(page, limit);
+  afterFirstLayout(BuildContext context) async {
+    await list(page, limit);
   }
 
   update(InventoryGoods data) {
@@ -108,6 +110,7 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
           context: context,
           useSafeArea: true,
           builder: (context) => AddManufacturerSheet(
+            listenController: listenController,
             id: data.id,
             name: data.name,
           ),
@@ -118,17 +121,25 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
     }, deleteClick: () async {
       if (Permission().check(user, "ERP_REF_MANUFACT", boolean: 'isDelete')) {
         await InventoryApi().manufacturerDelete(data.id!);
-        setState(() {
-          isLoading = true;
-          groupItems = {};
-          page = 1;
-        });
-        await list(page, limit);
+        listenController.changeVariable('manufacturer');
         Navigator.of(context).pop();
       } else {
         showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
       }
     });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        groupItems = {};
+        page = 1;
+      });
+      await list(page, limit);
+    });
+    super.initState();
   }
 
   @override
@@ -156,7 +167,9 @@ class _InventoryManufacturerState extends State<InventoryManufacturer>
                     showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
-                      builder: (context) => const AddManufacturerSheet(),
+                      builder: (context) => AddManufacturerSheet(
+                        listenController: listenController,
+                      ),
                     );
                   },
                   shape: const CircleBorder(),

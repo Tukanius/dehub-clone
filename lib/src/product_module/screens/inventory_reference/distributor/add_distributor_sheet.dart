@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -13,9 +14,11 @@ import 'package:provider/provider.dart';
 class AddDistributor extends StatefulWidget {
   final String? name;
   final String? id;
+  final ListenController listenController;
   const AddDistributor({
     this.name,
     this.id,
+    required this.listenController,
     super.key,
   });
 
@@ -35,6 +38,7 @@ class _AddDistributorState extends State<AddDistributor> {
             InventoryGoods.fromJson(fbKey.currentState!.value);
         if (widget.name == null) {
           await InventoryApi().distributorCreate(data);
+          widget.listenController.changeVariable('distributor');
           loading.loading(false);
           showCustomDialog(context, 'Дистрибютр амжилттай нэмлээ', true,
               onPressed: () {
@@ -42,6 +46,7 @@ class _AddDistributorState extends State<AddDistributor> {
           });
         } else {
           await InventoryApi().distributorUpdate(widget.id!, data);
+          widget.listenController.changeVariable('distributor');
           loading.loading(false);
           showCustomDialog(context, 'Дистрибютр амжилттай заслаа', true,
               onPressed: () {

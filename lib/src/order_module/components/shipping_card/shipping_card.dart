@@ -67,12 +67,17 @@ class _DeliveryCardState extends State<ShippingCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  '${widget.data?.warehouse?.name}',
-                  style: const TextStyle(
-                    color: buttonColor,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    '${widget.data?.warehouse?.name}',
+                    style: const TextStyle(
+                      color: buttonColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                ),
+                const SizedBox(
+                  width: 5,
                 ),
                 Row(
                   children: [

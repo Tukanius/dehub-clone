@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -13,9 +14,11 @@ import 'package:provider/provider.dart';
 class AddTagSheet extends StatefulWidget {
   final String? text;
   final String? id;
+  final ListenController listenController;
   const AddTagSheet({
     this.id,
     this.text,
+    required this.listenController,
     super.key,
   });
 
@@ -35,6 +38,7 @@ class _AddTagSheetState extends State<AddTagSheet> {
             InventoryGoods.fromJson(fbKey.currentState!.value);
         if (widget.text == null) {
           await InventoryApi().tagCreate(data);
+          widget.listenController.changeVariable('tag');
           loading.loading(false);
           showCustomDialog(context, 'Таг амжилттай нэмлээ', true,
               onPressed: () {
@@ -42,6 +46,7 @@ class _AddTagSheetState extends State<AddTagSheet> {
           });
         } else {
           await InventoryApi().tagUpdate(widget.id!, data);
+          widget.listenController.changeVariable('tag');
           loading.loading(false);
           showCustomDialog(context, 'Таг амжилттай заслаа', true,
               onPressed: () {

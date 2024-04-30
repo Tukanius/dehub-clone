@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
@@ -31,6 +32,7 @@ class _InventoryItemTypeState extends State<InventoryItemType>
   bool isLoading = true;
   List<InventoryGoods> groupedList = [];
   Map<String, List<InventoryGoods>> groupItems = {};
+  ListenController listenController = ListenController();
   User user = User();
   final RefreshController refreshController =
       RefreshController(initialRefresh: false);
@@ -88,7 +90,7 @@ class _InventoryItemTypeState extends State<InventoryItemType>
 
   @override
   afterFirstLayout(BuildContext context) async {
-    list(page, limit);
+    await list(page, limit);
   }
 
   update(InventoryGoods data) {
@@ -99,6 +101,7 @@ class _InventoryItemTypeState extends State<InventoryItemType>
           useSafeArea: true,
           context: context,
           builder: (context) => AddItemType(
+            listenController: listenController,
             data: data,
           ),
         );
@@ -114,6 +117,22 @@ class _InventoryItemTypeState extends State<InventoryItemType>
         showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
       }
     });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        page = 1;
+        groupItems = {};
+      });
+      await list(page, limit);
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -140,7 +159,9 @@ class _InventoryItemTypeState extends State<InventoryItemType>
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
-                      builder: (context) => const AddItemType(),
+                      builder: (context) => AddItemType(
+                        listenController: listenController,
+                      ),
                     );
                   },
                   shape: const CircleBorder(),

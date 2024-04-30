@@ -121,12 +121,7 @@ class _InventoryDeliveryTypeState extends State<InventoryDeliveryType>
     }, deleteClick: () async {
       if (Permission().check(user, "ERP_REF_DEL_TYPE", boolean: 'isDelete')) {
         await InventoryApi().deliveryTypeDelete(data.id!);
-        setState(() {
-          isLoading = true;
-          groupItems = {};
-          page = 1;
-        });
-        await list(page, limit);
+        listenController.changeVariable('deliveryType');
         Navigator.of(context).pop();
       } else {
         showCustomDialog(context, 'Хандах эрх хүрэлцэхгүй байна', false);

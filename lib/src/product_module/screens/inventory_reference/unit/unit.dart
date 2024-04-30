@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -30,6 +31,7 @@ class _InventoryUnitState extends State<InventoryUnit> with AfterLayoutMixin {
   User user = User();
   bool isLoading = true;
   List<InventoryGoods> groupList = [];
+  ListenController listenController = ListenController();
   Result distributor = Result(rows: [], count: 0);
   Map<String, List<InventoryGoods>> groupItems = {};
   final RefreshController refreshController =
@@ -107,6 +109,7 @@ class _InventoryUnitState extends State<InventoryUnit> with AfterLayoutMixin {
           context: context,
           useSafeArea: true,
           builder: (context) => AddUnitSheet(
+            listenController: listenController,
             name: data.name,
             id: data.id,
           ),
@@ -117,17 +120,25 @@ class _InventoryUnitState extends State<InventoryUnit> with AfterLayoutMixin {
     }, deleteClick: () async {
       if (Permission().check(user, "ERP_REF_UNIT", boolean: 'isDelete')) {
         await InventoryApi().unitDelete(data.id!);
-        setState(() {
-          isLoading = true;
-          groupItems = {};
-          page = 1;
-        });
-        await list(page, limit);
+        listenController.changeVariable('unitSheet');
         Navigator.of(context).pop();
       } else {
         showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
       }
     });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        groupItems = {};
+        page = 1;
+      });
+      await list(page, limit);
+    });
+    super.initState();
   }
 
   @override
@@ -155,7 +166,9 @@ class _InventoryUnitState extends State<InventoryUnit> with AfterLayoutMixin {
                     showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
-                      builder: (context) => const AddUnitSheet(),
+                      builder: (context) => AddUnitSheet(
+                        listenController: listenController,
+                      ),
                     );
                   },
                   shape: const CircleBorder(),

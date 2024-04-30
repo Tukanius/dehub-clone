@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -13,10 +14,12 @@ import 'package:provider/provider.dart';
 class AddManufacturerSheet extends StatefulWidget {
   final String? name;
   final String? id;
+  final ListenController listenController;
   const AddManufacturerSheet({
     super.key,
     this.name,
     this.id,
+    required this.listenController,
   });
 
   @override
@@ -35,6 +38,7 @@ class _AddManufacturerSheetState extends State<AddManufacturerSheet> {
             InventoryGoods.fromJson(fbKey.currentState!.value);
         if (widget.name == null) {
           await InventoryApi().manufacturerCreate(data);
+          await widget.listenController.changeVariable('manufacturer');
           loading.loading(false);
           showCustomDialog(context, 'Үйлдвэрлэгч амжилттай нэмлээ', true,
               onPressed: () {
@@ -42,6 +46,7 @@ class _AddManufacturerSheetState extends State<AddManufacturerSheet> {
           });
         } else {
           await InventoryApi().manufacturerUpdate(widget.id!, data);
+          await widget.listenController.changeVariable('manufacturer');
           loading.loading(false);
           showCustomDialog(context, 'Үйлдвэрлэгч амжилттай заслаа', true,
               onPressed: () {

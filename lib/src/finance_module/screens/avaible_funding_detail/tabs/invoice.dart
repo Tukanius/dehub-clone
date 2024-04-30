@@ -61,20 +61,32 @@ class _InvoiceTabState extends State<InvoiceTab> {
     user = Provider.of<UserProvider>(context, listen: true).financeUser;
     if (widget.data.type == "SALES") {
       setState(() {
-        buyerBusiness = widget.data.receiverBusiness!;
-        supplierBusiness = widget.data.senderBusiness!;
+        if (widget.data.receiverBusiness != null) {
+          buyerBusiness = widget.data.receiverBusiness!;
+        }
+        if (widget.data.senderBusiness != null) {
+          supplierBusiness = widget.data.senderBusiness!;
+        }
         buyerAcc = widget.data.receiverAcc!;
         supplierAcc = widget.data.senderAcc!;
-        buyerFinUser = widget.data.receiverFinUser!;
+        if (widget.data.receiverFinUser != null) {
+          buyerFinUser = widget.data.receiverFinUser!;
+        }
         supplierFinUser = widget.data.senderFinUser!;
       });
     } else {
       setState(() {
-        supplierBusiness = widget.data.receiverBusiness!;
-        buyerBusiness = widget.data.senderBusiness!;
+        if (widget.data.receiverBusiness != null) {
+          supplierBusiness = widget.data.receiverBusiness!;
+        }
+        if (widget.data.senderBusiness != null) {
+          buyerBusiness = widget.data.senderBusiness!;
+        }
         supplierAcc = widget.data.receiverAcc!;
         buyerAcc = widget.data.senderAcc!;
-        supplierFinUser = widget.data.receiverFinUser!;
+        if (widget.data.receiverFinUser != null) {
+          supplierFinUser = widget.data.receiverFinUser!;
+        }
         buyerFinUser = widget.data.senderFinUser!;
       });
     }

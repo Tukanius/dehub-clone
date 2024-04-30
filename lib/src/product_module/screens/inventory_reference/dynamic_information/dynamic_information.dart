@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/inventory_goods.dart';
@@ -26,6 +27,7 @@ class _DynamicInformationState extends State<DynamicInformation>
   User user = User();
   bool isLoading = true;
   List<InventoryGoods> groupList = [];
+  ListenController listenController = ListenController();
   Map<String, List<InventoryGoods>> groupItems = {};
   Result dynamic = Result(rows: [], count: 0);
   final RefreshController refreshController =
@@ -84,8 +86,20 @@ class _DynamicInformationState extends State<DynamicInformation>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    list();
+  afterFirstLayout(BuildContext context) async {
+    await list();
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        groupItems = {};
+      });
+      await list();
+    });
+    super.initState();
   }
 
   @override
@@ -113,7 +127,9 @@ class _DynamicInformationState extends State<DynamicInformation>
                     showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
-                      builder: (context) => const AddDinamycInformation(),
+                      builder: (context) => AddDinamycInformation(
+                        listenController: listenController,
+                      ),
                     );
                   },
                   shape: const CircleBorder(),

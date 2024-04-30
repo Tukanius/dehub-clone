@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
 import 'package:dehub/models/result.dart';
@@ -21,6 +22,7 @@ class InventoryBrand extends StatefulWidget {
 }
 
 class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
+  ListenController listenController = ListenController();
   Result brand = Result(rows: []);
   bool isLoading = true;
   User user = User();
@@ -41,6 +43,7 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
           context: context,
           useSafeArea: true,
           builder: (context) => AddBrandSheet(
+            listenController: listenController,
             id: id,
             brandName: name,
             brandLogo: logo,
@@ -55,7 +58,7 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
           setState(() {
             isLoading = true;
           });
-          InventoryApi().brandDelete(id);
+          await InventoryApi().brandDelete(id);
           brand = await InventoryApi().brandList();
           Navigator.of(context).pop();
           setState(() {
@@ -70,6 +73,20 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
         showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
       }
     });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+      });
+      brand = await InventoryApi().brandList();
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -102,7 +119,9 @@ class _InventoryBrandState extends State<InventoryBrand> with AfterLayoutMixin {
                     showModalBottomSheet(
                       context: context,
                       useSafeArea: true,
-                      builder: (context) => const AddBrandSheet(),
+                      builder: (context) => AddBrandSheet(
+                        listenController: listenController,
+                      ),
                     );
                   },
                 )

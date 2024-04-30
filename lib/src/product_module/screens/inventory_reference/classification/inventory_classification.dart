@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/components/update_sheet/update_sheet.dart';
@@ -42,6 +43,7 @@ class _InventoryClassificationState extends State<InventoryClassification>
   Result list = Result(rows: []);
   bool isLoading = true;
   Map<String, List<InventoryGoods>> groupItems = {};
+  ListenController listenController = ListenController();
   List<InventoryGoods> groupList = [];
   User user = User();
   final RefreshController refreshController =
@@ -121,12 +123,12 @@ class _InventoryClassificationState extends State<InventoryClassification>
   }
 
   @override
-  afterFirstLayout(BuildContext context) {
-    Provider.of<InventoryProvider>(context, listen: false).clearData();
-    api(page, limit);
+  afterFirstLayout(BuildContext context) async {
+    await Provider.of<InventoryProvider>(context, listen: false).clearData();
+    await api(page, limit);
   }
 
-  update(String id) {
+  update(String id, InventoryGoods data) {
     updateSheet(context, updateClick: () {
       if (Permission().check(user, "ERP_REF_ITM_CLS", boolean: 'isEdit')) {
         Navigator.of(context).pop();
@@ -134,6 +136,8 @@ class _InventoryClassificationState extends State<InventoryClassification>
           context: context,
           useSafeArea: true,
           builder: (context) => AddClassification(
+            data: data,
+            listenController: listenController,
             type: widget.type,
           ),
         );
@@ -146,12 +150,9 @@ class _InventoryClassificationState extends State<InventoryClassification>
           setState(() {
             isLoading = true;
           });
-          InventoryApi().brandDelete(id);
-          api(page, limit);
+          await InventoryApi().categoryDelete(id);
+          listenController.changeVariable('classification');
           Navigator.of(context).pop();
-          setState(() {
-            isLoading = false;
-          });
         } catch (e) {
           setState(() {
             isLoading = false;
@@ -161,6 +162,19 @@ class _InventoryClassificationState extends State<InventoryClassification>
         showCustomDialog(context, "Хандах эрх хүрэлцэхгүй байна", false);
       }
     });
+  }
+
+  @override
+  void initState() {
+    listenController.addListener(() async {
+      setState(() {
+        isLoading = true;
+        page = 1;
+        groupItems = {};
+      });
+      await api(page, limit);
+    });
+    super.initState();
   }
 
   @override
@@ -199,6 +213,7 @@ class _InventoryClassificationState extends State<InventoryClassification>
                       context: context,
                       useSafeArea: true,
                       builder: (context) => AddClassification(
+                        listenController: listenController,
                         type: widget.type,
                       ),
                     );
@@ -244,7 +259,7 @@ class _InventoryClassificationState extends State<InventoryClassification>
                                       onTap: user.currentBusinessId ==
                                               item.businessId
                                           ? () {
-                                              update(data.id!);
+                                              update(data.id!, data);
                                             }
                                           : () {},
                                       child: Container(
@@ -306,11 +321,13 @@ class _InventoryClassificationState extends State<InventoryClassification>
                                                 ],
                                               ),
                                             ),
-                                            const Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: productColor,
-                                              size: 16,
-                                            ),
+                                            if (user.currentBusinessId ==
+                                                item.businessId)
+                                              const Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: productColor,
+                                                size: 16,
+                                              ),
                                           ],
                                         ),
                                       ),

@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/inventory_provider.dart';
@@ -12,7 +13,11 @@ import 'package:provider/provider.dart';
 import 'package:after_layout/after_layout.dart';
 
 class AddDinamycInformation extends StatefulWidget {
-  const AddDinamycInformation({super.key});
+  final ListenController listenController;
+  const AddDinamycInformation({
+    super.key,
+    required this.listenController,
+  });
 
   @override
   State<AddDinamycInformation> createState() => _AddDinamycInformationState();
@@ -43,6 +48,7 @@ class _AddDinamycInformationState extends State<AddDinamycInformation>
             name: controller.text,
           ),
         );
+        await widget.listenController.changeVariable('dynamicInformation');
         loading.loading(false);
         showCustomDialog(context, "Динамик мэдээлэл амжилттай нэмлээ", true,
             onPressed: () {

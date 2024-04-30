@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -16,7 +17,9 @@ class AddBrandSheet extends StatefulWidget {
   final String? brandName;
   final String? brandLogo;
   final String? id;
+  final ListenController listenController;
   const AddBrandSheet({
+    required this.listenController,
     this.brandName,
     this.brandLogo,
     this.id,
@@ -63,6 +66,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
         if (widget.brandName == null) {
           loading.loading(true);
           await InventoryApi().brandCreate(data);
+          await widget.listenController.changeVariable('brand');
           loading.loading(false);
           showCustomDialog(context, 'Амжилттай брэнд нэмлээ', true,
               onPressed: () {
@@ -71,6 +75,7 @@ class _AddBrandSheetState extends State<AddBrandSheet> {
         } else {
           loading.loading(true);
           await InventoryApi().brandUpdate(widget.id!, data);
+          await widget.listenController.changeVariable('brand');
           loading.loading(false);
           showCustomDialog(context, 'Амжилттай заслаа', true, onPressed: () {
             Navigator.of(context).pop();

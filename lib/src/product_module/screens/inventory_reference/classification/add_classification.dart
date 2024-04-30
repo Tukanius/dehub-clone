@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/field_card/field_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
@@ -18,8 +19,12 @@ import 'package:provider/provider.dart';
 
 class AddClassification extends StatefulWidget {
   final String type;
+  final InventoryGoods? data;
+  final ListenController listenController;
   const AddClassification({
     super.key,
+    this.data,
+    required this.listenController,
     required this.type,
   });
 
@@ -54,23 +59,35 @@ class _AddClassificationState extends State<AddClassification> {
       try {
         InventoryGoods data =
             InventoryGoods.fromJson(fbKey.currentState!.value);
-        data.itemTypeId = source.product.itemTypeId;
-        data.parentId = widget.type == "SUB_CLASSIFICATION"
-            ? source.product.classificationId
-            : widget.type == "CATEGORY"
-                ? source.product.subClassificationId
-                : widget.type == "SUB_CATEGORY"
-                    ? source.product.categoryId
-                    : null;
+        if (widget.data == null) {
+          data.itemTypeId = source.product.itemTypeId;
+          data.parentId = widget.type == "SUB_CLASSIFICATION"
+              ? source.product.classificationId
+              : widget.type == "CATEGORY"
+                  ? source.product.subClassificationId
+                  : widget.type == "SUB_CATEGORY"
+                      ? source.product.categoryId
+                      : null;
+        }
         if (widget.type != 'SUB_CATEGORY') {
-          data.type = widget.type;
           loading.loading(true);
-          await InventoryApi().categoryCreate(data);
+          if (widget.data == null) {
+            data.type = widget.type;
+            await InventoryApi().categoryCreate(data);
+          } else {
+            await InventoryApi().categoryUpdate(widget.data!.id!, data);
+          }
+          widget.listenController.changeVariable('classification');
           loading.loading(false);
         } else {
-          data.categoryFields = dynamics;
           loading.loading(true);
-          await InventoryApi().subCategoryCreate(data);
+          if (widget.data == null) {
+            data.categoryFields = dynamics;
+            await InventoryApi().subCategoryCreate(data);
+          } else {
+            await InventoryApi().categoryUpdate(widget.data!.id!, data);
+          }
+          widget.listenController.changeVariable('classification');
           loading.loading(false);
         }
         showCustomDialog(context, "Амжилттай нэмлээ", true, onPressed: () {
@@ -202,92 +219,103 @@ class _AddClassificationState extends State<AddClassification> {
                             horizontal: 15, vertical: 10),
                         child: const Text('Энд бичээд "Хадгалах" сонгоно уу'),
                       ),
-                      FieldCard(
-                        paddingHorizontal: 15,
-                        paddingVertical: 10,
-                        color: white,
-                        labelText: 'Нэр төрөл',
-                        secondText: product.itemTypeName ?? 'Сонгох',
-                        onClick: () {
-                          showModalBottomSheet(
-                            useSafeArea: true,
-                            context: context,
-                            builder: (context) => const ItemTypeSheet(),
-                          );
-                        },
-                        arrowColor: productColor,
-                        secondTextColor: productColor,
-                      ),
-                      if (type() < 4)
-                        FieldCard(
-                          paddingHorizontal: 15,
-                          paddingVertical: 10,
-                          color: white,
-                          labelText: 'Ангилал',
-                          secondText: product.classificationName ?? 'Сонгох',
-                          onClick: product.itemTypeName != null
-                              ? () {
-                                  showModalBottomSheet(
-                                    useSafeArea: true,
-                                    context: context,
-                                    builder: (context) => const CategorySheet(
-                                      type: "CLASSIFICATION",
-                                      labelText: "Ангилал сонгоно уу",
-                                    ),
-                                  );
-                                }
-                              : () {},
-                          arrowColor: productColor,
-                          secondTextColor: productColor,
-                        ),
-                      if (type() < 3)
-                        FieldCard(
-                          paddingHorizontal: 15,
-                          paddingVertical: 10,
-                          color: white,
-                          labelText: 'Дэд ангилал',
-                          secondText: product.subClassificationName ?? 'Сонгох',
-                          onClick: product.classificationName != null
-                              ? () {
-                                  showModalBottomSheet(
-                                    useSafeArea: true,
-                                    context: context,
-                                    builder: (context) => const CategorySheet(
-                                      type: "SUB_CLASSIFICATION",
-                                      labelText: "Дэд ангилал сонгоно уу",
-                                    ),
-                                  );
-                                }
-                              : () {},
-                          arrowColor: productColor,
-                          secondTextColor: productColor,
-                        ),
-                      if (type() < 2)
-                        FieldCard(
-                          paddingHorizontal: 15,
-                          paddingVertical: 10,
-                          color: white,
-                          labelText: 'Категори',
-                          secondText: product.categoryName ?? 'Сонгох',
-                          onClick: () {
-                            if (product.subClassificationName != null) {
-                              showModalBottomSheet(
-                                useSafeArea: true,
-                                context: context,
-                                builder: (context) => const CategorySheet(
-                                  type: "CATEGORY",
-                                  labelText: "Категори сонгоно уу",
-                                ),
-                              );
-                            }
-                          },
-                          arrowColor: productColor,
-                          secondTextColor: productColor,
+                      if (widget.data == null)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FieldCard(
+                              paddingHorizontal: 15,
+                              paddingVertical: 10,
+                              color: white,
+                              labelText: 'Нэр төрөл',
+                              secondText: product.itemTypeName ?? 'Сонгох',
+                              onClick: () {
+                                showModalBottomSheet(
+                                  useSafeArea: true,
+                                  context: context,
+                                  builder: (context) => const ItemTypeSheet(),
+                                );
+                              },
+                              arrowColor: productColor,
+                              secondTextColor: productColor,
+                            ),
+                            if (type() < 4)
+                              FieldCard(
+                                paddingHorizontal: 15,
+                                paddingVertical: 10,
+                                color: white,
+                                labelText: 'Ангилал',
+                                secondText:
+                                    product.classificationName ?? 'Сонгох',
+                                onClick: product.itemTypeName != null
+                                    ? () {
+                                        showModalBottomSheet(
+                                          useSafeArea: true,
+                                          context: context,
+                                          builder: (context) =>
+                                              const CategorySheet(
+                                            type: "CLASSIFICATION",
+                                            labelText: "Ангилал сонгоно уу",
+                                          ),
+                                        );
+                                      }
+                                    : () {},
+                                arrowColor: productColor,
+                                secondTextColor: productColor,
+                              ),
+                            if (type() < 3)
+                              FieldCard(
+                                paddingHorizontal: 15,
+                                paddingVertical: 10,
+                                color: white,
+                                labelText: 'Дэд ангилал',
+                                secondText:
+                                    product.subClassificationName ?? 'Сонгох',
+                                onClick: product.classificationName != null
+                                    ? () {
+                                        showModalBottomSheet(
+                                          useSafeArea: true,
+                                          context: context,
+                                          builder: (context) =>
+                                              const CategorySheet(
+                                            type: "SUB_CLASSIFICATION",
+                                            labelText: "Дэд ангилал сонгоно уу",
+                                          ),
+                                        );
+                                      }
+                                    : () {},
+                                arrowColor: productColor,
+                                secondTextColor: productColor,
+                              ),
+                            if (type() < 2)
+                              FieldCard(
+                                paddingHorizontal: 15,
+                                paddingVertical: 10,
+                                color: white,
+                                labelText: 'Категори',
+                                secondText: product.categoryName ?? 'Сонгох',
+                                onClick: () {
+                                  if (product.subClassificationName != null) {
+                                    showModalBottomSheet(
+                                      useSafeArea: true,
+                                      context: context,
+                                      builder: (context) => const CategorySheet(
+                                        type: "CATEGORY",
+                                        labelText: "Категори сонгоно уу",
+                                      ),
+                                    );
+                                  }
+                                },
+                                arrowColor: productColor,
+                                secondTextColor: productColor,
+                              ),
+                          ],
                         ),
                       FormTextField(
                         textColor: productColor,
                         textAlign: TextAlign.end,
                         name: 'name',
+                        initialValue: widget.data?.name,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           fillColor: white,
@@ -323,7 +351,7 @@ class _AddClassificationState extends State<AddClassification> {
                         const SizedBox(
                           height: 15,
                         ),
-                      if (widget.type == "SUB_CATEGORY")
+                      if (widget.type == "SUB_CATEGORY" && widget.data == null)
                         Column(
                           children: [
                             Row(
@@ -522,6 +550,7 @@ class _AddClassificationState extends State<AddClassification> {
                           textAlign: TextAlign.left,
                           name: 'description',
                           maxLines: 5,
+                          initialValue: widget.data?.description,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.zero,

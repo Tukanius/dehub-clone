@@ -270,14 +270,13 @@ class OrderApi extends HttpRequest {
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
-  upload(String path) async {
+  Future<Order> upload(String path) async {
     String fileName = path.split('/').last;
     FormData formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(path, filename: fileName),
     });
     var res =
         await post('/media/file/order/upload', "MEDIA", true, data: formData);
-
     return Order.fromJson(res as Map<String, dynamic>);
   }
 

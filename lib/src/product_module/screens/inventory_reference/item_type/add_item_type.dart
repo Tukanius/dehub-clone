@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/loading_provider.dart';
@@ -13,7 +14,9 @@ import 'package:provider/provider.dart';
 
 class AddItemType extends StatefulWidget {
   final InventoryGoods? data;
+  final ListenController listenController;
   const AddItemType({
+    required this.listenController,
     this.data,
     super.key,
   });
@@ -38,6 +41,7 @@ class _AddItemTypeState extends State<AddItemType> {
         data.isService = isService;
         if (widget.data == null) {
           await InventoryApi().itemTypeCreate(data);
+          await widget.listenController.changeVariable('itemType');
           loading.loading(false);
           showCustomDialog(context, 'Нэр төрөл амжилттай нэмлээ', true,
               onPressed: () {
@@ -45,6 +49,7 @@ class _AddItemTypeState extends State<AddItemType> {
           });
         } else {
           await InventoryApi().itemTypeUpdate(widget.data!.id!, data);
+          await widget.listenController.changeVariable('itemType');
           loading.loading(false);
           showCustomDialog(context, 'Нэр төрөл амжилттай заслаа', true,
               onPressed: () {

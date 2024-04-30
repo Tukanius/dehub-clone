@@ -5,7 +5,6 @@ import 'package:dehub/api/order_api.dart';
 import 'package:dehub/api/user_api.dart';
 import 'package:dehub/components/controller/listen.dart';
 import 'package:dehub/models/order.dart';
-import 'package:dehub/models/user.dart';
 import 'package:dehub/src/auth/camera_page/camera_page.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
@@ -39,7 +38,7 @@ class AddAttachment extends StatefulWidget {
 class _AddAttachmentState extends State<AddAttachment> {
   GlobalKey<FormBuilderState> fbKey = GlobalKey<FormBuilderState>();
   FilePickerResult? file;
-  User user = User();
+  Order user = Order();
   String? fileName;
   PlatformFile? pickedFile;
   bool isLoading = false;

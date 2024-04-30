@@ -1,6 +1,7 @@
 // import 'package:dehub/components/goods_info_card/order_goods_info_card.dart';
 import 'package:dehub/api/order_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:dehub/src/order_module/components/goods_info_card/order_goods_info_card.dart';
 import 'package:dehub/src/order_module/components/shipping_card/shipping_card.dart';
 import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
@@ -8,6 +9,7 @@ import 'package:dehub/models/order.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PullSheetExpensesArguments {
   Order data;
@@ -30,16 +32,23 @@ class PullSheetExpenses extends StatefulWidget {
 
 class _PullSheetExpensesState extends State<PullSheetExpenses> {
   onSubmit() async {
-    await OrderApi().pullSheetConfirm(widget.data.id!);
-    showCustomDialog(
-      context,
-      "Амжилттай хүлээн авлаа",
-      true,
-      onPressed: () {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-      },
-    );
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
+    try {
+      loading.loading(true);
+      await OrderApi().pullSheetConfirm(widget.data.id!);
+      loading.loading(false);
+      showCustomDialog(
+        context,
+        "Амжилттай хүлээн авлаа",
+        true,
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        },
+      );
+    } catch (e) {
+      loading.loading(false);
+    }
   }
 
   @override
@@ -121,23 +130,24 @@ class _PullSheetExpensesState extends State<PullSheetExpenses> {
               ),
             ),
           ),
-          Container(
-            decoration: const BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+          if (widget.data.pullSheetStatus != "CONFIRMED")
+            Container(
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
               ),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 25),
-            child: CustomButton(
-              onClick: () {
-                onSubmit();
-              },
-              labelText: "Шалгаж хүлээн авлаа",
-              labelColor: orderColor,
-            ),
-          )
+              padding: const EdgeInsets.symmetric(vertical: 25),
+              child: CustomButton(
+                onClick: () {
+                  onSubmit();
+                },
+                labelText: "Шалгаж хүлээн авлаа",
+                labelColor: orderColor,
+              ),
+            )
         ],
       ),
     );

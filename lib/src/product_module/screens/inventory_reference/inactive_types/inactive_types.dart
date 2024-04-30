@@ -120,12 +120,7 @@ class _InActiveTypesState extends State<InActiveTypes> with AfterLayoutMixin {
     }, deleteClick: () async {
       if (Permission().check(user, "ERP_REF_INCT_TYPE", boolean: "isDelete")) {
         await InventoryApi().inactiveTypeDel(data.id!);
-        setState(() {
-          isLoading = true;
-          groupItems = {};
-          page = 1;
-        });
-        await list(page, limit);
+        listenController.changeVariable('inactiveType');
         Navigator.of(context).pop();
       } else {
         showCustomDialog(context, 'Хандах эрх хүрэлцэхгүй байна', false);
