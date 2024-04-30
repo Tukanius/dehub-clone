@@ -1,4 +1,5 @@
 import 'package:dehub/api/inventory_api.dart';
+import 'package:dehub/components/not_found/not_found.dart';
 import 'package:dehub/components/refresher/refresher.dart';
 import 'package:dehub/models/result.dart';
 import 'package:dehub/src/product_module/components/price_card/price_card.dart';
@@ -70,22 +71,27 @@ class _StandardPriceHistoryState extends State<StandardPriceHistory>
             onRefresh: onRefresh,
             color: productColor,
             child: SingleChildScrollView(
-              child: Column(
-                children: prices.rows!
-                    .map(
-                      (data) => PriceCard(
-                        data: data,
-                        onClick: () {
-                          Navigator.of(context).pushNamed(
-                            PriceGroupDetail.routeName,
-                            arguments: PriceGroupDetailArguments(
-                                id: data.id, type: 'GROUP'),
-                          );
-                        },
-                      ),
+              child: prices.rows!.isNotEmpty
+                  ? Column(
+                      children: prices.rows!
+                          .map(
+                            (data) => PriceCard(
+                              data: data,
+                              onClick: () {
+                                Navigator.of(context).pushNamed(
+                                  PriceGroupDetail.routeName,
+                                  arguments: PriceGroupDetailArguments(
+                                      id: data.id, type: 'GROUP'),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
                     )
-                    .toList(),
-              ),
+                  : const NotFound(
+                      module: 'INVENTORY',
+                      labelText: "Хоосон байна",
+                    ),
             ),
           );
   }

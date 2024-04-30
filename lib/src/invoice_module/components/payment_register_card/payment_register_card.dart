@@ -33,7 +33,7 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
     double difference = widget.received -
         widget.list.fold(
             0, (previousValue, element) => previousValue + element.amount!) +
-        (double.tryParse(controller.text) ?? 0);
+        (double.tryParse(Utils().parseCurrency(controller.text)) ?? 0);
     return difference;
   }
 
@@ -210,6 +210,7 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                       },
                       inputFormatters: [CurrencyInputFormatter()],
                       decoration: InputDecoration(
+                        suffixText: '₮',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(color: grey2),
@@ -219,7 +220,7 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                           borderSide: const BorderSide(color: grey2),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 15),
+                            vertical: 4, horizontal: 15),
                         isDense: true,
                       ),
                     ),
@@ -233,12 +234,13 @@ class _PaymentRegisterCardState extends State<PaymentRegisterCard> {
                         if (widget.data.amountToPay! < differential()) {
                           setState(() {
                             registered = widget.data.amountToPay!;
-                            controller.text =
-                                widget.data.amountToPay!.toInt().toString();
+                            controller.text = Utils().formatCurrency(
+                                widget.data.amountToPay!.toString());
                           });
                         } else {
                           setState(() {
-                            controller.text = differential().toInt().toString();
+                            controller.text = Utils()
+                                .formatCurrency(differential().toString());
                             registered = differential();
                           });
                         }

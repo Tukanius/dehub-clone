@@ -2,7 +2,6 @@ import 'package:dehub/components/custom_switch/custom_switch.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -33,9 +32,8 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
   Widget build(BuildContext context) {
     index = widget.list?.indexWhere((element) => element.id == widget.data.id);
     user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
-    bool permission = Permission().check(user, "ERP_NET_PRICE_SET");
     return GestureDetector(
-      onTap: permission ? widget.onClick : null,
+      onTap: widget.onClick,
       child: Container(
         margin: const EdgeInsets.only(bottom: 3),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -79,7 +77,7 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                     ],
                   ),
                 ),
-                if (widget.list != null)
+                if (widget.list != null && widget.onChange != null)
                   Checkbox(
                     side: MaterialStateBorderSide.resolveWith(
                       (states) => const BorderSide(
@@ -94,9 +92,7 @@ class _PriceSettingCardState extends State<PriceSettingCard> {
                     activeColor: productColor,
                     value: index! > -1,
                     onChanged: (value) {
-                      if (permission) {
-                        widget.onChange!();
-                      }
+                      widget.onChange!();
                     },
                   ),
               ],

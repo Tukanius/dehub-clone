@@ -36,7 +36,7 @@ class InventorySupplierCardState extends State<InventorySupplierCard> {
       child: AnimatedContainer(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-        duration: Duration(milliseconds: 300 + (widget.index * 200)),
+        duration: Duration(milliseconds: 200 + (widget.index * 100)),
         curve: Curves.ease,
         transform: Matrix4.translationValues(
           widget.startAnimation ? 0 : MediaQuery.of(context).size.width,

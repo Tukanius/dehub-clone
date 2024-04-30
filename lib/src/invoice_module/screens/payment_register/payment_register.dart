@@ -126,6 +126,13 @@ class PaymentRegisterState extends State<PaymentRegister>
               context,
               "Сонгосон нэхэмжлэх болгонд тус бүрийн үнийн дүн оруулах ёстой",
               false);
+        } else if ((received -
+                selected.fold(
+                    0.0,
+                    (previousValue, element) =>
+                        previousValue + element.amount!)) !=
+            0) {
+          showCustomDialog(context, "Мөнгөн дүн үлдэгдэлтэй байна", false);
         } else {
           await InvoiceApi().historyCreate(data);
           showCustomDialog(context, "Амжилттай төлбөр бүртгэлээ", true,
@@ -233,6 +240,7 @@ class PaymentRegisterState extends State<PaymentRegister>
                               },
                               inputFormatters: [CurrencyInputFormatter()],
                               decoration: const InputDecoration(
+                                suffixText: '₮',
                                 hintText: 'Энд оруулна уу',
                                 hintStyle: TextStyle(color: invoiceColor),
                                 prefixIcon: Row(

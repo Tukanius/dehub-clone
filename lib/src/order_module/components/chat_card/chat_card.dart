@@ -17,9 +17,24 @@ class ChatCard extends StatefulWidget {
 }
 
 class _ChatCardState extends State<ChatCard> {
+  bool startAnimation = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(milliseconds: 100), () {
+      setState(() {
+        startAnimation = true;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      transform: Matrix4.translationValues(
+          !startAnimation ? MediaQuery.of(context).size.width : 0, 0, 0),
       alignment: Alignment.centerRight,
       child: Column(
         crossAxisAlignment: widget.isOwnChat == false

@@ -242,8 +242,10 @@ class InventoryGoods {
   double? perValue;
   String? numberUnit;
   List<InventoryGoods>? categoryFields;
+  bool? isFetched;
 
   InventoryGoods({
+    this.isFetched,
     this.categoryFields,
     this.numberUnit,
     this.perValue,

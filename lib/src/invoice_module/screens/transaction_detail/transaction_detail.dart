@@ -1,20 +1,26 @@
 import 'package:dehub/components/field_card/field_card.dart';
+import 'package:dehub/models/general.dart';
+import 'package:dehub/models/invoice.dart';
+import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class InvoiceTransactionDetailArguments {
-  String id;
+  Invoice data;
   InvoiceTransactionDetailArguments({
-    required this.id,
+    required this.data,
   });
 }
 
 class InvoiceTransactionDetail extends StatefulWidget {
   static const routeName = '/InvoiceTransactionDetail';
-  final String id;
+  final Invoice data;
   const InvoiceTransactionDetail({
     super.key,
-    required this.id,
+    required this.data,
   });
 
   @override
@@ -23,8 +29,19 @@ class InvoiceTransactionDetail extends StatefulWidget {
 }
 
 class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
+  General general = General();
+
+  paymentMethod() {
+    final res = general.paymentMethod!
+        .firstWhere((element) => element.code == widget.data.paymentMethod)
+        .name;
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
+    general =
+        Provider.of<GeneralProvider>(context, listen: true).invoiceGeneral;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -63,9 +80,9 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
               alignment: Alignment.center,
               child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
-                child: const Text(
-                  'INV-23897',
-                  style: TextStyle(
+                child: Text(
+                  '${widget.data.description}',
+                  style: const TextStyle(
                     color: invoiceColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 18,
@@ -83,36 +100,38 @@ class _InvoiceTransactionDetailState extends State<InvoiceTransactionDetail> {
                 ),
               ),
             ),
-            const FieldCard(
+            FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
               labelText: "Гүйлгээний огноо",
-              secondText: "Огноо, цаг",
+              secondText:
+                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
               secondTextColor: invoiceColor,
             ),
-            const FieldCard(
+            FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
               labelText: "Төлбөрийн дүн",
-              secondText: "Төлсөн дүн",
+              secondText:
+                  "${Utils().formatCurrency(widget.data.trxAmount.toString())}₮",
               secondTextColor: invoiceColor,
             ),
-            const FieldCard(
+            FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
               labelText: "Гүйлгээний утга",
-              secondText: "Гүйлгээний утга",
+              secondText: "${widget.data.description}",
               secondTextColor: invoiceColor,
             ),
-            const FieldCard(
+            FieldCard(
               paddingHorizontal: 15,
               paddingVertical: 10,
               color: white,
               labelText: "Төлбөрийн хэрэгсэл",
-              secondText: "DeHUB",
+              secondText: "${paymentMethod()}",
               secondTextColor: invoiceColor,
             ),
             Container(

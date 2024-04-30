@@ -80,29 +80,35 @@ class _StandardPriceTabState extends State<StandardPriceTab>
                 onRefresh: onRefresh,
                 color: productColor,
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Column(
-                        children: prices.rows!
-                            .map(
-                              (data) => PriceGoodCard(
-                                data: data,
-                                onClick: () {
-                                  Navigator.of(context).pushNamed(
-                                    GoodsPriceChangeHistory.routeName,
-                                    arguments: GoodsPriceChangeHistoryArguments(
-                                        id: data.variantId),
-                                  );
-                                },
-                              ),
-                            )
-                            .toList(),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                    ],
-                  ),
+                  child: prices.rows!.isNotEmpty
+                      ? Column(
+                          children: [
+                            Column(
+                              children: prices.rows!
+                                  .map(
+                                    (data) => PriceGoodCard(
+                                      data: data,
+                                      onClick: () {
+                                        Navigator.of(context).pushNamed(
+                                          GoodsPriceChangeHistory.routeName,
+                                          arguments:
+                                              GoodsPriceChangeHistoryArguments(
+                                                  id: data.variantId),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+                          ],
+                        )
+                      : const NotFound(
+                          module: 'INVENTORY',
+                          labelText: "Хоосон байна",
+                        ),
                 ),
               )
         : const NotFound(

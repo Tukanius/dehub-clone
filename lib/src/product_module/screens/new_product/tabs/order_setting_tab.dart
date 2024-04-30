@@ -59,7 +59,8 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
           loading.loading(true);
           InventoryGoods form =
               InventoryGoods.fromJson(fbKey.currentState!.value);
-          form.supplierType = data.supplierType;
+          form.supplierType =
+              widget.data?.isFetched == true ? "RESELLER" : data.supplierType;
           form.baseUnitId = data.baseUnitId;
           form.weightLabel = data.unitWeightLabelId;
           form.spaceLabel = data.unitSpaceLabelId;
@@ -141,7 +142,9 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                 paddingHorizontal: 15,
                 paddingVertical: 10,
                 labelText: 'Ханган нийлүүлэгч',
-                secondText: source.product.supplierTypeName ?? 'Сонгох',
+                secondText: widget.data?.isFetched != true
+                    ? source.product.supplierTypeName ?? 'Сонгох'
+                    : "Татан аваад нийлүүлдэг",
                 secondTextColor: productColor,
                 arrowColor: productColor,
                 onClick: () {

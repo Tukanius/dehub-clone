@@ -58,7 +58,7 @@ class _PriceGroupPageState extends State<PriceGroupPage>
         ),
         actions: [
           if (tabController.index == 0 &&
-              Permission().check(user, "ERP_STD_PRICE"))
+              Permission().check(user, "ERP_PG", boolean: 'iscreate'))
             AddButton(
               onClick: () {
                 Navigator.of(context).pushNamed(

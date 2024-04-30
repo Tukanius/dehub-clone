@@ -872,7 +872,7 @@ class MyApp extends StatelessWidget {
                         settings.arguments as InvoiceTransactionDetailArguments;
                     return MaterialPageRoute(builder: (context) {
                       return InvoiceTransactionDetail(
-                        id: arguments.id,
+                        data: arguments.data,
                       );
                     });
                   case MenuPage.routeName:

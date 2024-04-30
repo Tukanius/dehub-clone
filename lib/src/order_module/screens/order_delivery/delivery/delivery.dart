@@ -41,10 +41,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   User user = User();
   TextEditingController chatController = TextEditingController();
   Result conversations = Result(count: 0, rows: []);
-  Order chat = Order();
-  bool isSubmit = false;
   RefreshController refreshController = RefreshController();
-  bool chatIsEmpty = true;
   Order get = Order();
   int limit = 10;
 
@@ -78,47 +75,56 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
   }
 
   void sendChat() async {
+    Order chat = Order();
     if (chatController.text.isNotEmpty) {
-      setState(() async {
-        try {
-          setState(() {
-            isSubmit = true;
-          });
-          chat.text = chatController.text;
-          chat.deliveryNoteId = widget.data.id;
-          chat.image = '';
-          await OrderApi().createConversation(chat);
-          conversations =
-              await OrderApi().conversationList('${widget.data.id}', 10);
+      try {
+        chat.text = chatController.text;
+        chat.deliveryNoteId = widget.data.id;
+        chat.image = '';
+        setState(() {
+          conversations.rows?.add(Order(
+            text: chatController.text,
+            createdAt: DateTime.now(),
+            user: Order(
+              id: user.id,
+              avatar: user.avatar,
+              lastName: user.lastName,
+              firstName: user.firstName,
+            ),
+          ));
+        });
+        // await OrderApi().createConversation(chat);
+        // await OrderApi().conversationList('${widget.data.id}', limit);
+        setState(() {
           chatController.text = '';
-          setState(() {
-            isSubmit = false;
-          });
-        } catch (e) {
-          debugPrint('============err===========');
-          debugPrint(e.toString());
-          debugPrint('============err===========');
-        }
-      });
+        });
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     } else {
       try {
-        setState(() {
-          isSubmit = true;
-        });
         chat.text = '👋';
         chat.deliveryNoteId = widget.data.id;
         chat.image = '';
-        await OrderApi().createConversation(chat);
-        conversations =
-            await OrderApi().conversationList('${widget.data.id}', 10);
-        chatController.text = '';
         setState(() {
-          isSubmit = false;
+          conversations.rows?.add(Order(
+            text: chatController.text,
+            createdAt: DateTime.now(),
+            user: Order(
+              id: user.id,
+              avatar: user.avatar,
+              lastName: user.lastName,
+              firstName: user.firstName,
+            ),
+          ));
+        });
+        // await OrderApi().createConversation(chat);
+        // await OrderApi().conversationList('${widget.data.id}', limit);
+        setState(() {
+          chatController.text = '';
         });
       } catch (e) {
-        debugPrint('============err===========');
         debugPrint(e.toString());
-        debugPrint('============err===========');
       }
     }
   }
@@ -173,7 +179,6 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                       onRefresh: onRefresh,
                       color: orderColor,
                       child: SingleChildScrollView(
-                        reverse: false,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -570,23 +575,16 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                         ),
                                       ),
                                     ),
-                                  isSubmit == true
-                                      ? const Center(
-                                          child: CircularProgressIndicator(
-                                            color: orderColor,
+                                  Column(
+                                    children: conversations.rows!.reversed
+                                        .map(
+                                          (data) => ChatCard(
+                                            isOwnChat: user.id == data.user.id,
+                                            data: data,
                                           ),
                                         )
-                                      : Column(
-                                          children: conversations.rows!
-                                              .map(
-                                                (data) => ChatCard(
-                                                  isOwnChat:
-                                                      user.id == data.user.id,
-                                                  data: data,
-                                                ),
-                                              )
-                                              .toList(),
-                                        ),
+                                        .toList(),
+                                  ),
                                 ],
                               ),
                             ),
@@ -616,9 +614,6 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                   child: FormTextField(
                                     onChanged: (value) {
                                       setState(() {});
-                                    },
-                                    onComplete: () {
-                                      sendChat();
                                     },
                                     controller: chatController,
                                     name: 'chat',

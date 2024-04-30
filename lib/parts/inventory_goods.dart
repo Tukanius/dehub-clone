@@ -130,6 +130,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     nameMon: json['nameMon'] != null ? json['nameMon'] as String : null,
     nameEng: json['nameEng'] != null ? json['nameEng'] as String : null,
     nameBill: json['nameBill'] != null ? json['nameBill'] as String : null,
+    isFetched: json['isFetched'] != null ? json['isFetched'] as bool : null,
     logo: json['logo'] != null ? json['logo'] as String : null,
     nameWeb: json['nameWeb'] != null ? json['nameWeb'] as String : null,
     nameApp: json['nameApp'] != null ? json['nameApp'] as String : null,
@@ -606,6 +607,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   if (instance.tier9Price != null) json['tier9Price'] = instance.tier9Price;
   if (instance.tier10Price != null) json['tier10Price'] = instance.tier10Price;
   if (instance.perType != null) json['perType'] = instance.perType;
+  if (instance.isFetched != null) json['isFetched'] = instance.isFetched;
   if (instance.changeType != null) json['changeType'] = instance.changeType;
   if (instance.perValue != null) json['perValue'] = instance.perValue;
   if (instance.tiers != null) json['tiers'] = instance.tiers;

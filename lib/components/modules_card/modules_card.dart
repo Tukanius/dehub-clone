@@ -32,10 +32,12 @@ class _ModulesCardState extends State<ModulesCard> {
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: true).user;
     bool isPartner = user.loginType == "PARTNER";
-    network = Permission().check(user, "NET_DASH") ||
-        Permission().check(user, "NET_INV_REC") ||
-        Permission().check(user, 'NET_INV_SENT') ||
-        Permission().check(user, 'NET_LIST');
+    if (user.id != null) {
+      network = Permission().check(user, "NET_DASH") ||
+          Permission().check(user, "NET_INV_REC") ||
+          Permission().check(user, 'NET_INV_SENT') ||
+          Permission().check(user, 'NET_LIST');
+    }
     return Container(
       margin: const EdgeInsets.only(top: 150, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(

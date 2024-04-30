@@ -44,22 +44,23 @@ class _HistoryCardState extends State<HistoryCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Text(
-                    'Гүйлгээний лавлах',
-                    style: TextStyle(
+                    widget.data.trxRefCode ?? "-",
+                    style: const TextStyle(
                       color: invoiceColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: grey3,
-                  size: 16,
-                ),
+                if (widget.onClick != null)
+                  const Icon(
+                    Icons.arrow_forward_ios,
+                    color: grey3,
+                    size: 16,
+                  ),
               ],
             ),
             const SizedBox(

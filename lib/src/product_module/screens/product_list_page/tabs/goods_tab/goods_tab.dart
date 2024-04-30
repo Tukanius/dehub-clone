@@ -223,32 +223,49 @@ class _GoodsTabState extends State<GoodsTab> with AfterLayoutMixin {
         child: Container(
           padding: const EdgeInsets.only(top: 20, bottom: 30),
           child: Column(
-            children: inactiveTypes.rows!
-                .map(
-                  (data) => GestureDetector(
-                    onTap: () {
-                      Navigator.of(ctx).pop();
-                      Navigator.of(context).pushNamed(
-                        PinCheckScreen.routeName,
-                        arguments: PinCheckScreenArguments(
-                          onSubmit: () {
-                            inactive(id, "INACTIVE", data.id);
-                          },
-                          color: productColor,
-                          labelText: "Бараа идэвхигүй болгох",
-                        ),
-                      );
-                    },
-                    child: Container(
-                      color: transparent,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Text("${data.text}"),
-                    ),
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: const Text(
+                  'Идэвхигүй болгох шалтгаах сонгох',
+                  style: TextStyle(
+                    color: grey3,
+                    fontWeight: FontWeight.w600,
                   ),
-                )
-                .toList(),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Column(
+                children: inactiveTypes.rows!
+                    .map(
+                      (data) => GestureDetector(
+                        onTap: () {
+                          Navigator.of(ctx).pop();
+                          Navigator.of(context).pushNamed(
+                            PinCheckScreen.routeName,
+                            arguments: PinCheckScreenArguments(
+                              onSubmit: () {
+                                inactive(id, "INACTIVE", data.id);
+                              },
+                              color: productColor,
+                              labelText: "Бараа идэвхигүй болгох",
+                            ),
+                          );
+                        },
+                        child: Container(
+                          color: transparent,
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: Text("${data.text}"),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
           ),
         ),
       ),

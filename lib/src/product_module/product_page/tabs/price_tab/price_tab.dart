@@ -166,28 +166,34 @@ class _PriceTabState extends State<PriceTab> with AfterLayoutMixin {
                                   return PriceSettingCard(
                                     list: priceList,
                                     data: data,
-                                    onClick: () {
-                                      if (index >= 0) {
-                                        setState(() {
-                                          priceList.removeAt(index);
-                                        });
-                                      } else {
-                                        setState(() {
-                                          priceList.add(data);
-                                        });
-                                      }
-                                    },
-                                    onChange: () {
-                                      if (index >= 0) {
-                                        setState(() {
-                                          priceList.removeAt(index);
-                                        });
-                                      } else {
-                                        setState(() {
-                                          priceList.add(data);
-                                        });
-                                      }
-                                    },
+                                    onClick: Permission()
+                                            .check(user, 'ERP_NET_PRICE_SET')
+                                        ? () {
+                                            if (index >= 0) {
+                                              setState(() {
+                                                priceList.removeAt(index);
+                                              });
+                                            } else {
+                                              setState(() {
+                                                priceList.add(data);
+                                              });
+                                            }
+                                          }
+                                        : null,
+                                    onChange: Permission()
+                                            .check(user, 'ERP_NET_PRICE_SET')
+                                        ? () {
+                                            if (index >= 0) {
+                                              setState(() {
+                                                priceList.removeAt(index);
+                                              });
+                                            } else {
+                                              setState(() {
+                                                priceList.add(data);
+                                              });
+                                            }
+                                          }
+                                        : null,
                                   );
                                 }).toList(),
                               )
