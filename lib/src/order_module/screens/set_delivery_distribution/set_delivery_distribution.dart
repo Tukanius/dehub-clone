@@ -427,18 +427,13 @@ class _SetDeliveryDistributionState extends State<SetDeliveryDistribution>
                             color: transparent,
                             child: Row(
                               children: [
-                                e.avatar == null
-                                    ? const CircleAvatar(
-                                        radius: 12,
-                                        backgroundImage:
-                                            AssetImage('images/map.jpg'),
-                                      )
-                                    : CircleAvatar(
-                                        backgroundColor: grey2,
-                                        radius: 12,
-                                        backgroundImage:
-                                            NetworkImage('${e.avatar}'),
-                                      ),
+                                if (e.avatar != null)
+                                  CircleAvatar(
+                                    backgroundColor: grey2,
+                                    radius: 12,
+                                    backgroundImage:
+                                        NetworkImage('${e.avatar}'),
+                                  ),
                                 const SizedBox(
                                   width: 10,
                                 ),

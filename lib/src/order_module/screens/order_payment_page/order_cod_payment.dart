@@ -400,22 +400,6 @@ class _OrderCodPaymentState extends State<OrderCodPayment>
       image: 'images/qpay_logo.png',
       name: 'Qpay',
     ),
-    // Order(
-    //   image: 'images/social_pay_logo.png',
-    //   name: 'Social Pay',
-    // ),
-    // Order(
-    //   image: 'assets/svg/bank_card.svg',
-    //   name: 'Картаар',
-    // ),
-    // Order(
-    //   image: 'assets/svg/sanhuujilt.svg',
-    //   name: 'Бэлэн мөнгөөр',
-    // ),
-    // Order(
-    //   image: 'assets/svg/bank_account.svg',
-    //   name: 'Дансаар',
-    // ),
   ];
 
   showModal() {

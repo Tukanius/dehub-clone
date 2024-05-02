@@ -1,6 +1,5 @@
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/src/profile/information/partner_info.dart';
 import 'package:dehub/src/profile/information/personal_info.dart';
 import 'package:dehub/src/profile/information/settings_page.dart';
 import 'package:dehub/src/splash/splash_page.dart';
@@ -224,7 +223,6 @@ class _ProfilePageState extends State<ProfilePage>
                       physics: const NeverScrollableScrollPhysics(),
                       children: const [
                         PersonalInfo(),
-                        PartnerInfo(),
                         SettingsPage(),
                       ],
                     ),

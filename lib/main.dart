@@ -108,7 +108,6 @@ import 'package:dehub/src/order_module/screens/new_order/add_attachment/add_atta
 import 'package:dehub/src/order_module/screens/new_order/add_row/order_add_row.dart';
 import 'package:dehub/src/order_module/screens/new_order/change_branch/change_branch_name.dart';
 import 'package:dehub/src/order_module/screens/new_order/new_order.dart';
-import 'package:dehub/src/order_module/screens/order_payment/order_payment.dart';
 import 'package:dehub/src/order_module/screens/new_order/order_send/order_send_customer.dart';
 import 'package:dehub/src/order_module/screens/new_order/order_send/order_send_page.dart';
 import 'package:dehub/src/order_module/screens/new_order/product_choose/product_choose.dart';
@@ -1557,25 +1556,6 @@ class MyApp extends StatelessWidget {
                         parentRefCode: arguments.parentRefCode,
                         listenController: arguments.listenController,
                       ),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        var begin = const Offset(0.0, 1.0);
-                        var end = Offset.zero;
-                        var curve = Curves.ease;
-
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
-                    );
-                  case OrderPayment.routeName:
-                    return PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          const OrderPayment(),
                       transitionsBuilder:
                           (context, animation, secondaryAnimation, child) {
                         var begin = const Offset(0.0, 1.0);
