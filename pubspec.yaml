@@ -44,8 +44,6 @@ dependencies:
   another_flushbar: ^1.12.29
   flutter_form_builder: ^9.0.0
   form_builder_validators: ^9.0.0
-  percent_indicator: ^4.2.3
-  flutter_rating_bar: ^4.0.1
   pinput: ^2.2.31
   dio: ^5.1.1
   cookie_jar: ^3.0.1
@@ -55,7 +53,6 @@ dependencies:
   shared_preferences: ^2.1.0
   lottie: ^2.3.2
   syncfusion_flutter_charts: ^23.1.42
-  syncfusion_flutter_datepicker: ^23.1.42
   file_picker: ^5.3.4
   flutter_secure_storage: ^9.0.0
   local_auth: ^2.1.7
@@ -64,10 +61,10 @@ dependencies:
   pie_chart: ^5.3.2
   image_picker: ^1.0.4
   connectivity_plus: ^5.0.1
-  flutter_file_downloader: ^1.1.4
   carousel_slider: ^4.2.1
   path_provider: ^2.1.2
   camera: ^0.10.5+9
+  flutter_phone_direct_caller: ^2.1.1
 
 dev_dependencies:
   flutter_test:

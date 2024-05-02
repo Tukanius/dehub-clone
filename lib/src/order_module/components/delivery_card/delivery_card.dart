@@ -76,7 +76,9 @@ class _DeliveryCardState extends State<DeliveryCard> {
                           color: grey,
                           image: DecorationImage(
                             image: NetworkImage(
-                              "${widget.data.receiverBusiness?.logo}",
+                              user.currentBusiness?.type == "SUPPLIER"
+                                  ? "${widget.data.receiverBusiness?.logo}"
+                                  : "${widget.data.business?.logo}",
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -85,8 +87,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                       const SizedBox(
                         width: 10,
                       ),
-                      user.currentBusiness?.type == "SUPPLIER" &&
-                              widget.data.order?.type == "SALES"
+                      user.currentBusiness?.type == "SUPPLIER"
                           ? Expanded(
                               child: Text(
                                 '${widget.data.receiverBusiness?.profileName}',

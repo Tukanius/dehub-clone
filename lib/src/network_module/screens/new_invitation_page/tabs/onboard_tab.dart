@@ -643,63 +643,6 @@ class _OnboardTabState extends State<OnboardTab> {
                 margin:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: const Text(
-                  'Байршлын мэдээлэл',
-                  style: TextStyle(
-                    color: grey3,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                width: MediaQuery.of(context).size.width,
-                color: white,
-                child: const Image(
-                  image: AssetImage('images/map.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Container(
-                color: white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Уртраг',
-                      style: TextStyle(color: dark),
-                    ),
-                    Text(
-                      '90.23',
-                      style: TextStyle(color: networkColor),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                color: white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Өргөрөг',
-                      style: TextStyle(color: dark),
-                    ),
-                    Text(
-                      '45.52',
-                      style: TextStyle(color: networkColor),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: const Text(
                   'Урилга авах хүн',
                   style: TextStyle(
                     color: grey3,

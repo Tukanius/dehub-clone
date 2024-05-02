@@ -382,6 +382,10 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
             .toList()
         : null,
     regUserId: json['regUserId'] != null ? json['regUserId'] as String : null,
+    childOrderSalesCode: json['childOrderSalesCode'] != null
+        ? json['childOrderSalesCode'] as String
+        : null,
+    isDropped: json['isDropped'] != null ? json['isDropped'] as bool : null,
     locationLat: json['locationLat'] != null
         ? double.parse(json['locationLat'].toString())
         : null,
@@ -522,6 +526,12 @@ Map<String, dynamic> _$OrderToJson(Order instance) {
   }
   if (instance.supplierStaffId != null) {
     json['supplierStaffId'] = instance.supplierStaffId;
+  }
+  if (instance.childOrderSalesCode != null) {
+    json['childOrderSalesCode'] = instance.childOrderSalesCode;
+  }
+  if (instance.isDropped != null) {
+    json['isDropped'] = instance.isDropped;
   }
   if (instance.proformaInvoiceId != null) {
     json['proformaInvoiceId'] = instance.proformaInvoiceId;

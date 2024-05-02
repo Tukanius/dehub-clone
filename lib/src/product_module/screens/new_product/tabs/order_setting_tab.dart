@@ -147,13 +147,15 @@ class _OrderSettingTabState extends State<OrderSettingTab> {
                     : "Татан аваад нийлүүлдэг",
                 secondTextColor: productColor,
                 arrowColor: productColor,
-                onClick: () {
-                  showModalBottomSheet(
-                    context: context,
-                    useSafeArea: true,
-                    builder: (context) => const SupplierTypeSheet(),
-                  );
-                },
+                onClick: widget.data?.isFetched != true
+                    ? () {
+                        showModalBottomSheet(
+                          context: context,
+                          useSafeArea: true,
+                          builder: (context) => const SupplierTypeSheet(),
+                        );
+                      }
+                    : null,
                 color: white,
               ),
               Container(

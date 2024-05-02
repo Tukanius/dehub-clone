@@ -51,6 +51,16 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
     }
   }
 
+  deliveryNoteStatus() {
+    if (widget.data.deliveryNote != null) {
+      final res = general.deliveryNoteStatus!.firstWhere((element) =>
+          element.code == widget.data.deliveryNote?.deliveryNoteStatus);
+      return res;
+    } else {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     general = Provider.of<GeneralProvider>(context, listen: true).orderGeneral;
@@ -242,11 +252,15 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     )
                   ],
                 ),
-                Text(
-                  DateFormat("yyyy-MM-dd HH:mm").format(widget.data.createdAt!),
-                  style: const TextStyle(
-                    color: grey2,
-                    fontSize: 12,
+                Expanded(
+                  child: Text(
+                    'Хүргэх: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse("${widget.data.deliveryDate}"))}',
+                    style: const TextStyle(
+                      color: grey2,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
+                    ),
+                    textAlign: TextAlign.end,
                   ),
                 ),
               ],
@@ -280,16 +294,51 @@ class _SalesOrderCardState extends State<SalesOrderCard> {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Text(
-                    'Хүргэх: ${DateFormat("yyyy-MM-dd HH:mm").format(DateTime.parse("${widget.data.deliveryDate}"))}',
-                    style: const TextStyle(
-                      color: grey2,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
+                Row(
+                  children: [
+                    const Text(
+                      'Хүргэлт:  ',
+                      style: TextStyle(
+                        color: depBrown,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                      ),
                     ),
-                    textAlign: TextAlign.end,
-                  ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 3),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: widget.data.deliveryNote?.deliveryNoteStatus !=
+                                  null
+                              ? Color(int.parse(
+                                          deliveryNoteStatus()
+                                              .color
+                                              .substring(1, 7),
+                                          radix: 16) +
+                                      0xff000000)
+                                  .withOpacity(0.2)
+                              : transparent),
+                      child: Text(
+                        widget.data.deliveryNote?.deliveryNoteStatus != null
+                            ? deliveryNoteStatus().name.toString()
+                            : '-',
+                        style: TextStyle(
+                          color: widget.data.deliveryNote?.deliveryNoteStatus !=
+                                  null
+                              ? Color(int.parse(
+                                      deliveryNoteStatus()
+                                          .color
+                                          .substring(1, 7),
+                                      radix: 16) +
+                                  0xff000000)
+                              : null,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),

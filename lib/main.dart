@@ -27,7 +27,6 @@ import 'package:dehub/src/invoice_module/screens/payment_register/payment_regist
 import 'package:dehub/src/invoice_module/screens/invoice_transaction/invoice_transaction.dart';
 import 'package:dehub/src/invoice_module/screens/network_settlement_detail/network_settlement_detail.dart';
 import 'package:dehub/src/invoice_module/screens/settlement_detail/settlement_detail.dart';
-import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting.dart';
 import 'package:dehub/src/network_module/screens/account_setting/account_setting_detail/account_setting_detail.dart';
 import 'package:dehub/src/network_module/screens/account_setting/set_account/set_account.dart';
@@ -864,14 +863,6 @@ class MyApp extends StatelessWidget {
                         settings.arguments as TransactionDetailPageArguments;
                     return MaterialPageRoute(builder: (context) {
                       return TransactionDetailPage(
-                        data: arguments.data,
-                      );
-                    });
-                  case InvoiceTransactionDetail.routeName:
-                    InvoiceTransactionDetailArguments arguments =
-                        settings.arguments as InvoiceTransactionDetailArguments;
-                    return MaterialPageRoute(builder: (context) {
-                      return InvoiceTransactionDetail(
                         data: arguments.data,
                       );
                     });

@@ -5,7 +5,6 @@ import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatefulWidget {
@@ -69,31 +68,6 @@ class _ProductCardState extends State<ProductCard> {
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
-          ),
-          const SizedBox(
-            height: 7,
-          ),
-          RatingBar(
-            itemSize: 12,
-            initialRating: 3,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            ratingWidget: RatingWidget(
-              full: const Icon(
-                Icons.star,
-                color: orange,
-              ),
-              half: const Icon(
-                Icons.star_half,
-                color: orange,
-              ),
-              empty: const Icon(
-                Icons.star_border,
-                color: orange,
-              ),
-            ),
-            onRatingUpdate: (rating) {},
           ),
           const SizedBox(
             height: 7,

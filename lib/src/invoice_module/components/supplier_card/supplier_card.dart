@@ -1,7 +1,6 @@
 import 'package:dehub/models/invoice.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SupplierCard extends StatefulWidget {
   final bool? shoppingCard;
@@ -87,31 +86,6 @@ class _SupplierCardState extends State<SupplierCard> {
                           style: const TextStyle(
                             color: dark,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        RatingBar(
-                          itemSize: 12,
-                          initialRating: 3,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          ratingWidget: RatingWidget(
-                            full: const Icon(
-                              Icons.star,
-                              color: orange,
-                            ),
-                            half: const Icon(
-                              Icons.star_half,
-                              color: orange,
-                            ),
-                            empty: const Icon(
-                              Icons.star_border,
-                              color: orange,
-                            ),
-                          ),
-                          onRatingUpdate: (rating) {},
                         ),
                       ],
                     ),

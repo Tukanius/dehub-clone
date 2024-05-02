@@ -112,7 +112,7 @@ class _SetAccountState extends State<SetAccount> {
               paddingVertical: 10,
               labelText: "Орлого авах данс",
               onClick: () {
-                inAcc();
+                inOutAcc("IN");
               },
               arrowColor: networkColor,
               secondText: inAccName ?? '-',
@@ -124,7 +124,7 @@ class _SetAccountState extends State<SetAccount> {
               paddingVertical: 10,
               labelText: "Зарлага гаргах данс",
               onClick: () {
-                outAcc();
+                inOutAcc("OUT");
               },
               arrowColor: networkColor,
               secondText: outAccName ?? '-',
@@ -180,7 +180,7 @@ class _SetAccountState extends State<SetAccount> {
     );
   }
 
-  inAcc() {
+  inOutAcc(String type) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -214,11 +214,19 @@ class _SetAccountState extends State<SetAccount> {
                             .map(
                               (e) => GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    inAccName = "${e.bankName} ${e.number}";
-                                    inAccId = e.id.toString();
-                                  });
-                                  Navigator.of(context).pop();
+                                  if (type == "IN") {
+                                    setState(() {
+                                      inAccName = "${e.bankName} ${e.number}";
+                                      inAccId = e.id.toString();
+                                    });
+                                    Navigator.of(context).pop();
+                                  } else {
+                                    setState(() {
+                                      outAccName = "${e.bankName} ${e.number}";
+                                      outAccId = e.id.toString();
+                                    });
+                                    Navigator.of(context).pop();
+                                  }
                                 },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
@@ -227,121 +235,13 @@ class _SetAccountState extends State<SetAccount> {
                                   color: transparent,
                                   child: Row(
                                     children: [
-                                      e.icon == null
-                                          ? const CircleAvatar(
-                                              radius: 12,
-                                              backgroundImage:
-                                                  AssetImage('images/map.jpg'),
-                                            )
-                                          : CircleAvatar(
-                                              backgroundColor: grey2,
-                                              radius: 12,
-                                              backgroundImage:
-                                                  NetworkImage('${e.icon}'),
-                                            ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        '${e.bankName} ${e.number}',
-                                        style: TextStyle(
-                                          color: black.withOpacity(0.7),
+                                      if (e.icon != null)
+                                        CircleAvatar(
+                                          backgroundColor: grey2,
+                                          radius: 12,
+                                          backgroundImage:
+                                              NetworkImage('${e.icon}'),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      )
-                    : Column(
-                        children: [
-                          const NotFound(
-                            module: "NETWORK",
-                            labelText: '',
-                          ),
-                          CustomButton(
-                            onClick: () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context)
-                                  .pushNamed(LinkAccountPage.routeName);
-                            },
-                            labelColor: networkColor,
-                            labelText: 'Данс нэмэх',
-                          ),
-                        ],
-                      ),
-                const SizedBox(
-                  height: 40,
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  outAcc() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-        ),
-      ),
-      useSafeArea: true,
-      backgroundColor: white,
-      builder: (context) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 25, bottom: 20),
-                  child: const Text(
-                    'Зарлагын данс сонгох',
-                    style: TextStyle(
-                      color: grey2,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                general.bankAccounts!.isNotEmpty
-                    ? Column(
-                        children: general.bankAccounts!
-                            .map(
-                              (e) => GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    outAccName = "${e.bankName} ${e.number}";
-                                    outAccId = e.id.toString();
-                                  });
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  color: transparent,
-                                  child: Row(
-                                    children: [
-                                      e.icon == null
-                                          ? const CircleAvatar(
-                                              radius: 12,
-                                              backgroundImage:
-                                                  AssetImage('images/map.jpg'),
-                                            )
-                                          : CircleAvatar(
-                                              backgroundColor: grey2,
-                                              radius: 12,
-                                              backgroundImage:
-                                                  NetworkImage('${e.icon}'),
-                                            ),
                                       const SizedBox(
                                         width: 10,
                                       ),

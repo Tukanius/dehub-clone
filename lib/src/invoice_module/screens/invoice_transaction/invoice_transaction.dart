@@ -7,7 +7,6 @@ import 'package:dehub/models/result.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
 import 'package:dehub/src/invoice_module/components/invoice_transaction_card/history_card.dart';
-import 'package:dehub/src/invoice_module/screens/transaction_detail/transaction_detail.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -223,19 +222,6 @@ class _InvoiceTransactionState extends State<InvoiceTransaction>
                                 .map(
                                   (data) => HistoryCard(
                                     data: data,
-                                    onClick:
-                                        widget.data.receiverBusiness != null
-                                            ? () {
-                                                Navigator.of(context).pushNamed(
-                                                  InvoiceTransactionDetail
-                                                      .routeName,
-                                                  arguments:
-                                                      InvoiceTransactionDetailArguments(
-                                                    data: data,
-                                                  ),
-                                                );
-                                              }
-                                            : null,
                                   ),
                                 )
                                 .toList(),

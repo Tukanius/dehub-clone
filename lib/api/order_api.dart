@@ -91,7 +91,7 @@ class OrderApi extends HttpRequest {
   }
 
   Future<Result> deliveryNoteList(ResultArguments resultArguments) async {
-    var res = await get('/delivery_note', "ORDER", true,
+    var res = await get('/delivery_management', "ORDER", true,
         data: resultArguments.toJson(), handler: true);
     return Result.fromJson(res, Order.fromJson);
   }
@@ -103,20 +103,20 @@ class OrderApi extends HttpRequest {
   }
 
   Future<Order> deliveryNoteStart(String id) async {
-    var res =
-        await put('/delivery_note/$id/start', "ORDER", true, handler: true);
+    var res = await put('/delivery_management/$id/start', "ORDER", true,
+        handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Order> createConversation(Order data) async {
-    var res = await post('/delivery_note/conversation', 'ORDER', true,
+    var res = await post('/delivery_management/conversation', 'ORDER', true,
         data: data.toJson(), handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Result> conversationList(String id, int limit) async {
     var res = await get(
-        '/delivery_note/conversation?deliveryNoteId=$id&limit=$limit',
+        '/delivery_management/conversation?deliveryNoteId=$id&limit=$limit',
         "ORDER",
         true,
         handler: true);
@@ -124,35 +124,37 @@ class OrderApi extends HttpRequest {
   }
 
   Future<Order> deliveryNoteGet(String id) async {
-    var res = await get('/delivery_note/$id', 'ORDER', true, handler: true);
+    var res =
+        await get('/delivery_management/$id', 'ORDER', true, handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Order> deliveryNotestart(String id) async {
-    var res =
-        await put('/delivery_note/$id/start', "ORDER", true, handler: true);
+    var res = await put('/delivery_management/$id/start', "ORDER", true,
+        handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Order> deliveryNoteProceed(String id) async {
-    var res =
-        await put('/delivery_note/$id/proceed', 'ORDER', true, handler: true);
+    var res = await put('/delivery_management/$id/proceed', 'ORDER', true,
+        handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Order> deliveryNotePause(String id) async {
-    var res =
-        await put('/delivery_note/$id/pause', 'ORDER', true, handler: true);
+    var res = await put('/delivery_management/$id/pause', 'ORDER', true,
+        handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Order> deliveryNoteEnd(String id) async {
-    var res = await put('/delivery_note/$id/end', "ORDER", true, handler: true);
+    var res =
+        await put('/delivery_management/$id/end', "ORDER", true, handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
   Future<Order> deliveryNoteLineConfirm(Order data, String id) async {
-    var res = await put('/delivery_note/$id/line_confirm', "ORDER", true,
+    var res = await put('/delivery_management/$id/line_confirm', "ORDER", true,
         data: data.toJson(), handler: true);
     return Order.fromJson(res as Map<String, dynamic>);
   }
@@ -186,32 +188,9 @@ class OrderApi extends HttpRequest {
     return Order.fromJson(res as Map<String, dynamic>);
   }
 
-  Future<Order> deliveryManagementCreate(Order data) async {
-    var res = await post('/delivery_management', "ORDER", true,
-        handler: true, data: data.toJson());
-    return Order.fromJson(res as Map<String, dynamic>);
-  }
-
-  Future<Order> deliveryManagementAssign(Order data, String id) async {
-    var res = await put('/delivery_management/$id/assign', "ORDER", true,
-        data: data.toJson());
-    return Order.fromJson(res as Map<String, dynamic>);
-  }
-
-  Future<Order> deliveryManagementApprove(String id) async {
-    var res = await get('/delivery_management/$id/approve', "ORDER", true);
-    return Order.fromJson(res as Map<String, dynamic>);
-  }
-
   Future<Order> pullSheetCreate(Order data) async {
     var res = await post('/pull_sheet', "ORDER", true, data: data.toJson());
     return Order.fromJson(res as Map<String, dynamic>);
-  }
-
-  Future<Result> deliveryManagementList(ResultArguments resultArguments) async {
-    var res = await get('/delivery_management', "ORDER", true,
-        data: resultArguments.toJson());
-    return Result.fromJson(res, Order.fromJson);
   }
 
   Future<Result> staffSelect(String businessId) async {
@@ -283,5 +262,28 @@ class OrderApi extends HttpRequest {
   cancel(String id) async {
     var res = await put('/order/$id/cancel', "ORDER", true);
     return res;
+  }
+
+  Future<Order> deliveryManagementCreate(Order data) async {
+    var res = await post('/delivery_note', "ORDER", true,
+        handler: true, data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryManagementAssign(Order data, String id) async {
+    var res = await put('/delivery_note/$id/assign', "ORDER", true,
+        data: data.toJson());
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Order> deliveryManagementApprove(String id) async {
+    var res = await get('/delivery_note/$id/approve', "ORDER", true);
+    return Order.fromJson(res as Map<String, dynamic>);
+  }
+
+  Future<Result> deliveryManagementList(ResultArguments resultArguments) async {
+    var res = await get('/delivery_note', "ORDER", true,
+        data: resultArguments.toJson());
+    return Result.fromJson(res, Order.fromJson);
   }
 }

@@ -123,12 +123,6 @@ class FirstPageState extends State<FirstPage> with AfterLayoutMixin {
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset(
-                                        'assets/svg/notification.svg',
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
                                       Container(
                                         margin:
                                             const EdgeInsets.only(right: 20),

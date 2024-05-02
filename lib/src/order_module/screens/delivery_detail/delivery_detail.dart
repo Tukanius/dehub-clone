@@ -5,6 +5,7 @@ import 'package:dehub/src/order_module/screens/product_give/product_give.dart';
 import 'package:dehub/widgets/custom_button.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:after_layout/after_layout.dart';
@@ -206,61 +207,47 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Утас',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 12,
-                                  ),
+                            GestureDetector(
+                              onTap: () {
+                                FlutterPhoneDirectCaller.callNumber(
+                                    "+97696119230");
+                              },
+                              child: Container(
+                                color: transparent,
+                                child: Row(
+                                  children: [
+                                    const Text(
+                                      'Утас',
+                                      style: TextStyle(
+                                        color: black,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                    Container(
+                                      height: 36,
+                                      width: 36,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: orderColor),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                            'assets/svg/call.svg'),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Container(
-                                  height: 36,
-                                  width: 36,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: orderColor),
-                                  child: Center(
-                                    child:
-                                        SvgPicture.asset('assets/svg/call.svg'),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: const Text(
-                            'Түмэн дэлгүүр, УБ-ЧД, 4-р хороо, Сансар телевиз байр, 1 давхарт 3 тоот',
-                            style: TextStyle(
-                              color: orderColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Center(
-                          child: Image(
-                            image: AssetImage('images/map.jpg'),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
+                          height: 20,
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -399,6 +386,9 @@ class _DeliveryDetailState extends State<DeliveryDetail> with AfterLayoutMixin {
                               ),
                             ],
                           ),
+                        ),
+                        const SizedBox(
+                          height: 5,
                         ),
                         OrderGoodsInfo(
                           data: get.lines,

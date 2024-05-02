@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dehub/providers/loading_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/field_card/field_card.dart';
@@ -64,35 +65,42 @@ class _OptionInformationSheetState extends State<OptionInformationSheet> {
   }
 
   onSubmit() async {
+    final loading = Provider.of<LoadingProvider>(context, listen: false);
     List<InventoryGoods> optionValues = [];
-
     if (fbKey.currentState!.saveAndValidate()) {
-      for (var i = 0; i < widget.arrayData.length; i++) {
-        optionValues.add(
-          InventoryGoods(
-            optionId: widget.arrayData[i].optionId,
-            name: widget.arrayData[i].name,
-          ),
+      try {
+        loading.loading(true);
+        for (var i = 0; i < widget.arrayData.length; i++) {
+          optionValues.add(
+            InventoryGoods(
+              optionId: widget.arrayData[i].optionId,
+              name: widget.arrayData[i].name,
+            ),
+          );
+        }
+        InventoryGoods data =
+            InventoryGoods.fromJson(fbKey.currentState!.value);
+        data.goodsId = widget.jsonData.id;
+        data.optionValues = optionValues;
+        data.skuCode = '${widget.jsonData.skuCode}-${widget.index + 1}';
+        data.barCode = '${widget.jsonData.barCode}-${widget.index + 1}';
+        data.erpCode = '${widget.jsonData.erpCode}-${widget.index + 1}';
+        data.image = upload.url ?? widget.jsonData.image;
+        await InventoryApi().variant(data);
+        await Provider.of<InventoryProvider>(context, listen: false)
+            .removeOption(widget.index);
+        loading.loading(false);
+        showCustomDialog(
+          context,
+          "Хувилбар амжилттай үүслээ",
+          true,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         );
+      } catch (e) {
+        loading.loading(false);
       }
-      InventoryGoods data = InventoryGoods.fromJson(fbKey.currentState!.value);
-      data.goodsId = widget.jsonData.id;
-      data.optionValues = optionValues;
-      data.skuCode = '${widget.jsonData.skuCode}-${widget.index + 1}';
-      data.barCode = '${widget.jsonData.barCode}-${widget.index + 1}';
-      data.erpCode = '${widget.jsonData.erpCode}-${widget.index + 1}';
-      data.image = upload.url ?? widget.jsonData.image;
-      await InventoryApi().variant(data);
-      await Provider.of<InventoryProvider>(context, listen: false)
-          .removeOption(widget.index);
-      showCustomDialog(
-        context,
-        "Хувилбар амжилттай үүслээ",
-        true,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
     }
   }
 

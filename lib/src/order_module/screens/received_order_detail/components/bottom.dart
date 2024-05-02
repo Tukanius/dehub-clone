@@ -330,7 +330,7 @@ class _BottomState extends State<Bottom> {
                                           orderColor, BlendMode.srcIn),
                                     ),
                                     const Text(
-                                      'SO болгох',
+                                      'Хянаад илгээх',
                                       style: TextStyle(
                                         color: orderColor,
                                         fontSize: 10,
@@ -348,7 +348,14 @@ class _BottomState extends State<Bottom> {
                       : user.currentBusiness?.type == "SUPPLIER" &&
                               widget.order.deliveryNote == null &&
                               widget.order.orderStatus == "AUTHORIZED" &&
-                              Permission().check(user, "ORD_DN_ASSIGN")
+                              Permission().check(user, "ORD_DN_ASSIGN") &&
+                              widget.order.lines!.indexWhere((element) =>
+                                      element.isDropped == false &&
+                                      element.isSplit == false &&
+                                      element.isLoadable == false &&
+                                      element.isConfirmed == false &&
+                                      element.childOrderSalesCode == null) >
+                                  -1
                           ? GestureDetector(
                               onTap: () {
                                 onSubmit(

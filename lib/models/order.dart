@@ -221,8 +221,12 @@ class Order {
   String? color;
   String? proformaInvoiceId;
   String? supplierStaffId;
+  bool? isDropped;
+  String? childOrderSalesCode;
 
   Order({
+    this.isDropped,
+    this.childOrderSalesCode,
     this.supplierStaffId,
     this.proformaInvoiceId,
     this.color,

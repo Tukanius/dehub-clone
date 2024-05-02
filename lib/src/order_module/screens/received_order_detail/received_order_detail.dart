@@ -86,6 +86,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
         loading.loading(false);
         showCustomDialog(context, "Амжилттай", true, onPressed: () {
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
         });
       } catch (e) {
         loading.loading(false);
@@ -155,7 +156,7 @@ class _ReceivedOrderDetailState extends State<ReceivedOrderDetail>
                     GestureDetector(
                       onTap: () {
                         List<Order> data = splitList
-                            .where((element) => element.isSplit == false)
+                            .where((element) => element.isSplit == true)
                             .toList();
                         if (data.isEmpty) {
                           Navigator.of(context).pushNamed(

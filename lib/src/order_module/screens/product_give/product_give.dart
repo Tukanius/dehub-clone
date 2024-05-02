@@ -54,7 +54,13 @@ class _ProductGiveState extends State<ProductGive> with AfterLayoutMixin {
       difference = DateTime.now()
           .difference(DateTime.parse(shipment.dispatchedDate.toString()));
       int pausedDurationInSeconds = (shipment.pausedDuration!).round();
-      if (shipment.isPaused == true) {
+      if (shipment.isPaused == true && shipment.pausedDate != null) {
+        difference1 = DateTime.now()
+            .difference(DateTime.parse(shipment.pausedDate.toString()));
+      } else if (shipment.deliveredDate != null) {
+        difference1 = DateTime.now()
+            .difference(DateTime.parse(shipment.deliveredDate.toString()));
+      } else {
         difference1 = DateTime.now()
             .difference(DateTime.parse(shipment.pausedDate.toString()));
       }
