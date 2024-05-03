@@ -1,3 +1,4 @@
+import 'package:dehub/components/dashboard_screen/dashboard_screen.dart';
 import 'package:dehub/components/full_picture/full_picture.dart';
 import 'package:dehub/providers/checkout_provider.dart';
 import 'package:dehub/providers/finance_provider.dart';
@@ -1765,6 +1766,14 @@ class MyApp extends StatelessWidget {
                     return MaterialPageRoute(builder: (context) {
                       return CategoryDetailPage(
                         id: arguments.id,
+                      );
+                    });
+                  case DashboardScreen.routeName:
+                    DashboardScreenArguments arguments =
+                        settings.arguments as DashboardScreenArguments;
+                    return MaterialPageRoute(builder: (context) {
+                      return DashboardScreen(
+                        data: arguments.data,
                       );
                     });
                   case BuyerProposal.routeName:

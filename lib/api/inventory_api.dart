@@ -582,4 +582,13 @@ class InventoryApi extends HttpRequest {
         data: data.toJson());
     return Result.fromJson(res, InventoryGoods.fromJson);
   }
+
+  Future<InventoryGoods> dashboard(
+      String date, String rowDate, String startDate, String endDate) async {
+    var res = await get(
+        '/dashboard/main?date=$date&rowDate=$rowDate&startDate=$startDate&endDate=$endDate',
+        "INVENTORY",
+        true);
+    return InventoryGoods.fromJson(res as Map<String, dynamic>);
+  }
 }

@@ -15,6 +15,8 @@ Stats _$StatsFromJson(Map<String, dynamic> json) {
     changedAmount: json['changedAmount'] != null
         ? double.parse(json['changedAmount'].toString())
         : null,
+    count:
+        json['count'] != null ? double.parse(json['count'].toString()) : null,
   );
 }
 
@@ -24,6 +26,9 @@ Map<String, dynamic> _$StatsToJson(Stats instance) {
   if (instance.image != null) json['image'] = instance.image;
   if (instance.changedAmount != null) {
     json['changedAmount'] = instance.changedAmount;
+  }
+  if (instance.count != null) {
+    json['count'] = instance.count;
   }
   if (instance.changedCount != null) {
     json['changedCount'] = instance.changedCount;

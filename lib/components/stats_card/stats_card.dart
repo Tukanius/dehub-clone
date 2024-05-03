@@ -6,8 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class StatsCard extends StatefulWidget {
   final Stats data;
+  final String? module;
   const StatsCard({
     super.key,
+    this.module,
     required this.data,
   });
 
@@ -56,7 +58,9 @@ class _StatsCardState extends State<StatsCard> {
             ],
           ),
           Text(
-            '${Utils().formatCurrency("${widget.data.amount ?? widget.data.changedAmount}")}₮',
+            widget.module == "INVENTORY"
+                ? "${widget.data.count?.toInt() ?? 0}"
+                : '${Utils().formatCurrency("${widget.data.amount ?? widget.data.changedAmount}")}₮',
             style: const TextStyle(
               color: dark,
               fontSize: 16,
@@ -112,7 +116,9 @@ class _StatsCardState extends State<StatsCard> {
                     ),
                     Text(
                       widget.data.changedCount != null
-                          ? '${widget.data.changedCount?.toInt()}%'
+                          ? widget.module == "INVENTORY"
+                              ? "${widget.data.changedCount?.toInt()}"
+                              : '${widget.data.changedCount?.toInt()}%'
                           : '0%',
                       style: TextStyle(
                         color: widget.data.changedCount == null ||

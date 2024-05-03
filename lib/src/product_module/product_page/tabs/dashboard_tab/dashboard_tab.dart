@@ -1,7 +1,10 @@
+import 'package:dehub/api/inventory_api.dart';
 import 'package:dehub/components/dashboard_card/dashboard_card.dart';
+import 'package:dehub/components/dashboard_screen/dashboard_screen.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
+import 'package:dehub/src/product_module/components/dashboard/inventory_dashboard.dart';
 import 'package:dehub/src/product_module/screens/inventory_reference/inventory_reference.dart';
 import 'package:dehub/src/product_module/screens/price_group/price_group.dart';
 import 'package:dehub/src/product_module/screens/product_list_page/product_list_page.dart';
@@ -11,9 +14,7 @@ import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:provider/provider.dart';
-// import 'package:dehub/components/pie_chart/pie_chart.dart';
 
 class DashboardTab extends StatefulWidget {
   const DashboardTab({super.key});
@@ -24,38 +25,37 @@ class DashboardTab extends StatefulWidget {
 
 class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   User user = User();
-
+  InventoryGoods dashboard =
+      InventoryGoods(mostSold: [], stockInfo: [], numberSurvey: []);
   Map<String, double> data = {};
   List<InventoryGoods> legend = [];
   InventoryGoods confirmed = InventoryGoods();
   bool isLoading = true;
-  Map<String, dynamic> pieChart = {
-    "Сэнгүр": 5,
-    "Боргио": 2,
-    "Сэрүүн": 3,
-    "Касс": 7,
-    "Эден": 10,
-  };
   List<Color> colorList = [
     productColor,
     productColor,
     userColor,
     partnerColor,
+    partnerColor,
   ];
 
   @override
-  afterFirstLayout(BuildContext context) {
-    if (Permission().check(user, "ERP_DASH")) {
+  afterFirstLayout(BuildContext context) async {
+    if (user.currentBusiness?.type == "SUPPLIER" &&
+        Permission().check(user, "ERP_DASH")) {
+      dashboard = await InventoryApi().dashboard(
+        DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        DateFormat('yyyy-MM-dd').format(DateTime.now()),
+        DateFormat('yyyy-MM-dd')
+            .format(DateTime.now().subtract(const Duration(days: 14))),
+        DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      );
       Map<String, double> pieData = {};
-      pieChart.forEach((key, value) {
-        pieData[key] = double.parse(value.toString());
-        legend.add(
-          InventoryGoods(
-            count: value,
-            profileName: key,
-          ),
-        );
-      });
+      if (dashboard.mostSold!.isNotEmpty) {
+        for (var i = 0; i < dashboard.mostSold!.length; i++) {
+          pieData[''] = dashboard.mostSold![i].availableQuantity!;
+        }
+      }
       setState(() {
         data = pieData;
       });
@@ -68,7 +68,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).inventoryMe;
-
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,15 +112,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     svgColor: productColor,
                     svg: 'assets/svg/grid1.svg',
                   ),
-
-                // DashboardCard(
-                //   onClick: () {},
-                //   boxColor: productColor.withOpacity(0.1),
-                //   padding: 8,
-                //   labelText: 'Ажил, үйлчилгээ',
-                //   svgColor: productColor,
-                //   svg: 'assets/svg/headset.svg',
-                // ),
                 DashboardCard(
                   onClick: () {
                     Navigator.of(context).pushNamed(PriceGroupPage.routeName);
@@ -147,204 +137,24 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               ],
             ),
           ),
-          const SizedBox(
-            height: 25,
-          ),
-          if (Permission().check(user, "ERP_DASH"))
+          if (Permission().check(user, "ERP_DASH") &&
+              user.currentBusiness?.type == "SUPPLIER")
             isLoading == true
                 ? const Center(
                     child: CircularProgressIndicator(
                       color: productColor,
                     ),
                   )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Container(
-                      //       margin: const EdgeInsets.only(left: 15),
-                      //       child: Text(
-                      //         'Өндөр борлуулалттай',
-                      //         style: TextStyle(
-                      //           color: black,
-                      //           fontSize: 16,
-                      //           fontWeight: FontWeight.w500,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     GestureDetector(
-                      //       onTap: () {},
-                      //       child: Container(
-                      //         color: transparent,
-                      //         padding: const EdgeInsets.symmetric(vertical: 5),
-                      //         child: Row(
-                      //           children: [
-                      //             Text(
-                      //               "Бүгдийг",
-                      //               style: TextStyle(
-                      //                 color: productColor,
-                      //                 fontSize: 12,
-                      //                 fontWeight: FontWeight.w500,
-                      //               ),
-                      //             ),
-                      //             SizedBox(
-                      //               width: 10,
-                      //             ),
-                      //             Icon(
-                      //               Icons.arrow_forward_ios,
-                      //               color: productColor,
-                      //               size: 16,
-                      //             ),
-                      //             SizedBox(
-                      //               width: 15,
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
-                      // PieChart(legend: legend, colorList: colorList, data: data),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (user.currentBusiness?.type == "SUPPLIER")
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(left: 15),
-                                  child: const Text(
-                                    'Нөөцөд анхаарах бараа',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    color: transparent,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: const Row(
-                                      children: [
-                                        Text(
-                                          "Бүгдийг",
-                                          style: TextStyle(
-                                            color: productColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: productColor,
-                                          size: 16,
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                const Icon(
-                                  Icons.calendar_today,
-                                  color: grey,
-                                  size: 18,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                                  style: const TextStyle(
-                                    color: grey,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                const Icon(
-                                  Icons.calendar_today,
-                                  color: grey,
-                                  size: 18,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  DateFormat("yyyy-MM-dd")
-                                      .format(DateTime.now()),
-                                  style: const TextStyle(
-                                    color: grey,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Container(
-                              height: 180,
-                              padding: const EdgeInsets.all(10),
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: white,
-                              ),
-                              child: SfCartesianChart(
-                                series: <ChartSeries>[
-                                  BarSeries<InventoryGoods, String>(
-                                    borderRadius: BorderRadius.circular(5),
-                                    pointColorMapper: (datum, index) => datum
-                                                .profileName ==
-                                            "Эден"
-                                        ? green
-                                        : datum.profileName == "Касс"
-                                            ? pieYellow
-                                            : datum.profileName == "Сэрүүн"
-                                                ? pieOrange
-                                                : datum.profileName == "Боргио"
-                                                    ? pieRed
-                                                    : brown,
-                                    dataSource: legend,
-                                    xValueMapper: (gdp, _) => gdp.profileName,
-                                    yValueMapper: (gdp, _) => gdp.count,
-                                  )
-                                ],
-                                primaryXAxis: CategoryAxis(),
-                              ),
-                            ),
-                          ],
+                : InventoryDashboard(
+                    data: dashboard,
+                    onClick: () {
+                      Navigator.of(context).pushNamed(
+                        DashboardScreen.routeName,
+                        arguments: DashboardScreenArguments(
+                          data: dashboard.stockInfo!,
                         ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                      );
+                    },
                   ),
         ],
       ),

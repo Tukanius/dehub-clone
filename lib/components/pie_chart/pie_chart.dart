@@ -106,7 +106,9 @@ class PieChartState extends State<PieChart> {
                                         ? '${Utils().formatCurrency("${data.amount}")}₮'
                                         : widget.module == "PAYMENT"
                                             ? '${Utils().formatCurrency("${data.amount}")}₮'
-                                            : '${data.count}',
+                                            : widget.module == "INVENTORY"
+                                                ? "${Utils().formatCurrency("${data.standardPrice}")}₮"
+                                                : '${data.count}',
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -127,7 +129,9 @@ class PieChartState extends State<PieChart> {
                                         ? '${data.ordersCount.toInt()}'
                                         : widget.module == "PAYMENT"
                                             ? "${data.percent.toInt()}%"
-                                            : '${(100 * data.count / legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
+                                            : widget.module == "INVENTORY"
+                                                ? '${data.soldCount.toInt()}'
+                                                : '${(100 * data.count / legend.fold(0, (previousValue, element) => previousValue + element.count!)).toStringAsFixed(1)}%',
                             style: const TextStyle(
                               color: grey,
                               fontSize: 12,
@@ -149,7 +153,9 @@ class PieChartState extends State<PieChart> {
                                         ? '${data.name}'
                                         : widget.module == "PAYMENT"
                                             ? "${data.name}"
-                                            : '${data.profileName}',
+                                            : widget.module == "INVENTORY"
+                                                ? "${data.nameMon}"
+                                                : '${data.profileName}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: grey2,

@@ -7,6 +7,7 @@ import 'package:dehub/components/show_success_dialog/show_success_dialog.dart';
 import 'package:dehub/models/general.dart';
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/providers/general_provider.dart';
+import 'package:dehub/utils/permission.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:dehub/widgets/form_textfield.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dehub/models/result.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:provider/provider.dart';
+import 'package:dehub/models/user.dart';
+import 'package:dehub/providers/user_provider.dart';
 
 class SupplierProductListArguments {
   String id;
@@ -50,6 +53,7 @@ class _SupplierProductListState extends State<SupplierProductList>
   bool startAnimation = false;
   bool gridview = true;
   General general = General();
+  User user = User();
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -132,6 +136,7 @@ class _SupplierProductListState extends State<SupplierProductList>
   Widget build(BuildContext context) {
     general =
         Provider.of<GeneralProvider>(context, listen: false).inventoryGeneral;
+    user = Provider.of<UserProvider>(context, listen: true).inventoryMe;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -265,19 +270,25 @@ class _SupplierProductListState extends State<SupplierProductList>
                                       .map(
                                         (data) => GridViewProductCard(
                                           data: data,
-                                          buttonClick: () {
-                                            Navigator.of(context).pushNamed(
-                                              PinCheckScreen.routeName,
-                                              arguments:
-                                                  PinCheckScreenArguments(
-                                                onSubmit: () {
-                                                  fetch(data.id);
-                                                },
-                                                color: productColor,
-                                                labelText: "Бараа татан авах",
-                                              ),
-                                            );
-                                          },
+                                          buttonClick: Permission().check(user,
+                                                      'ERP_STORE_FETCH') &&
+                                                  data.hasFetched == false
+                                              ? () {
+                                                  Navigator.of(context)
+                                                      .pushNamed(
+                                                    PinCheckScreen.routeName,
+                                                    arguments:
+                                                        PinCheckScreenArguments(
+                                                      onSubmit: () {
+                                                        fetch(data.id);
+                                                      },
+                                                      color: productColor,
+                                                      labelText:
+                                                          "Бараа татан авах",
+                                                    ),
+                                                  );
+                                                }
+                                              : null,
                                         ),
                                       )
                                       .toList(),
@@ -286,18 +297,25 @@ class _SupplierProductListState extends State<SupplierProductList>
                                   itemCount: inventory.rows?.length,
                                   itemBuilder: (context, index) => ProductCard(
                                     data: inventory.rows![index],
-                                    buttonClick: () {
-                                      Navigator.of(context).pushNamed(
-                                        PinCheckScreen.routeName,
-                                        arguments: PinCheckScreenArguments(
-                                          onSubmit: () {
-                                            fetch(inventory.rows?[index].id);
-                                          },
-                                          color: productColor,
-                                          labelText: "Бараа татан авах",
-                                        ),
-                                      );
-                                    },
+                                    buttonClick: Permission().check(
+                                                user, 'ERP_STORE_FETCH') &&
+                                            inventory.rows![index].hasFetched ==
+                                                false
+                                        ? () {
+                                            Navigator.of(context).pushNamed(
+                                              PinCheckScreen.routeName,
+                                              arguments:
+                                                  PinCheckScreenArguments(
+                                                onSubmit: () {
+                                                  fetch(inventory
+                                                      .rows?[index].id);
+                                                },
+                                                color: productColor,
+                                                labelText: "Бараа татан авах",
+                                              ),
+                                            );
+                                          }
+                                        : null,
                                   ),
                                 )
                           : const NotFound(

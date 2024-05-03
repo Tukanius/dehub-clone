@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     tabController.index = widget.index;
     super.initState();
   }
@@ -68,84 +68,104 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     user = Provider.of<UserProvider>(context, listen: false).user;
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: const Color(0xffF5F5F5),
-        appBar: AppBar(
-          backgroundColor: menuBack,
-          surfaceTintColor: menuBack,
-          iconTheme: const IconThemeData(color: white),
-          elevation: 0,
-          centerTitle: false,
-          actions: [
-            GestureDetector(
-              onTap: () async {
-                logout();
-              },
-              child: Container(
-                margin: const EdgeInsets.only(right: 25),
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  border: Border.all(color: white.withOpacity(0.3), width: 0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.logout,
+    return Scaffold(
+      backgroundColor: const Color(0xffF5F5F5),
+      appBar: AppBar(
+        backgroundColor: menuBack,
+        surfaceTintColor: menuBack,
+        iconTheme: const IconThemeData(color: white),
+        elevation: 0,
+        centerTitle: false,
+        actions: [
+          GestureDetector(
+            onTap: () async {
+              logout();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 25),
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                border: Border.all(color: white.withOpacity(0.3), width: 0.5),
+                shape: BoxShape.circle,
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: white,
+                    size: 12,
+                  ),
+                  Text(
+                    'Гарах',
+                    style: TextStyle(
                       color: white,
-                      size: 12,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      'Гарах',
-                      style: TextStyle(
-                        color: white,
-                        fontSize: 8,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-          ],
-          title: tabController.index == 0
-              ? const Text(
-                  'Миний мэдээлэл',
-                  style: TextStyle(fontSize: 15, color: white),
-                )
-              : tabController.index == 1
-                  ? const Text(
-                      'Партнер мэдээлэл',
-                      style: TextStyle(fontSize: 15, color: white),
-                    )
-                  : const Text(
-                      'Систем тохиргоо',
-                      style: TextStyle(fontSize: 15, color: white),
-                    ),
-        ),
-        body: isLoading == true
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: menuBack,
-                ),
+          ),
+        ],
+        title: tabController.index == 0
+            ? const Text(
+                'Миний мэдээлэл',
+                style: TextStyle(fontSize: 15, color: white),
               )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 50),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
+            : tabController.index == 1
+                ? const Text(
+                    'Партнер мэдээлэл',
+                    style: TextStyle(fontSize: 15, color: white),
+                  )
+                : const Text(
+                    'Систем тохиргоо',
+                    style: TextStyle(fontSize: 15, color: white),
+                  ),
+      ),
+      body: isLoading == true
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: menuBack,
+              ),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          changePage(0);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: grey3, width: 0.5),
+                            color: tabController.index == 0 ? menuBack : white,
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/svg/bx_user-circle.svg',
+                            colorFilter: ColorFilter.mode(
+                                tabController.index != 0 ? grey3 : white,
+                                BlendMode.srcIn),
+                          ),
+                        ),
+                      ),
+                      if (user.loginType == "PARTNER")
                         GestureDetector(
                           onTap: () {
-                            changePage(0);
+                            changePage(1);
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
@@ -155,81 +175,56 @@ class _ProfilePageState extends State<ProfilePage>
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(color: grey3, width: 0.5),
                               color:
-                                  tabController.index == 0 ? menuBack : white,
+                                  tabController.index == 1 ? menuBack : white,
                             ),
                             child: SvgPicture.asset(
-                              'assets/svg/bx_user-circle.svg',
+                              'assets/svg/hospital.svg',
                               colorFilter: ColorFilter.mode(
-                                  tabController.index != 0 ? grey3 : white,
+                                  tabController.index != 1 ? grey3 : white,
                                   BlendMode.srcIn),
                             ),
                           ),
                         ),
-                        if (user.loginType == "PARTNER")
-                          GestureDetector(
-                            onTap: () {
-                              changePage(1);
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: grey3, width: 0.5),
-                                color:
-                                    tabController.index == 1 ? menuBack : white,
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/svg/hospital.svg',
-                                colorFilter: ColorFilter.mode(
-                                    tabController.index != 1 ? grey3 : white,
-                                    BlendMode.srcIn),
-                              ),
-                            ),
-                          ),
-                        GestureDetector(
-                          onTap: () {
-                            changePage(2);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: grey3, width: 0.5),
-                                color: tabController.index == 2
-                                    ? menuBack
-                                    : white),
-                            child: SvgPicture.asset(
-                              'assets/svg/settings.svg',
-                              colorFilter: ColorFilter.mode(
-                                  tabController.index != 2 ? grey3 : white,
-                                  BlendMode.srcIn),
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          changePage(1);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(color: grey3, width: 0.5),
+                              color:
+                                  tabController.index == 1 ? menuBack : white),
+                          child: SvgPicture.asset(
+                            'assets/svg/settings.svg',
+                            colorFilter: ColorFilter.mode(
+                                tabController.index != 1 ? grey3 : white,
+                                BlendMode.srcIn),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const Divider(
-                    indent: 20,
-                    endIndent: 20,
+                ),
+                const Divider(
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      PersonalInfo(),
+                      SettingsPage(),
+                    ],
                   ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: const [
-                        PersonalInfo(),
-                        SettingsPage(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-      ),
+                ),
+              ],
+            ),
     );
   }
 }

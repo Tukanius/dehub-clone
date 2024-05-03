@@ -1,3 +1,5 @@
+import 'package:dehub/models/stats.dart';
+
 part '../parts/inventory_goods.dart';
 
 class InventoryGoods {
@@ -243,8 +245,22 @@ class InventoryGoods {
   String? numberUnit;
   List<InventoryGoods>? categoryFields;
   bool? isFetched;
+  bool? hasFetched;
+  List<Stats>? numberSurvey;
+  List<InventoryGoods>? stockInfo;
+  List<InventoryGoods>? mostSold;
+  List<InventoryGoods>? newProducts;
+  double? changedCount;
+  double? soldCount;
 
   InventoryGoods({
+    this.soldCount,
+    this.numberSurvey,
+    this.stockInfo,
+    this.mostSold,
+    this.newProducts,
+    this.changedCount,
+    this.hasFetched,
     this.isFetched,
     this.categoryFields,
     this.numberUnit,

@@ -23,6 +23,30 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     rows: json['rows'] != null
         ? (json['rows'] as List).map((e) => InventoryGoods.fromJson(e)).toList()
         : null,
+    numberSurvey: json['numberSurvey'] != null
+        ? (json['numberSurvey'] as List).map((e) => Stats.fromJson(e)).toList()
+        : null,
+    stockInfo: json['stockInfo'] != null
+        ? (json['stockInfo'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    mostSold: json['mostSold'] != null
+        ? (json['mostSold'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    newProducts: json['newProducts'] != null
+        ? (json['newProducts'] as List)
+            .map((e) => InventoryGoods.fromJson(e))
+            .toList()
+        : null,
+    changedCount: json['changedCount'] != null
+        ? double.parse(json['changedCount'].toString())
+        : null,
+    soldCount: json['soldCount'] != null
+        ? double.parse(json['soldCount'].toString())
+        : null,
     categoryFields: json['categoryFields'] != null
         ? (json['categoryFields'] as List)
             .map((e) => InventoryGoods.fromJson(e))
@@ -131,6 +155,7 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
     nameEng: json['nameEng'] != null ? json['nameEng'] as String : null,
     nameBill: json['nameBill'] != null ? json['nameBill'] as String : null,
     isFetched: json['isFetched'] != null ? json['isFetched'] as bool : null,
+    hasFetched: json['hasFetched'] != null ? json['hasFetched'] as bool : null,
     logo: json['logo'] != null ? json['logo'] as String : null,
     nameWeb: json['nameWeb'] != null ? json['nameWeb'] as String : null,
     nameApp: json['nameApp'] != null ? json['nameApp'] as String : null,
@@ -595,6 +620,16 @@ InventoryGoods _$InventoryGoodsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
   Map<String, dynamic> json = {};
+
+  if (instance.numberSurvey != null) {
+    json['numberSurvey'] = instance.numberSurvey;
+  }
+  if (instance.stockInfo != null) json['stockInfo'] = instance.stockInfo;
+  if (instance.mostSold != null) json['mostSold'] = instance.mostSold;
+  if (instance.newProducts != null) json['newProducts'] = instance.newProducts;
+  if (instance.changedCount != null) {
+    json['changedCount'] = instance.changedCount;
+  }
   if (instance.tier0Price != null) json['tier0Price'] = instance.tier0Price;
   if (instance.tier1Price != null) json['tier1Price'] = instance.tier1Price;
   if (instance.tier2Price != null) json['tier2Price'] = instance.tier2Price;
@@ -630,6 +665,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
     json['priceGroupId'] = instance.priceGroupId;
   }
   if (instance.priceTierNo != null) json['priceTierNo'] = instance.priceTierNo;
+  if (instance.soldCount != null) json['soldCount'] = instance.soldCount;
   if (instance.businessIds != null) json['businessIds'] = instance.businessIds;
   if (instance.totalQuantity != null) {
     json['totalQuantity'] = instance.totalQuantity;
@@ -638,6 +674,7 @@ Map<String, dynamic> _$InventoryGoodsToJson(InventoryGoods instance) {
     json['excelUrl'] = instance.excelUrl;
   }
   if (instance.reference != null) json['reference'] = instance.reference;
+  if (instance.hasFetched != null) json['hasFetched'] = instance.hasFetched;
   if (instance.regUser != null) json['regUser'] = instance.regUser;
   if (instance.reservedQuantity != null) {
     json['reservedQuantity'] = instance.reservedQuantity;

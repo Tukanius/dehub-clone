@@ -131,7 +131,7 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
 
   void phoneCall() async {
     final Uri phoneLaunch =
-        Uri(scheme: 'tel', path: "tel:${get.buyerBusiness?.partner?.phone}");
+        Uri(scheme: 'tel', path: "${get.buyerBusiness?.partner?.phone}");
     if (await canLaunchUrl(phoneLaunch)) {
       await launchUrl(phoneLaunch);
     } else {}
@@ -269,48 +269,25 @@ class _DeliveryPageState extends State<DeliveryPage> with AfterLayoutMixin {
                                       ],
                                     ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 36,
-                                        width: 36,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: orderColor,
-                                        ),
-                                        child: Center(
-                                          child: SvgPicture.asset(
-                                            'assets/svg/map.svg',
-                                            colorFilter: const ColorFilter.mode(
-                                                white, BlendMode.srcIn),
-                                          ),
-                                        ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      phoneCall();
+                                    },
+                                    child: Container(
+                                      height: 36,
+                                      width: 36,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: orderColor,
                                       ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          phoneCall();
-                                        },
-                                        child: Container(
-                                          height: 36,
-                                          width: 36,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: orderColor,
-                                          ),
-                                          child: Center(
-                                            child: SvgPicture.asset(
-                                              'assets/svg/call.svg',
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                      white, BlendMode.srcIn),
-                                            ),
-                                          ),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          'assets/svg/call.svg',
+                                          colorFilter: const ColorFilter.mode(
+                                              white, BlendMode.srcIn),
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ),

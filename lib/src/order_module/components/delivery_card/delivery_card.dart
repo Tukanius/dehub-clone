@@ -284,7 +284,7 @@ class _DeliveryCardState extends State<DeliveryCard> {
                                   ),
                                 )
                               : Text(
-                                  DateFormat('yyyy-MM-dd').format(
+                                  DateFormat('yyyy-MM-dd HH:mm').format(
                                       DateTime.parse(widget.data.startDate!)),
                                   style: const TextStyle(
                                     color: buttonColor,

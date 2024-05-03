@@ -7,8 +7,10 @@ class Stats {
   double? percent;
   double? changedAmount;
   double? changedCount;
+  double? count;
 
   Stats({
+    this.count,
     this.changedAmount,
     this.changedCount,
     this.percent,

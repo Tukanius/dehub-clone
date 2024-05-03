@@ -1,7 +1,6 @@
 import 'package:dehub/models/inventory_goods.dart';
 import 'package:dehub/models/user.dart';
 import 'package:dehub/providers/user_provider.dart';
-import 'package:dehub/utils/permission.dart';
 import 'package:dehub/utils/utils.dart';
 import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,7 @@ class _ProductCardState extends State<ProductCard> {
                 '${widget.data.image}',
                 fit: BoxFit.cover,
               ),
-              if (Permission().check(user, 'ERP_STORE_FETCH'))
+              if (widget.buttonClick != null)
                 Positioned(
                   right: 10,
                   top: 10,

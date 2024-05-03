@@ -1,11 +1,14 @@
+import 'package:dehub/widgets/dialog_manager/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomCloseButton extends StatefulWidget {
   final Color? color;
+  final Color? svgColor;
   const CustomCloseButton({
     super.key,
     this.color,
+    this.svgColor,
   });
 
   @override
@@ -24,6 +27,8 @@ class _CustomCloseButtonState extends State<CustomCloseButton> {
         padding: const EdgeInsets.all(13),
         child: SvgPicture.asset(
           'assets/svg/close.svg',
+          colorFilter:
+              ColorFilter.mode(widget.svgColor ?? white, BlendMode.srcIn),
           height: 30,
         ),
       ),
