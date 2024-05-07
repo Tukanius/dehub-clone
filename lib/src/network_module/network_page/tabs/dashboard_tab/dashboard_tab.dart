@@ -36,58 +36,6 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   Map<String, double> data = {};
   List<Business> legend = [];
   User user = User();
-  PageController pageController = PageController();
-  int currentPage = 0;
-
-  Map<String, double> dummy = {
-    "ТОП 100": 5,
-    "ТОП 50": 4,
-    "ТОП 30": 3,
-    "ТОП 20": 2,
-    "ТОП 10": 1,
-  };
-
-  List<Business> dummyLegend = [
-    Business(
-      count: 5,
-      profileName: 'ТОП 100',
-    ),
-    Business(
-      count: 4,
-      profileName: 'ТОП 50',
-    ),
-    Business(
-      count: 3,
-      profileName: 'ТОП 30',
-    ),
-    Business(
-      count: 2,
-      profileName: 'ТОП 20',
-    ),
-    Business(
-      count: 1,
-      profileName: 'ТОП 10',
-    ),
-  ];
-
-  Business dummyInvitation = Business(
-    start: DateTime.parse('2024-02-25'),
-    end: DateTime.parse('2024-03-25'),
-    stats: [
-      Business(
-        name: 'Илгээсэн',
-        count: 3,
-      ),
-      Business(
-        name: 'Зөвшөөрсөн',
-        count: 2,
-      ),
-      Business(
-        name: 'Цуцлагдсан',
-        count: 4,
-      ),
-    ],
-  );
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -121,14 +69,6 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
     networkDashboard3,
     networkDashboard4,
   ];
-
-  @override
-  void initState() {
-    pageController.addListener(() {
-      setState(() {});
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -242,246 +182,107 @@ class DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                 const SizedBox(
                   height: 15,
                 ),
-                if (Permission().check(user, "NET_DASH"))
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            pageController.animateToPage(0,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease);
-                          });
-                        },
-                        child: CircleAvatar(
-                          radius: 8,
-                          backgroundColor: currentPage == 0
-                              ? Colors.grey
-                              : Colors.grey.shade300,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            pageController.animateToPage(1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease);
-                          });
-                        },
-                        child: CircleAvatar(
-                          radius: 8,
-                          backgroundColor: currentPage == 1
-                              ? Colors.grey
-                              : Colors.grey.shade300,
-                        ),
-                      ),
-                    ],
-                  ),
-                const SizedBox(
-                  height: 10,
-                ),
               ],
             ),
           ),
         ];
       },
       body: Permission().check(user, "NET_DASH")
-          ? PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
-              children: [
-                SingleChildScrollView(
+          ? isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: networkColor,
+                  ),
+                )
+              : SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 15),
-                                child: const Text(
-                                  'Харилцагч бизнесүүд',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(NetworkPartnerPage.routeName);
-                                },
-                                child: Container(
-                                  color: transparent,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: const Row(
-                                    children: [
-                                      Text(
-                                        "Бүгдийг",
-                                        style: TextStyle(
-                                          color: networkColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: networkColor,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          PieChart(
-                            legend: dummyLegend,
-                            colorList: colorList,
-                            data: dummy,
-                            module: "NETWORK",
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                      NetworkHorizontalChart(
-                        index: 2,
-                        data: dummyInvitation,
-                        labelText: 'Танайд ирсэн',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      NetworkHorizontalChart(
-                        index: 3,
-                        labelText: 'Танай илгээсэн',
-                        data: dummyInvitation,
-                      ),
-                    ],
-                  ),
-                ),
-                isLoading == true
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          color: networkColor,
-                        ),
-                      )
-                    : SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      if (data.isNotEmpty)
+                        Column(
                           children: [
-                            if (data.isNotEmpty)
-                              Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 15),
-                                        child: const Text(
-                                          'Харилцагч бизнесүүд',
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 15),
+                                  child: const Text(
+                                    'Харилцагч бизнесүүд',
+                                    style: TextStyle(
+                                      color: black,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        NetworkPartnerPage.routeName);
+                                  },
+                                  child: Container(
+                                    color: transparent,
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: const Row(
+                                      children: [
+                                        Text(
+                                          "Бүгдийг",
                                           style: TextStyle(
-                                            color: black,
-                                            fontSize: 16,
+                                            color: networkColor,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).pushNamed(
-                                              NetworkPartnerPage.routeName);
-                                        },
-                                        child: Container(
-                                          color: transparent,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          child: const Row(
-                                            children: [
-                                              Text(
-                                                "Бүгдийг",
-                                                style: TextStyle(
-                                                  color: networkColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: networkColor,
-                                                size: 16,
-                                              ),
-                                              SizedBox(
-                                                width: 15,
-                                              ),
-                                            ],
-                                          ),
+                                        SizedBox(
+                                          width: 10,
                                         ),
-                                      ),
-                                    ],
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: networkColor,
+                                          size: 16,
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  PieChart(
-                                    legend: legend,
-                                    colorList: colorList,
-                                    data: data,
-                                    module: "NETWORK",
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              ),
-                            if (received.stats != null)
-                              NetworkHorizontalChart(
-                                index: 2,
-                                data: received,
-                                labelText: 'Танайд ирсэн',
-                              ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
-                            if (sent.stats != null)
-                              NetworkHorizontalChart(
-                                index: 3,
-                                labelText: 'Танай илгээсэн',
-                                data: sent,
-                              ),
+                            PieChart(
+                              legend: legend,
+                              colorList: colorList,
+                              data: data,
+                              module: "NETWORK",
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                           ],
                         ),
+                      if (received.stats != null)
+                        NetworkHorizontalChart(
+                          index: 2,
+                          data: received,
+                          labelText: 'Танайд ирсэн',
+                        ),
+                      const SizedBox(
+                        height: 10,
                       ),
-              ],
-            )
+                      if (sent.stats != null)
+                        NetworkHorizontalChart(
+                          index: 3,
+                          labelText: 'Танай илгээсэн',
+                          data: sent,
+                        ),
+                    ],
+                  ),
+                )
           : const NotFound(
               module: 'NETWORK',
               labelText: 'Хандах эрх хүрэлцэхгүй байна',

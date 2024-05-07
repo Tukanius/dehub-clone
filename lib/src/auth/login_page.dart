@@ -473,7 +473,6 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
     User save = User();
     final loading = Provider.of<LoadingProvider>(context, listen: false);
     try {
-      loading.loading(true);
       authenticated = await auth.authenticate(
         localizedReason: 'Баталгаажуулалт',
         options: const AuthenticationOptions(
@@ -491,13 +490,17 @@ class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
         save.code = resultCode;
         save.username = resultEmail;
         save.password = resultPassword;
-        await Provider.of<UserProvider>(context, listen: false).login(save);
-        loading.loading(false);
-        Navigator.of(context).pushNamed(SplashPage.routeName);
+        try {
+          loading.loading(true);
+          await Provider.of<UserProvider>(context, listen: false).login(save);
+          loading.loading(false);
+          Navigator.of(context).pushNamed(SplashPage.routeName);
+        } catch (e) {
+          loading.loading(false);
+        }
       }
     } on PlatformException catch (e) {
       debugPrint(e.toString());
-      loading.loading(false);
       return;
     }
     if (!mounted) {

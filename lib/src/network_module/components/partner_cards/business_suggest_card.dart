@@ -140,54 +140,56 @@ class BusinessSuggestCardState extends State<BusinessSuggestCard> {
                           ),
                         ],
                       ),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              widget.data.staff?.avatar == null
-                                  ? const CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor: grey,
-                                      backgroundImage:
-                                          AssetImage('images/avatar.png'),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 12,
-                                      backgroundImage: NetworkImage(
-                                          '${widget.data.staff?.avatar}'),
-                                    ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                '${widget.data.staff?.firstName}',
-                                style: const TextStyle(
-                                  fontSize: 10,
+                      if (widget.data.staff != null)
+                        const Divider(
+                          thickness: 1,
+                        ),
+                      if (widget.data.staff != null)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                widget.data.staff?.avatar == null
+                                    ? const CircleAvatar(
+                                        radius: 12,
+                                        backgroundColor: grey,
+                                        backgroundImage:
+                                            AssetImage('images/avatar.png'),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 12,
+                                        backgroundImage: NetworkImage(
+                                            '${widget.data.staff?.avatar}'),
+                                      ),
+                                const SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '${widget.data.staff?.email}',
-                                style:
-                                    const TextStyle(color: grey3, fontSize: 10),
-                              ),
-                              Text(
-                                '${widget.data.staff?.phone}',
-                                style:
-                                    const TextStyle(color: grey3, fontSize: 10),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
+                                Text(
+                                  '${widget.data.staff?.firstName}',
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${widget.data.staff?.email}',
+                                  style: const TextStyle(
+                                      color: grey3, fontSize: 10),
+                                ),
+                                Text(
+                                  '${widget.data.staff?.phone}',
+                                  style: const TextStyle(
+                                      color: grey3, fontSize: 10),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                     ],
                   ),
                 ),

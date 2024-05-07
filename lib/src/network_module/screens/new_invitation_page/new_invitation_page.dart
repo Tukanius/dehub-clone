@@ -30,9 +30,11 @@ class _NewInvitationPageState extends State<NewInvitationPage> {
           backgroundColor: white,
           surfaceTintColor: white,
           iconTheme: const IconThemeData(color: networkColor),
-          title: const Text(
-            'Худалдан авагч урих',
-            style: TextStyle(
+          title: Text(
+            user.currentBusiness?.type == "SUPPLIER"
+                ? 'Худалдан авагч урих'
+                : "Нийлүүлэгч урих",
+            style: const TextStyle(
               color: networkColor,
               fontSize: 17,
               fontWeight: FontWeight.bold,

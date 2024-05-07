@@ -145,7 +145,8 @@ class _InventoryDashboardState extends State<InventoryDashboard> {
               ),
             ],
           ),
-        if (user.currentBusiness?.type == "SUPPLIER")
+        if (user.currentBusiness?.type == "SUPPLIER" &&
+            widget.data.stockInfo!.isNotEmpty)
           Center(
             child: TextButton(
               onPressed: widget.onClick,

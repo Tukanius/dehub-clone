@@ -28,23 +28,12 @@ class DashBoardTab extends StatefulWidget {
 }
 
 class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
-  Map<String, double> dummyData = {};
   Map<String, double> data = {};
   List<Finance> legend = [];
   Finance dashboard = Finance(numberSurvey: [], byInterval: [], byProgram: []);
   Result programs = Result(rows: []);
   bool isLoading = true;
   User user = User();
-  PageController pageController = PageController();
-  int currentPage = 0;
-
-  Map<String, dynamic> pieChart = {
-    "Санхүүжилт авсан": 3,
-    "Санхүүжилт хүссэн": 3,
-    "Олголт хүлээж буй": 3,
-    "Боломжит лимит": 3,
-    "Үлдэгдэл лимит": 3,
-  };
 
   List<Color> colorList = [
     orderColor,
@@ -82,18 +71,7 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
     final source = Provider.of<FinanceProvider>(context, listen: false);
     programs = await FinanceApi().programSelect(source.url);
     await main(source.url, null);
-    Map<String, double> pieData = {};
-    pieChart.forEach((key, value) {
-      pieData[key] = double.parse(value.toString());
-      legend.add(
-        Finance(
-          count: value,
-          name: key,
-        ),
-      );
-    });
     setState(() {
-      dummyData = pieData;
       isLoading = false;
     });
   }
@@ -218,49 +196,6 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                           const SizedBox(
                             height: 25,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    pageController.animateToPage(0,
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        curve: Curves.ease);
-                                  });
-                                },
-                                child: CircleAvatar(
-                                  radius: 8,
-                                  backgroundColor: currentPage == 0
-                                      ? Colors.grey
-                                      : Colors.grey.shade300,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    pageController.animateToPage(1,
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        curve: Curves.ease);
-                                  });
-                                },
-                                child: CircleAvatar(
-                                  radius: 8,
-                                  backgroundColor: currentPage == 1
-                                      ? Colors.grey
-                                      : Colors.grey.shade300,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
                         ],
                       ),
               ],
@@ -274,383 +209,189 @@ class _DashBoardTabState extends State<DashBoardTab> with AfterLayoutMixin {
                 color: source.currentColor,
               ),
             )
-          : PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  currentPage = value;
-                });
-              },
-              children: [
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 15),
-                            child: const Text(
-                              'Хөтөлбөрийн лимит',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Бүгдийг",
-                                    style: TextStyle(
-                                      color: source.currentColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: source.currentColor,
-                                    size: 16,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (dummyData.isNotEmpty)
-                        PieChart(
-                          legend: legend,
-                          colorList: colorList,
-                          data: dummyData,
-                          module: "FINANCE",
-                        ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 15),
-                            child: const Text(
-                              'Танай илгээсэн',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Бүгдийг",
-                                    style: TextStyle(
-                                      color: source.currentColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: source.currentColor,
-                                    size: 16,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Icon(
-                            Icons.calendar_today,
-                            color: grey,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                            style: const TextStyle(
-                              color: grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.calendar_today,
-                            color: grey,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                            style: const TextStyle(
-                              color: grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       Container(
-                        height: 180,
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: white,
-                        ),
-                        child: SfCartesianChart(
-                          series: <ChartSeries>[
-                            BarSeries<Finance, String>(
-                              borderRadius: BorderRadius.circular(5),
-                              pointColorMapper: (datum, index) =>
-                                  datum.profileName == "Зөвшөөрсөн"
-                                      ? networkDashboard2
-                                      : datum.profileName == "Илгээсэн"
-                                          ? source.currentColor
-                                          : grey2,
-                              dataSource: legend,
-                              xValueMapper: (gdp, _) => gdp.profileName,
-                              yValueMapper: (gdp, _) => gdp.count,
-                            )
-                          ],
-                          primaryXAxis: CategoryAxis(),
+                        margin: const EdgeInsets.only(left: 15),
+                        child: const Text(
+                          'Хөтөлбөрийн лимит',
+                          style: TextStyle(
+                            color: black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          color: transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Бүгдийг",
+                                style: TextStyle(
+                                  color: source.currentColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color: source.currentColor,
+                                size: 16,
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (data.isNotEmpty)
+                    PieChart(
+                      legend: dashboard.byProgram!,
+                      colorList: colorList,
+                      data: data,
+                      module: "FINANCE",
+                    ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 15),
-                            child: const Text(
-                              'Хөтөлбөрийн лимит',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Бүгдийг",
-                                    style: TextStyle(
-                                      color: source.currentColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: source.currentColor,
-                                    size: 16,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      if (data.isNotEmpty)
-                        PieChart(
-                          legend: dashboard.byProgram!,
-                          colorList: colorList,
-                          data: data,
-                          module: "FINANCE",
-                        ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(left: 15),
-                            child: const Text(
-                              'Танай илгээсэн',
-                              style: TextStyle(
-                                color: black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              color: transparent,
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Бүгдийг",
-                                    style: TextStyle(
-                                      color: source.currentColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: source.currentColor,
-                                    size: 16,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const Icon(
-                            Icons.calendar_today,
-                            color: grey,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
-                            style: const TextStyle(
-                              color: grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.calendar_today,
-                            color: grey,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            DateFormat("yyyy-MM-dd").format(DateTime.now()),
-                            style: const TextStyle(
-                              color: grey,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
                       Container(
-                        height: 180,
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: white,
-                        ),
-                        child: SfCartesianChart(
-                          series: <ChartSeries>[
-                            BarSeries<Finance, String>(
-                              borderRadius: BorderRadius.circular(5),
-                              pointColorMapper: (datum, index) =>
-                                  datum.profileName == "Зөвшөөрсөн"
-                                      ? networkDashboard2
-                                      : datum.profileName == "Илгээсэн"
-                                          ? source.currentColor
-                                          : grey2,
-                              dataSource: legend,
-                              xValueMapper: (gdp, _) => gdp.profileName,
-                              yValueMapper: (gdp, _) => gdp.count,
-                            )
-                          ],
-                          primaryXAxis: CategoryAxis(),
+                        margin: const EdgeInsets.only(left: 15),
+                        child: const Text(
+                          'Танай илгээсэн',
+                          style: TextStyle(
+                            color: black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          color: transparent,
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Бүгдийг",
+                                style: TextStyle(
+                                  color: source.currentColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                color: source.currentColor,
+                                size: 16,
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Icon(
+                        Icons.calendar_today,
+                        color: grey,
+                        size: 18,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '${DateFormat("yyyy-MM-dd").format(DateTime.now())} - ',
+                        style: const TextStyle(
+                          color: grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const Icon(
+                        Icons.calendar_today,
+                        color: grey,
+                        size: 18,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        DateFormat("yyyy-MM-dd").format(DateTime.now()),
+                        style: const TextStyle(
+                          color: grey,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: 180,
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: white,
+                    ),
+                    child: SfCartesianChart(
+                      series: <ChartSeries>[
+                        BarSeries<Finance, String>(
+                          borderRadius: BorderRadius.circular(5),
+                          pointColorMapper: (datum, index) =>
+                              datum.profileName == "Зөвшөөрсөн"
+                                  ? networkDashboard2
+                                  : datum.profileName == "Илгээсэн"
+                                      ? source.currentColor
+                                      : grey2,
+                          dataSource: legend,
+                          xValueMapper: (gdp, _) => gdp.profileName,
+                          yValueMapper: (gdp, _) => gdp.count,
+                        )
+                      ],
+                      primaryXAxis: CategoryAxis(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
             ),
     );
   }

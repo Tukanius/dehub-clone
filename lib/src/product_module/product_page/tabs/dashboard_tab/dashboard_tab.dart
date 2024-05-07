@@ -27,22 +27,15 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   User user = User();
   InventoryGoods dashboard =
       InventoryGoods(mostSold: [], stockInfo: [], numberSurvey: []);
-  Map<String, double> data = {};
-  List<InventoryGoods> legend = [];
-  InventoryGoods confirmed = InventoryGoods();
-  bool isLoading = true;
-  List<Color> colorList = [
-    productColor,
-    productColor,
-    userColor,
-    partnerColor,
-    partnerColor,
-  ];
+  bool isLoading = false;
 
   @override
   afterFirstLayout(BuildContext context) async {
     if (user.currentBusiness?.type == "SUPPLIER" &&
         Permission().check(user, "ERP_DASH")) {
+      setState(() {
+        isLoading = true;
+      });
       dashboard = await InventoryApi().dashboard(
         DateFormat('yyyy-MM-dd').format(DateTime.now()),
         DateFormat('yyyy-MM-dd').format(DateTime.now()),
@@ -50,19 +43,10 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
             .format(DateTime.now().subtract(const Duration(days: 14))),
         DateFormat('yyyy-MM-dd').format(DateTime.now()),
       );
-      Map<String, double> pieData = {};
-      if (dashboard.mostSold!.isNotEmpty) {
-        for (var i = 0; i < dashboard.mostSold!.length; i++) {
-          pieData[''] = dashboard.mostSold![i].availableQuantity!;
-        }
-      }
       setState(() {
-        data = pieData;
+        isLoading = false;
       });
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override
@@ -137,25 +121,26 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
               ],
             ),
           ),
-          if (Permission().check(user, "ERP_DASH") &&
-              user.currentBusiness?.type == "SUPPLIER")
-            isLoading == true
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: productColor,
-                    ),
-                  )
-                : InventoryDashboard(
-                    data: dashboard,
-                    onClick: () {
-                      Navigator.of(context).pushNamed(
-                        DashboardScreen.routeName,
-                        arguments: DashboardScreenArguments(
-                          data: dashboard.stockInfo!,
-                        ),
-                      );
-                    },
+          isLoading == true
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: productColor,
                   ),
+                )
+              : Permission().check(user, "ERP_DASH") &&
+                      user.currentBusiness?.type == "SUPPLIER"
+                  ? InventoryDashboard(
+                      data: dashboard,
+                      onClick: () {
+                        Navigator.of(context).pushNamed(
+                          DashboardScreen.routeName,
+                          arguments: DashboardScreenArguments(
+                            data: dashboard.stockInfo!,
+                          ),
+                        );
+                      },
+                    )
+                  : const SizedBox(),
         ],
       ),
     );

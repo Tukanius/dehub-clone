@@ -29,58 +29,14 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
   User user = User();
   Order dashboard = Order(recentDelivered: []);
   Map<String, double> data = {};
-  Order confirmed = Order();
   bool isLoading = true;
-  PageController pageController = PageController();
-  int currentPage = 0;
-  List<Order> legend = [
-    Order(
-      name: 'ТОП 500',
-      ordersCount: 1,
-      amount: 13000,
-    ),
-    Order(
-      name: 'ТОП 300',
-      ordersCount: 1,
-      amount: 25000,
-    ),
-    Order(
-      name: 'ТОП 200',
-      ordersCount: 1,
-      amount: 8000,
-    ),
-    Order(
-      name: 'ТОП 100',
-      ordersCount: 1,
-      amount: 27000,
-    ),
-    Order(
-      name: 'ТОП 50',
-      ordersCount: 1,
-      amount: 10000,
-    ),
-  ];
   List<Color> colorList = [];
-  List<Color> dummyColorList = [
-    const Color(0xff15CAB8),
-    const Color(0xff44A6E9),
-    const Color(0xffFEC600),
-    const Color(0xffFF8548),
-    const Color(0xffE2362F),
-  ];
   List<String> svgs = [
     'assets/svg/income_review.svg',
     'assets/svg/expenditure_review.svg',
     'assets/svg/finance_review.svg',
     'assets/svg/paid_review.svg',
   ];
-  Map<String, double> dummyPie = {
-    "ТОП 500": 13000,
-    "ТОП 300": 25000,
-    "ТОП 200": 8000,
-    "ТОП 100": 27000,
-    "ТОП 50": 10000,
-  };
 
   @override
   afterFirstLayout(BuildContext context) async {
@@ -234,49 +190,6 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                             const SizedBox(
                               height: 25,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      pageController.animateToPage(0,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          curve: Curves.ease);
-                                    });
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 8,
-                                    backgroundColor: currentPage == 0
-                                        ? Colors.grey
-                                        : Colors.grey.shade300,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      pageController.animateToPage(1,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          curve: Curves.ease);
-                                    });
-                                  },
-                                  child: CircleAvatar(
-                                    radius: 8,
-                                    backgroundColor: currentPage == 1
-                                        ? Colors.grey
-                                        : Colors.grey.shade300,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
                           ],
                         ),
               ],
@@ -291,371 +204,190 @@ class _DashboardTabState extends State<DashboardTab> with AfterLayoutMixin {
                     color: orderColor,
                   ),
                 )
-              : PageView(
-                  controller: pageController,
-                  onPageChanged: (value) {
-                    setState(() {
-                      currentPage = value;
-                    });
-                  },
-                  children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 15),
-                                child: const Text(
-                                  'Борлуулалтын захиалга',
-                                  style: TextStyle(
-                                    color: black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      if (data.isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(left: 15),
+                              child: const Text(
+                                'Борлуулалтын захиалга',
+                                style: TextStyle(
+                                  color: black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  index.indexChange(3);
-                                },
-                                child: Container(
-                                  color: transparent,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 5),
-                                  child: const Row(
-                                    children: [
-                                      Text(
-                                        "Бүгдийг",
-                                        style: TextStyle(
-                                          color: orderColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: orderColor,
-                                        size: 16,
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          PieChart(
-                            legend: legend,
-                            colorList: dummyColorList,
-                            data: dummyPie,
-                            module: 'ORDER',
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 15),
-                            decoration: BoxDecoration(
-                              color: white,
-                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Сүүлд хүргэсэн',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const Divider(),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                            GestureDetector(
+                              onTap: () {
+                                index.indexChange(3);
+                              },
+                              child: Container(
+                                color: transparent,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: const Row(
                                   children: [
-                                    Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        image: const DecorationImage(
-                                          image: AssetImage(
-                                            'images/golomt.png',
-                                          ),
-                                        ),
+                                    Text(
+                                      "Бүгдийг",
+                                      style: TextStyle(
+                                        color: orderColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 5,
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Expanded(
-                                                child: Text(
-                                                  'Hunnu Air',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ),
-                                              Text(
-                                                DateFormat('yyyy-MM-dd')
-                                                    .format(DateTime.now()),
-                                                style: const TextStyle(
-                                                  color: orderColor,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 3,
-                                          ),
-                                          const Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  'SU-100000',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 12,
-                                                    color: orderColor,
-                                                  ),
-                                                ),
-                                              ),
-                                              Text(
-                                                '20,000₮',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: orderColor,
+                                      size: 16,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          if (data.isNotEmpty)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.only(left: 15),
-                                  child: const Text(
-                                    'Борлуулалтын захиалга',
-                                    style: TextStyle(
-                                      color: black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    index.indexChange(3);
-                                  },
-                                  child: Container(
-                                    color: transparent,
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 5),
-                                    child: const Row(
-                                      children: [
-                                        Text(
-                                          "Бүгдийг",
-                                          style: TextStyle(
-                                            color: orderColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: orderColor,
-                                          size: 16,
-                                        ),
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          if (data.isNotEmpty)
-                            PieChart(
-                              legend: dashboard.byPie!,
-                              colorList: colorList,
-                              data: data,
-                              module: "ORDER",
-                            ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          if (dashboard.recentDelivered!.isNotEmpty)
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 15, bottom: 5),
-                              decoration: BoxDecoration(
-                                color: white,
-                                borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Сүүлд хүргэсэн',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  const Divider(),
-                                  Column(
-                                    children: dashboard.recentDelivered!
-                                        .map(
-                                          (data) => Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 5),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 10),
-                                                  height: 40,
-                                                  width: 40,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                        '${data.receiverBusiness?.logo}',
-                                                      ),
-                                                      fit: BoxFit.cover,
-                                                    ),
+                            ),
+                          ],
+                        ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      if (data.isNotEmpty)
+                        PieChart(
+                          legend: dashboard.byPie!,
+                          colorList: colorList,
+                          data: data,
+                          module: "ORDER",
+                        ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      if (dashboard.recentDelivered!.isNotEmpty)
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 15, bottom: 5),
+                          decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Сүүлд хүргэсэн',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const Divider(),
+                              Column(
+                                children: dashboard.recentDelivered!
+                                    .map(
+                                      (data) => Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 5),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                image: DecorationImage(
+                                                  image: NetworkImage(
+                                                    '${data.receiverBusiness?.logo}',
                                                   ),
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
                                                     children: [
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              '${data.receiverBusiness?.profileName}',
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
-                                                            ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          '${data.receiverBusiness?.profileName}',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
                                                           ),
-                                                          Text(
-                                                            DateFormat(
-                                                                    'yyyy-MM-dd')
-                                                                .format(data
-                                                                    .deliveredDate!),
-                                                            style:
-                                                                const TextStyle(
-                                                              color: orderColor,
-                                                            ),
-                                                          )
-                                                        ],
+                                                        ),
                                                       ),
-                                                      const SizedBox(
-                                                        height: 3,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Text(
-                                                              '${data.receiverBusiness?.refCode}',
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: 12,
-                                                                color:
-                                                                    orderColor,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            '${Utils().formatCurrency("${data.orderAmount}")}₮',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 12,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
+                                                      Text(
+                                                        DateFormat('yyyy-MM-dd')
+                                                            .format(data
+                                                                .deliveredDate!),
+                                                        style: const TextStyle(
+                                                          color: orderColor,
+                                                        ),
+                                                      )
                                                     ],
                                                   ),
-                                                ),
-                                              ],
+                                                  const SizedBox(
+                                                    height: 3,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          '${data.receiverBusiness?.refCode}',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 12,
+                                                            color: orderColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '${Utils().formatCurrency("${data.orderAmount}")}₮',
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                        .toList(),
-                                  ),
-                                ],
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
                               ),
-                            ),
-                          const SizedBox(
-                            height: 10,
+                            ],
                           ),
-                        ],
+                        ),
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 )
           : const SizedBox(),
     );

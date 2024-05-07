@@ -79,7 +79,6 @@ class _WarehouseCreateState extends State<WarehouseCreate>
     List<String> supplierIds = [];
     if (fbkey.currentState!.saveAndValidate()) {
       try {
-        loading.loading(true);
         Partner data = Partner.fromJson(fbkey.currentState!.value);
         data.district = source.partner.district;
         data.isDefault = isDefault;
@@ -104,8 +103,10 @@ class _WarehouseCreateState extends State<WarehouseCreate>
             source.partner.province != null &&
             source.partner.warehouseUserId != null) {
           if (widget.data != null) {
+            loading.loading(true);
             await PartnerApi().warehouseUpdate(data, widget.data!.id!);
           } else {
+            loading.loading(true);
             await PartnerApi().warehouseCreate(data);
           }
           loading.loading(false);
@@ -144,27 +145,35 @@ class _WarehouseCreateState extends State<WarehouseCreate>
     if (widget.data != null) {
       if (widget.data!.isBuyer == true) {
         for (var i = 0; i < widget.data!.buyers!.length; i++) {
-          Partner buyers = this.buyers.rows!.firstWhere(
+          Partner buyer = buyers.rows!.firstWhere(
               (element) => element.id == widget.data!.buyers![i].id);
-          source.selectBuyer(buyers);
+          buyers.rows!.removeWhere(
+              (element) => element.id == widget.data!.buyers![i].id);
+          source.selectBuyer(buyer);
         }
       }
       if (widget.data!.isSupplier == true) {
         for (var i = 0; i < widget.data!.suppliers!.length; i++) {
-          Partner suppliers = this.suppliers.rows!.firstWhere(
+          Partner supplier = suppliers.rows!.firstWhere(
               (element) => element.id == widget.data!.suppliers![i].id);
-          source.selectSupplier(suppliers);
+          suppliers.rows!.removeWhere(
+              (element) => element.id == widget.data!.suppliers![i].id);
+          source.selectSupplier(supplier);
         }
       }
       isDefault = widget.data!.isDefault!;
       buyerRadioValue = widget.data!.isBuyer == true ? 1 : 0;
       supplierRadioValue = widget.data!.isSupplier == true ? 1 : 0;
       source.warehouseStatus(widget.data!.warehouseStatus!);
-      source.province(general.zipCodes!
-          .firstWhere((element) => element.code == widget.data?.district)
-          .parent);
-      source.district(widget.data!.district);
-      source.partnerStaff(widget.data!.warehouseUserId!);
+      if (widget.data?.district != null) {
+        source.province(general.zipCodes!
+            .firstWhere((element) => element.code == widget.data?.district)
+            .parent);
+        source.district(widget.data!.district);
+      }
+      if (widget.data!.warehouseUserId != null) {
+        source.partnerStaff(widget.data!.warehouseUserId!);
+      }
     }
     setState(() {
       isLoading = false;

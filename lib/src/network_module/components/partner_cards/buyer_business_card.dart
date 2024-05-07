@@ -5,10 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class BuyerBusinessCard extends StatefulWidget {
   final Function()? onClick;
-  final Business? data;
+  final Business data;
   const BuyerBusinessCard({
     super.key,
-    this.data,
+    required this.data,
     this.onClick,
   });
 
@@ -41,7 +41,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      widget.data?.logo == null
+                      widget.data.logo == null
                           ? Container(
                               height: 40,
                               width: 40,
@@ -63,7 +63,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                 shape: BoxShape.circle,
                                 color: grey,
                                 image: DecorationImage(
-                                  image: NetworkImage('${widget.data?.logo}'),
+                                  image: NetworkImage('${widget.data.logo}'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -82,7 +82,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: '${widget.data?.profileName}, ',
+                                          text: '${widget.data.profileName}, ',
                                           style: const TextStyle(
                                             fontSize: 12,
                                             color: black,
@@ -91,7 +91,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: '${widget.data?.refCode}',
+                                          text: '${widget.data.refCode}',
                                           style: const TextStyle(
                                             fontSize: 12,
                                             fontFamily: "Montserrat",
@@ -116,7 +116,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: '${widget.data?.partnerName},',
+                                          text: '${widget.data.partnerName},',
                                           style: const TextStyle(
                                               fontFamily: "Montserrat",
                                               fontSize: 12,
@@ -124,7 +124,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                         ),
                                         TextSpan(
                                           text:
-                                              '${widget.data?.partner?.refCode}',
+                                              '${widget.data.partner?.refCode}',
                                           style: const TextStyle(
                                             fontFamily: "Montserrat",
                                             fontSize: 12,
@@ -149,7 +149,7 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                   style: TextStyle(color: grey3, fontSize: 10),
                                 ),
                                 Text(
-                                  '${widget.data?.partner?.regNumber}',
+                                  '${widget.data.partner?.regNumber}',
                                   style: const TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w600,
@@ -158,71 +158,73 @@ class BuyerBusinessCardState extends State<BuyerBusinessCard> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: 250,
-                              child: Column(
-                                children: [
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            widget.data?.staff?.avatar == null
-                                                ? const CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundColor: grey,
-                                                    backgroundImage: AssetImage(
-                                                        'images/avatar.png'),
-                                                  )
-                                                : CircleAvatar(
-                                                    radius: 12,
-                                                    backgroundImage: NetworkImage(
-                                                        '${widget.data?.staff?.avatar}'),
-                                                  ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              '${widget.data?.staff?.firstName}',
-                                              style: const TextStyle(
-                                                fontSize: 10,
+                            if (widget.data.staff != null)
+                              SizedBox(
+                                width: 250,
+                                child: Column(
+                                  children: [
+                                    const Divider(
+                                      thickness: 1,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            children: [
+                                              widget.data.staff?.avatar == null
+                                                  ? const CircleAvatar(
+                                                      radius: 12,
+                                                      backgroundColor: grey,
+                                                      backgroundImage: AssetImage(
+                                                          'images/avatar.png'),
+                                                    )
+                                                  : CircleAvatar(
+                                                      radius: 12,
+                                                      backgroundImage: NetworkImage(
+                                                          '${widget.data.staff?.avatar}'),
+                                                    ),
+                                              const SizedBox(
+                                                width: 5,
                                               ),
-                                            ),
-                                          ],
+                                              Text(
+                                                widget.data.staff?.firstName ??
+                                                    '-',
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              '${widget.data?.staff?.email}',
-                                              style: const TextStyle(
-                                                  color: grey3, fontSize: 10),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                            Text(
-                                              '${widget.data?.staff?.phone}',
-                                              style: const TextStyle(
-                                                  color: grey3, fontSize: 10),
-                                              textAlign: TextAlign.end,
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                widget.data.staff?.email ?? '-',
+                                                style: const TextStyle(
+                                                    color: grey3, fontSize: 10),
+                                                textAlign: TextAlign.end,
+                                              ),
+                                              Text(
+                                                widget.data.staff?.phone ?? '-',
+                                                style: const TextStyle(
+                                                    color: grey3, fontSize: 10),
+                                                textAlign: TextAlign.end,
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
